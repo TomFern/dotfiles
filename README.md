@@ -1,4 +1,4 @@
-=  My dotfiles
+# My dotfiles
 
 1. Install gnu stow.
 
