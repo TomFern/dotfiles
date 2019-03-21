@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# start firefox family of browsers
+#
+
+function usage() {
+cat <<EOF
+usage:
+    $0 [-P profile] [FIREFOX SPECIFIC ARGS] [URL]
+EOF
+}
+
+# if which palemoon >/dev/null 2>&1; then
+#     exec palemoon $@
+#     # exec firejail --seccomp  /usr/bin/palemoon $@
+# elif which firefox >/dev/null 2>&1; then
+    exec firefox -P pablo $@
+# fi

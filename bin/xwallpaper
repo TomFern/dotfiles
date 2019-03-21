@@ -1,0 +1,98 @@
+#!/bin/bash
+#
+# simple wallpaper setter
+#
+
+CFG=$HOME/.wallpapers
+
+function usage() {
+cat <<EOF
+usage:
+    $0 [-b minutes] [wallpaper]
+
+options:
+    -b minutes  continue running, reapply the wallpaper every m minutes
+
+[wallpaper] when it's a file, set it as background
+            when it's a directory, pick one file randomly and set it as background.
+            when not supplied, pick random line in file: $CFG
+
+You may use the following tokens in the file names:
+    
+    %%    a percent (%) sign
+    %d16  division n in 16 part day day (1 is dawn, 16 is pre-dawn)
+    %q    quarter of the day (1 is am, 2 pm, 3 night, 4 pre-dawn)
+    %g    daytime/nighttime
+
+EOF
+}
+
+opt_r=
+while getopts ":b:bh" o; do
+  case $o in
+    b)
+        opt_r=$OPTARG
+        ;;
+    h)
+        usage
+        exit 0
+        ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+    esac
+done
+shift $((OPTIND-1))
+
+function set_wallpaper() {
+    fn=$1
+    if [ -f "$fn" ]; then
+        echo "set wallpaper: $fn"
+        feh --bg-fill -bg "$fn"
+    else
+        echo "file not found: $fn"
+    fi
+}
+
+
+arg_fn=$1
+
+while true; do
+
+    # pick random line from config file
+    if [ -n "$arg_fn" ]; then
+        fn=$arg_fn
+    else
+        fn=$(cat $CFG | sed '/^\s*#/d;/^\s*$/d' | sort -u | sort --random-sort | head -n 1)
+    fi
+
+    # tok_g=$(solar | egrep "^It is" | awk '{print $3}')
+    # tok_d16=$(solar | egrep "^Sun is on division" | awk '{print $5}')
+    # tok_q=$(solar | egrep "^Day quarter is" | awk '{print $4}')
+
+    # # expand tokens
+    # fn=$(sed 's/%d16/'$tok_d16'/' <<< "$fn")
+    # fn=$(sed 's/%g/'$tok_g'/' <<< "$fn")
+    # fn=$(sed 's/%q/'$tok_q'/' <<< "$fn")
+    # fn=$(sed 's/%%/%/' <<< "$fn")
+
+    # when dir, pick random image file
+    if [ -d "$fn" ]; then
+        pic=$(find "$fn" -name "*.png" -o -name "*.jpg" -o -name "*.jpeg"| shuf -n 1)
+    elif [ -f "$fn" ]; then
+        pic=$fn
+    fi
+
+    set_wallpaper $pic
+
+
+    if [ -z "$opt_r" ]; then
+        exit 0
+    fi
+    sleep $((60 * $opt_r))
+done

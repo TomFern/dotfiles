@@ -1,0 +1,57 @@
+#!/bin/bash
+#
+# lightning conditions adjustments
+#
+# change wallpaper
+# load xrdb
+# touch/rm the ~/.darkness file
+#
+
+old=
+delay_day=$((60*10))
+delay_night=$((60*60))
+
+function switchto() {
+    condition=$1
+    echo "SWITCHING TO $condition"
+    if [ "$condition" == "day" ]; then
+        echo "Wait $delay_day seconds before switching lights on"
+        sleep $delay_day
+        [[ -f $HOME/.darkness ]] && rm -f $HOME/.darkness
+        [[ -f $HOME/.Xresources ]] && xrdb $HOME/.Xresources
+        [[ -f $HOME/.Xresources.d/colors/apple-bright ]] && xrdb -merge $HOME/.Xresources.d/colors/apple-bright
+    fi
+
+    if [ "$condition" == "night" ]; then
+        echo "Wait $delay_night seconds before switching to darkness"
+        sleep $delay_night
+        touch $HOME/.darkness
+        [[ -f $HOME/.Xresources ]] && xrdb $HOME/.Xresources
+        [[ -f $HOME/.Xresources.d/colors/dark ]] && xrdb -merge $HOME/.Xresources.d/colors/dark
+    fi
+    xwallpaper
+}
+
+function transition() {
+    new=$1
+    if [ -n "$old" ]; then
+        if [ "$old" != "$new" ]; then
+            old=$new
+            switchto $new
+        fi
+    else
+        old=$new
+        switchto $new
+    fi
+}
+
+redshift -r -v -c ~/.redshift | while read line; do
+    echo "LINE: $line"
+    if $(echo "$line" | grep -q Period); then
+        if $(echo "$line" | grep -q Daytime); then
+            transition "day"
+        elif $(echo "$line" | grep -q Night); then
+            transition "night"
+        fi
+    fi
+done

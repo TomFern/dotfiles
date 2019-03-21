@@ -1,0 +1,54 @@
+#!/bin/bash
+#
+# a wrapper for dmenu, uses rofi instead if found
+#
+
+# dmenu options
+FN="-*-terminal-*-*-*-*-14-*-*-*-*-*-*-*"
+NB="#303030"
+NF="khaki"
+SB="#ccffaa"
+SF="#303030"
+CMD_DMENU="dmenu -i -fn $FN -nb $NB -nf $NF -sb $SB -sf $SF"
+
+# rofi
+CMD_ROFI="rofi -dmenu -i"
+
+function usage() {
+cat <<EOF
+usage:
+    $0 [-p prompt]
+EOF
+}
+
+CMD_ARGS=
+while getopts ":p:ih" o; do
+  case $o in
+    p)
+        CMD_ARGS="-p '"$OPTARG": '"
+        ;;
+    h)
+        usage
+        exit 0
+        ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if which rofi>/dev/null; then
+    killall rofi 2>/dev/null
+    eval $CMD_ROFI $CMD_ARGS
+elif which dmenu>/dev/null; then
+    eval $CMD_DMENU $CMD_ARGS
+else
+    echo "no rofi/dmenu in path"
+    exit 1
+fi

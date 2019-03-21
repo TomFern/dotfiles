@@ -1,0 +1,67 @@
+#!/bin/bash
+#
+# add url to file, use dmenu to select url file
+#
+# req: dmenu,xdotool,libnotify
+#
+
+
+URLDIR=$HOME/.url
+TEMPS=$URLDIR/temps.urls
+
+function usage(){
+cat <<EOF
+usage:
+    $0 [-t NAME] [-l URL [KEYWORDS]]
+
+options:
+    -t NAME          filename to append url
+    -l URL KEYWORDS  url to add with optional keywords
+EOF
+}
+ 
+# process arguments
+file_choose=
+file_use="$URLDIR/default.urls"
+url=
+GO=1
+while getopts ":t:l:" o; do
+    case "${o}" in
+        t)
+            file_choose=${OPTARG}
+            ;;
+        l)
+            url=${OPTARG}
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if [ -z "$url" ]; then
+    # extract url from window title
+    title=$(xdotool getwindowname `xdotool getactivewindow`)
+    url=$(egrep -o 'https?://[^ ]+' <<< "$title")
+fi
+
+if [[ ! $url =~ ^(https?://|ftp://) ]]; then
+    echo "url not valid" >&2
+    notify-send "no url in window"
+    exit 1
+fi
+
+# user chooses file to write url to
+keywords=
+if [ -n "$file_choose" ]; then
+    use_file="$URLDIR/$file_choose"
+    keywords=$@
+else
+    selection=$(ls "$URLDIR"/*.urls | dmenu)
+    words=($selection)
+    use_file=${words[0]}
+    keywords=$(echo ${words[@]:1})
+fi
+
+if [ -n "$use_file" ]; then
+    notify-send "Add to $(basename $use_file)" "$url"
+    echo "$url $keywords" >> $use_file
+fi

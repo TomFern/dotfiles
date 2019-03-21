@@ -1,0 +1,103 @@
+#!/bin/bash
+#
+# start chromium/chrome family of browsers
+# adds elementary profile support:
+#
+# ~/.chromium/profiles/$PROFILE/xbrowser-chrome.profile
+#
+# usage:
+#   encrust [-U name] [-D /path/to/profiledir]
+#
+
+function usage() {
+cat <<EOF
+usage:
+    $0 [-P profile] [-D profiledir] URL -- [CHROME SPECIFIC ARGUMENTS]
+EOF
+}
+
+#DEFAULT_DIR=$HOME/.chromium/profiles/work
+#DEFAULT_DIR=$HOME/.chromium/profiles/pablo
+#PROFILE_SEARCH=$HOME/.chromium/profiles
+DEFAULT_NAME=$(whoami)
+DEFAULT_SEARCH=$HOME/.chromium/profiles
+
+name=
+profiledir=
+while getopts ":P:D:" o; do
+    case "${o}" in
+        P)
+            name=${OPTARG}
+            ;;
+        D)
+            profiledir=${OPTARG}
+            ;;
+        *) 
+            usage
+            exit 1
+    esac
+done
+shift $((OPTIND-1))
+
+usedir=
+if [ -n "$profiledir" ]; then
+    usedir="$profiledir"
+elif [ -n "$name" ]; then
+    usedir="$DEFAULT_SEARCH/$name"
+else
+    usedir="$DEFAULT_SEARCH/$DEFAULT_NAME"
+fi
+
+if [ ! -d "$usedir" ]; then
+    echo "dir not found: $usedir"
+    exit 1
+fi
+if [ ! -f "$usedir/xbrowser-chrome.profile" ]; then
+    echo "file not found: $usedir/xbrowser-chrome.profile"
+    exit 2
+fi
+
+# source script if exists
+XBROWSER_ADDITIONAL_ARGS=
+if [ -f "$usedir/xbrowser-chrome.profile" ]; then
+    . "$usedir/xbrowser-chrome.profile"
+fi
+
+# I like running chromium without a UI, so I start in kiosk mode, and switch fullscreen
+# as soon as the window appears
+# echo "using $usedir"
+# initial_active_window=`xdotool getactivewindow`
+# initial_active_window_name=`xdotool getwindowname $initial_active_window`
+#chromium --user-data-dir=$usedir $ENCRUST_ADDITIONAL_ARGS --kiosk --new-window $@ &
+#chromium --user-data-dir=$usedir $ENCRUST_ADDITIONAL_ARGS  --start-fullscreen --new-window $@ &
+#chromium --user-data-dir=$usedir $ENCRUST_ADDITIONAL_ARGS  --new-window $@ &
+# if [ -n "$use_kiosk" ]; then
+#     chromium --user-data-dir=$usedir $ENCRUST_ADDITIONAL_ARGS  --kiosk --new-window $@ &
+#     i=0
+#     while true; do
+#         i=$(( $i + 1 ))
+#         sleep 0.1
+#         active_window=`xdotool getactivewindow`
+#         active_window_name=`xdotool getwindowname $active_window`
+#         if [ $active_window -ne $initial_active_window ] && [[ $active_window_name =~ .*Chromium.* ]]; then
+#             break
+#         fi
+#         if [ $i -gt 20 ]; then
+#             echo "no window found"
+#             exit 1
+#         fi
+#         echo "waiting for window change"
+#     done
+#     echo "going fullscreen"
+#     i3-msg "fullscreen"
+# else
+# fi
+
+if which chromium >/dev/null 2>&1; then
+    chromium --user-data-dir=$usedir $XBROWSER_ADDITIONAL_ARGS  --new-window $@ &
+elif which chrome >/dev/null 2>&1; then
+    chrome --user-data-dir=$usedir $XBROWSER_ADDITIONAL_ARGS  --new-window $@ &
+else
+    echo "No browser installed for Chrome family." >&2
+fi
+

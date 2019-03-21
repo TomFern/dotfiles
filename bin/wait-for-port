@@ -1,0 +1,22 @@
+#!/bin/bash
+# generitc wait for port with netcat
+
+function usage(){
+cat <<EOF
+usage:
+    wait-for-port PORT [IP or HOSTNAME]
+EOF
+}
+ 
+PORT=$1
+if [ -z "$PORT" ]; then
+    usage
+    exit 1
+fi
+shift
+IPADDR=$1
+if [ -z "$IPADDR" ]; then
+    IPADDR=127.0.0.1
+fi
+
+(while ! echo exit | nc $IPADDR $PORT; do sleep 0.1; done) >/dev/null 2>&1

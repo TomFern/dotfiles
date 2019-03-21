@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# delete old files
+#
+
+MARK=/tmp/cleanup-home-$USER/mark
+
+[[ -f $MARK ]] && tmpwatch -m 1d $(dirname $MARK)
+
+if [ ! -f $MARK ]; then
+    mkdir -p $(dirname $MARK)
+    touch $MARK
+    [[ -d $HOME/dl ]] && tmpwatch -m 10d $HOME/dl
+    [[ -d $HOME/Downloads ]] && tmpwatch 10d $HOME/Downloads
+    [[ -d $HOME/.cache/thumbnails ]] && tmpwatch 2d $HOME/.cache/thumbnails
+    [[ -d $HOME/.cache ]] && tmpwatch 30d $HOME/.cache
+fi

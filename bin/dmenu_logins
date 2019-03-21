@@ -1,0 +1,84 @@
+#!/bin/bash
+#
+# simple login with dmenu
+#
+
+PASSWDIR=$HOME/.password-store
+CACHEDIR=$HOME/.cache/passwords
+
+function usage() {
+cat <<EOF
+usage:
+    $0 [-b]
+EOF
+}
+
+browser_mode=
+while getopts ":bh" o; do
+  case $o in
+    b)
+        browser_mode=1
+        ;;
+    h)
+        usage
+        exit 0
+        ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+    esac
+done
+shift $((OPTIND-1))
+
+function get_selection() {
+    if [ -n "$browser_mode" ]; then
+        title=$(xdotool getwindowname `xdotool getactivewindow`)
+        url=$(egrep -o 'https?://[^ ]+' <<< "$title")
+        if [[ $url =~ ^(https?://|ftp://) ]]; then
+            # get base url and remove www
+            baseurl=$(awk -F '/' '{print $3}' <<< "$url")
+            baseurl=$(sed 's/^www[[:digit:]]*\.//i' <<< "$baseurl")
+            selection=$(find . -type f -name "*.gpg" | grep -i "$baseurl" | dmenu)
+            echo $selection
+        fi
+    else
+        selection=$(find . -name "*.gpg" | dmenu)
+        echo $selection
+    fi
+}
+
+cd $PASSWDIR
+pw=
+selection=$(get_selection)
+if [ -n "$selection" ]; then
+
+    # try first the cache
+    if [ -d "$CACHEDIR" ]; then
+        cd $CACHEDIR
+        cache-passwords
+        fn=$(sed 's/\.gpg//' <<<"$selection")
+        if [ -f "$fn" ]; then
+            pw=$(cat $fn)
+        fi
+    fi
+
+    # then use gpg
+    if [ -z "$pw" ]; then
+        cd $PASSWDIR
+        pw=$(gpg2 -q --for-your-eyes-only --no-tty -d $selection)
+
+    fi
+
+    if [ -n "$pw" ]; then
+        echo -n $pw | xsel
+        echo -n $pw | xsel -b
+    else
+        echo "didn't get a any data from gpg" >&2
+        exit 0
+    fi
+fi

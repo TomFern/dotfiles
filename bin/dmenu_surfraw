@@ -1,0 +1,52 @@
+#!/bin/bash
+#
+# run web search using dmenu
+# the default browser is set on surfraw config file
+#
+# req: surfraw, dmenu
+
+function usage() {
+cat <<EOF
+usage:
+    $0 [-p] query string
+
+options:
+    -p  don't open anything just return the query string
+EOF
+}
+
+# default elvie: if no valid elvie was selected
+elvie_default=duckduckgo
+
+USE_BROWSER=
+GO=1
+while getopts ":p" o; do
+    case "${o}" in
+        p)
+            GO=
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+
+# replace first line 'GLOBAL ELVIE:' with default and remove comments
+elvies=$(surfraw -elvie | sed 's/.*GLOBAL.*/'$elvie_default'/;s/\s*--.*//' )
+selection=$(echo $elvies | sed 's/ /\n/g' | dmenu -p surfraw)
+
+if [ -z "$selection" ]; then
+    exit 0 
+fi
+
+# check if first word on selection is an existing elvie
+# if not default to $elvie_default
+if ! $(echo $elvies | grep --quiet $(echo $selection | awk '{print $1}')); then
+    selection="$elvie_default $selection"
+fi
+
+if [ -z "$GO" ]; then
+    surfraw $options -p $selection
+    exit 0
+else
+    exec surfraw $options $selection
+fi

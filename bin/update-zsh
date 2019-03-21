@@ -1,0 +1,10 @@
+#!/bin/zsh
+#
+# upgrade zsh modules
+#
+
+cd $HOME/.dotfiles/sh/prezto
+git pull
+cd modules
+git submodule init
+git submodule update
