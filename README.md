@@ -5,7 +5,7 @@
 2. Clone the repository on $HOME
 
 ```
-git clone @@ $HOME
+git clone git@github.com:TomFern/dotfiles.git
 ```
 
 3. Install links
