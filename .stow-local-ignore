@@ -1,0 +1,6 @@
+# stow ignore (info stow)
+^/README.*                                
+^/LICENSE.*                               
+^/COPYING
+\.git                                     
+\.gitignore
