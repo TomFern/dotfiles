@@ -201,6 +201,7 @@ function MyEndpoint {
 # vnc
 alias vnc-beta='vncviewer beta:5904 -passwd ~/.vnc/passwd-beta'
 alias vnc-g0='vncviewer g0:5904' # -passwd ~/.vnc/passwd-g0'
+alias vnc-sr='vncviewer sr:5903' # -passwd ~/.vnc/passwd-g0'
 # }}}
 
 

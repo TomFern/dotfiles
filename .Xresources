@@ -1,0 +1,398 @@
+! .Xresources / .Xdefaults
+
+! color schemes {{{
+
+!#include ".Xresources.d/colors/atelierlakeside.light"
+!#include ".Xresources.d/rofi/solarized.light"
+!#include ".Xresources.d/rxvt/config"
+
+
+! #include ".Xresources.d/colors/apple-bright"
+! #include ".Xresources.d/colors/brightly"
+! #include ".Xresources.d/colors/visiblue"
+! #include ".Xresources.d/colors/digerati"
+
+!}}}
+! xcursor {{{
+
+! package: xcursor-themes
+!Xcursor.theme: whiteglass
+Xcursor.theme: xcursor-neutral 
+Xcursor.size: 16
+
+
+!}}}
+! xft {{{
+
+! enable antialiasing 
+Xft.dpi:        112
+Xft.antialias:  true
+Xft.hinting:    true
+Xft.rgba:       rgb
+Xft.hintstyle:  hintslight
+
+! }}}
+! xterm {{{
+
+!xterm*geometry:         80x26
+xterm*boldFont:    -xos4-terminus-bold-*-*-*-12-*-*-*-*-*-iso8859-2
+xterm*cursorBlink:       false
+xterm*cursorColor: #DCDCCC
+xterm*dynamicColors:        on
+xterm*eightBitInput:   true
+xterm*font:        -xos4-terminus-medium-*-*-*-12-*-*-*-*-*-iso8859-2
+xterm*highlightSelection: true
+xterm*internalBorder:        0
+xterm*loginShell:         false
+xterm*metaSendsEscape: true
+xterm*saveLines:         65535
+xterm*scrollBar:         false
+xterm*utf8:            2
+
+
+! }}}
+! rxvt-unicode {{{
+
+!URxvt*font: xft:Fantasque Sans Mono:size=12
+!URxvt*letterSpace: -1
+!URxvt.termName:rxvt-unicode-256color
+!URxvt*scrollTtyOutput: false
+!URxvt*scrollWithBuffer: true
+!URxvt*scrollTtyKeypress: true
+!URxvt*secondaryScreen: 1
+!URxvt*secondaryScroll: 0
+!
+!! extensions (disabled)
+!URxvt*perl-ext:
+!URxvt*perl-ext-common:
+
+
+! }}}
+! rofi {{{
+
+rofi.modi:                           run,window
+rofi.opacity:                        90
+rofi.width:                          100
+rofi.lines:                          15
+rofi.columns:                        1
+!rofi.font:                           mono 9
+rofi.font:                           PxPlus IBM VGA9 Regular 12
+!rofi.font:                          -*-anorexia-medium-*-*-*-11-*-*-*-*-*-iso10646-1
+rofi.color-enabled:                  true
+rofi.bw:                             1
+rofi.location:                       1
+rofi.padding:                        5
+rofi.yoffset:                        0
+rofi.xoffset:                        0
+rofi.fixed-num-lines:                false
+rofi.terminal:                       rxvt
+rofi.ssh-client:                     ssh
+rofi.ssh-command:                    {terminal} -e {ssh-client} {host}
+rofi.run-command:                    {cmd}
+!rofi.run-list-command:               
+rofi.run-shell-command:              {terminal} -e {cmd}
+rofi.disable-history:                false
+rofi.levenshtein-sort:               true
+rofi.case-sensitive:                 false
+!rofi.sidebar-mode:                   false
+rofi.sidebar-mode:                   true
+rofi.lazy-filter-limit:              5000
+rofi.eh:                             1
+rofi.auto-select:                    false
+rofi.parse-hosts:                    false
+rofi.combi-modi:                     window,run
+rofi.fuzzy:                          false
+!rofi.pid:                            /run/user/1000/rofi.pid
+rofi.kb-primary-paste:               Control+Shift+v,Shift+Insert
+rofi.kb-secondary-paste:             Control+v,Insert
+rofi.kb-clear-line:                  Control+u
+rofi.kb-move-front:                  Control+a
+rofi.kb-move-end:                    Control+e
+rofi.kb-move-word-back:              Alt+b
+rofi.kb-move-word-forward:           Alt+f
+rofi.kb-move-char-back:              Left,Control+b
+rofi.kb-move-char-forward:           Right,Control+f
+rofi.kb-remove-word-back:            Control+Alt+h
+rofi.kb-remove-word-forward:         Control+Alt+d
+rofi.kb-remove-char-forward:         Delete,Control+d
+rofi.kb-remove-char-back:            BackSpace,Control+h
+rofi.kb-accept-entry:                Control+j,Control+m,Return,KP_Enter
+rofi.kb-accept-custom:               Control+Return
+rofi.kb-accept-entry-continue:       Shift+Return
+rofi.kb-mode-next:                   Shift+Right,Control+Tab
+rofi.kb-mode-previous:               Shift+Left,Control+Shift+Tab
+rofi.kb-remove-to-sol:               Control+Shift+u
+rofi.kb-row-tab:                     Control+Shift+Alt+Tab
+!rofi.kb-toggle-case-sensitivity:     grave,dead_grave
+rofi.kb-delete-entry:                Shift+Delete
+rofi.kb-custom-1:                    Alt+1
+rofi.kb-custom-2:                    Alt+2
+rofi.kb-custom-3:                    Alt+3
+rofi.kb-custom-4:                    Alt+4
+rofi.kb-custom-5:                    Alt+5
+rofi.kb-custom-6:                    Alt+6
+rofi.kb-custom-7:                    Alt+7
+rofi.kb-custom-8:                    Alt+8
+rofi.kb-custom-9:                    Alt+9
+rofi.kb-row-left:                    Control+Page_Up
+rofi.kb-row-right:                   Control+Page_Down
+rofi.kb-row-up:                      Up,Control+p,Shift+Tab
+rofi.kb-row-down:                    Down,Control+n
+!rofi.kb-row-tab:                     Tab
+!rofi.kb-row-tab:                     Shift+Tab
+rofi.kb-page-prev:                   Page_Up
+rofi.kb-page-next:                   Page_Down
+rofi.kb-row-first:                   Home,KP_Home
+rofi.kb-row-last:                    End,KP_End
+!rofi.kb-row-select:                  Control+space
+rofi.kb-row-select:                  Tab
+rofi.kb-cancel:                      Escape
+!rofi.key-window:                     
+!rofi.key-run:                        
+!rofi.key-ssh:                        
+
+! }}}
+! URxvt {{{
+
+! ! colorscheme zenburn {{{2
+! 
+! !! Zenburn color-scheme
+! !!URxvt*background:  #3f3f3f
+! !URxvt*background:  #000000
+! !URxvt*foreground:  #dcdccc
+! !! black + red
+! !!URxvt*color0:     #3f3f3f
+! !URxvt*color0:      #1E2320
+! !URxvt*color1:      #705050
+! !! green + yellow
+! !URxvt*color2:      #60b48a
+! !URxvt*color3:      #dfaf8f
+! !! blue + purple
+! !URxvt*color4:      #506070
+! !URxvt*color5:      #dc8cc3
+! !! cyan + white
+! !URxvt*color6:      #8cd0d3
+! !URxvt*color7:      #dcdccc
+! !! bright-black + bright-red
+! !URxvt*color8:      #709080
+! !URxvt*color9:      #dca3a3
+! !! bright-green + bright-yellow
+! !URxvt*color10:     #c3bf9f
+! !URxvt*color11:     #f0dfaf
+! !! bright-blue + bright-purple
+! !URxvt*color12:     #94bff3
+! !URxvt*color13:     #ec93d3
+! !! bright-cyan + bright-white
+! !URxvt*color14:     #93e0e3
+! !URxvt*color15:     #ffffff
+! 
+! ! }}}
+! ! colorscheme solarized {{{2
+! 
+! 
+! ! Solarized color scheme for the X Window System
+! !
+! ! http://ethanschoonover.com/solarized
+! 
+! 
+! ! Common
+! 
+! #define S_yellow        #b58900
+! #define S_orange        #cb4b16
+! #define S_red           #dc322f
+! #define S_magenta       #d33682
+! #define S_violet        #6c71c4
+! #define S_blue          #268bd2
+! #define S_cyan          #2aa198
+! #define S_green         #859900
+! 
+! 
+! ! Dark
+! 
+! !#define S_base03        #002b36
+! !#define S_base02        #073642
+! !#define S_base01        #586e75
+! !#define S_base00        #657b83
+! !#define S_base0         #839496
+! !#define S_base1         #93a1a1
+! !#define S_base2         #eee8d5
+! !#define S_base3         #fdf6e3
+! 
+! 
+! ! Light
+! 
+! #define S_base03        #fdf6e3
+! #define S_base02        #eee8d5
+! #define S_base01        #93a1a1
+! #define S_base00        #839496
+! #define S_base0         #657b83
+! #define S_base1         #586e75
+! #define S_base2         #073642
+! #define S_base3         #002b36
+! 
+! 
+! ! To only apply colors to your terminal, for example, prefix
+! ! the color assignment statement with its name. Example:
+! !
+! ! URxvt*background:            S_base03
+! 
+! URxvt*background:              S_base03
+! URxvt*foreground:              S_base0
+! URxvt*fading:                  40
+! URxvt*fadeColor:               S_base03
+! URxvt*cursorColor:             S_base1
+! URxvt*pointerColorBackground:  S_base01
+! URxvt*pointerColorForeground:  S_base1
+! 
+! URxvt*color0:                  S_base02
+! URxvt*color1:                  S_red
+! URxvt*color2:                  S_green
+! URxvt*color3:                  S_yellow
+! URxvt*color4:                  S_blue
+! URxvt*color5:                  S_magenta
+! URxvt*color6:                  S_cyan
+! URxvt*color7:                  S_base2
+! URxvt*color9:                  S_orange
+! URxvt*color8:                  S_base03
+! URxvt*color10:                 S_base01
+! URxvt*color11:                 S_base00
+! URxvt*color12:                 S_base0
+! URxvt*color13:                 S_violet
+! URxvt*color14:                 S_base1
+! URxvt*color15:                 S_base3
+! 
+! ! }}}
+! 
+! ! these are in the FAQ, author favourites
+! URxvt.cutchars: "()*,<>[]{}|"
+! URxvt.print-pipe: cat >/tmp/xxx
+! URxvt.secondaryScroll:  true
+! URxvt.cursorColor:      #e0e080
+! !URxvt.throughColor:     #8080f0
+! !!URxvt.highlightColor:   #f0f0f0
+! ! end of FAQ suggestions
+! 
+! ! dont scroll when using a pager
+! URxvt.secondaryScreen: 1
+! URxvt.secondaryScroll: 0
+! 
+! ! handle Alt key - 7 or 8 bit mode
+! URxvt.meta8: false
+! !
+! !URxvt.urgentOnBell: True 
+! URxvt.visualBell: False
+! ! bit depth and background color [90] is the opacity but only works when using a composite manager
+! ! WARNING using depth will prevent the inline / framebuffer images on the console, leave this commented
+! ! URxvt.depth: 32
+! ! URxvt.background: [90]#000000
+! 
+! !! native transparency 0 to 99 darkens, 101 to 200 lightens
+! ! fake transparency
+! !!URxvt*.transparent: true
+! !URxvt*.shading: 05
+! ! true (w/compositor) transparency
+! !URxvt*depth:32
+! !URxvt*background: rgba:0000/0000/0200/c800
+! 
+! ! colors
+! !URxvt.foreground: White
+! !URxvt.background: Black
+! 
+! ! scroll history lines
+! URxvt.saveLines: 65535
+! 
+! ! scrollbar
+! URxvt.scrollBar: true
+! ! styles are rxvt, plain, next or xterm
+! URxvt.scrollstyle: plain
+! ! do not scroll with output
+! URxvt*scrollTtyOutput: false
+! ! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
+! URxvt*scrollWithBuffer: true
+! ! scroll back to the bottom on keypress
+! URxvt*scrollTtyKeypress: true
+! URxvt*scrollBar_right: true
+! 
+! ! fonts (check installed with fc-list)
+! ! powerline tested
+! URxvt*font: xft:Meslo LG S for Powerline:size=:9
+! !URxvt*font: -*-aqui-*-*-*-*-11-*-*-*-*-*-*-*
+! !URxvt*font: -*-cure-*-*-*-*-11-*-*-*-*-*-*-*
+! !URxvt*font: -*-anorexia-medium-*-*-*-11-*-*-*-*-*-iso10646-1
+! 
+! ! untested / do not work
+! !URxvt*font: xft:Monaco for Powerline:regular:size=11
+! !URxvt*font: xft:Source Code Pro for Powerline:size=11
+! !URxvt*font: xft:Inconsolata for Powerline:size=12
+! !URxvt*font: xft:Inconsolata-dz for Powerline:size=12
+! !URxvt*font: xft:Meslo LG S DZ for Powerline:size=11
+! !URxvt*font: xft:Menlo for Powerline:size=11
+! !URxvt*font: xft:Mensch for Powerline:size=11
+! !URxvt*font: xft:Droid Sans Mono for Powerline:size=12
+! !URxvt.font:xft:droid sans mono:medium:pixelsize=20
+! !URxvt.boldFont:xft:droid sans mono:medium:pixelsize=20
+! !URxvt.font: xft:DejaVu Sans Mono:pixelsize=12
+! !URxvt.font: -*-terminus-medium-*-*-*-*-140-*-*-*-*-iso8859-1
+! !URxvt*font: xft:DejaVu Sans Mono:size=12
+! !URxvt.font: xft:monaco:size=10
+! !URxvt.font: xft:Sans Mono:size=10
+! !URxvt.font: xft:Andale Mono Regular:size=15
+! 
+! ! URxvt perl extensions
+! ! see installed extension in /usr/lib/urxvt/perl
+! ! load extensions 
+! ! matched -> url highlight and clicklable url
+! ! url-select -> yankable urls, replaces matched, but does not work on debian, not installed
+! ! tabbed -> use tabbed sessions (no options)
+! ! vtwheel -> support mouse wheel (no options) , no need to activate here
+! ! selection -> smarter highlighting
+! ! selection-popup -> Ctrl+Mouse2 convert selections
+! !URxvt.perl-ext-common:  default,matcher,tabbed,selection
+! !URxvt.perl-lib: /home/pablo/perl5/lib/perl5/Urxvt,/home/pablo/.urxvt/ext/urxvt-perls
+! URxvt.perl-lib: /home/pablo/.urxvt/ext
+! !URxvt.perl-ext-common:  default,matcher,selection,overlay-osc,confirm-paste,clipboard-keys,keyboard-select
+! URxvt.perl-ext-common:  default,selection,overlay-osc,confirm-paste,keyboard-select,clipboard,font-size
+! 
+! !,history-popup
+! ! matcher options
+! ! keyboard-select
+! URxvt.keysym.M-l: perl:keyboard-select:activate
+! URxvt.keysym.M-r: perl:keyboard-select:search
+! ! clipboard
+! ! update clipboard whenever primary gets updated
+! !URxvt.clipboard.autocopy: true
+! URxvt.keysym.M-c: perl:clipboard:copy
+! URxvt.keysym.M-v: perl:clipboard:paste
+! URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+! !URxvt.url-launcher:     uzbl-browser
+! URxvt.url-launcher:     "encrust -U pablo"
+! URxvt.matcher.button:   1
+! ! font-size
+! URxvt.keysym.C-Up:     font-size:increase
+! URxvt.keysym.C-Down:   font-size:decrease
+! URxvt.keysym.C-S-Up:   font-size:incglobal
+! URxvt.keysym.C-S-Down: font-size:decglobal
+! ! Control-Delete reopens last clicked url
+! !URxvt.keysym.C-Delete:  perl:matcher:last
+! !URxvt.keysym.M-Delete:  perl:matcher:list
+! ! blue color for urls
+! !URxvt.colorUL: #E80000
+! ! clipboard-keys (custom extension)
+! !URxvt.keysym.M-c: perl:clipboard-keys:copy_to_clipboard
+! !URxvt.keysym.M-v: perl:clipboard-keys:paste_from_clipboard
+! ! tabbed options
+! URxvt.tabbed.tabbar-fg: 2
+! URxvt.tabbed.tabbar-bg: 0
+! URxvt.tabbed.tab-fg: 11
+! URxvt.tabbed.tab-bg: 4
+! 
+! ! test
+! !URxvt.keysym.C:    \033<RAlt-Left>
+! 
+! !url-select yankable urls, url-select replaces matched, but not installed on debian
+! !URxvt.keysym.M-u:    perl:url-select:select_next
+! !URxvt.url-select.launcher:   /usr/bin/firefox -new-tab
+! !URxvt.url-select.underline: true
+! }}}
+
+! vim: foldenable foldmethod=marker syn=xdefaults
