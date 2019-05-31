@@ -27,7 +27,7 @@ values."
    ;; If non-nil layers with lazy install support are lazy installed.
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '()
+   dotspacemacs-configuration-layer-path '( "~/.spacemacs.d/private/")
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
@@ -73,7 +73,6 @@ values."
                                       ob-async
                                       ox-hugo
                                       org-journal
-                                      yasnippet-snippets
                                       emojify
                                       )
    ;; A list of packages that cannot be updated.

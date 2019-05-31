@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: ssh tmux
+# key: ssh
+# --
+
+#+BEGIN_SRC tmux :session default:0.0
+ssh $1@$2
+#+END_SRC

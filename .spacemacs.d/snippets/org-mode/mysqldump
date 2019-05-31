@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: mysqldump
+# key: mysqldump
+# --
+
+# --all-databases
+#+BEGIN_SRC tmux :session default:0.0
+  mysqldump --routines --triggers --events -h $1 -u $2 --password="$3" --databases $4
+#+END_SRC
+
