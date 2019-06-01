@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+#
+function usage() {
+cat <<EOF
+usage:
+    $0 
+
+Config files:
+
+    ~/.restic/env
+    -------------
+    export B2_ACCOUNT_ID=<B2_ID>
+    export B2_ACCOUNT_KEY=<B2_KEY>
+    export RESTIC_REPOSITORY="b2:bucket-name
+    export RESTIC_PASSWORD_FILE="$HOME/.restic/pw"
+
+    ~/.restic/pw
+    ------------
+    Your_Bucket_Password
+
+    ~/.restic/exclude
+    -----------------
+    list
+    of 
+    files
+EOF
+}
+
+SW_s=
+while getopts ":sh" o; do
+    case "${o}" in
+        s)
+            SW_s=1
+            ;;
+        h)
+            usage
+            exit 0
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if [ ! -d $HOME/.restic ] || [ ! -f $HOME/.restic/env ]; then
+    usage
+    echo ":: Config missing!"
+    exit 1
+fi
+
+. $HOME/.restic/env
+touch $HOME/.restic/exclude
+if [ -n "$SW_s" ]; then
+    restic -r $RESTIC_REPOSITORY snapshots
+else
+    if pidof restic; then
+        exit 1;
+    fi
+    restic -r $RESTIC_REPOSITORY backup --exclude-file=$HOME/.restic/exclude $HOME
+    restic -r $RESTIC_REPOSITORY forget --keep-daily 10 --keep-weekly 4 --keep-monthly 4
+fi
+

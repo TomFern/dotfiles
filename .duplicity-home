@@ -1,0 +1,10 @@
+. .backblaze
+- .cache
+- .vagrant.d
+- .local
+- .dropbox-dist
+- .emacs.d
+- .vim-plug
+- Private
+- .Private
+- r
