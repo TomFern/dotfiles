@@ -1,0 +1,306 @@
+* Zeit Now Continuous Deployment
+  :LOGBOOK:
+  CLOCK: [2019-04-25 Thu 12:23]--[2019-04-25 Thu 12:50] =>  0:27
+  CLOCK: [2019-04-25 Thu 09:39]--[2019-04-25 Thu 09:50] =>  0:11
+  CLOCK: [2019-04-25 Thu 00:08]--[2019-04-25 Thu 00:27] =>  0:19
+  CLOCK: [2019-04-24 Wed 15:51]--[2019-04-24 Wed 17:09] =>  1:18
+  CLOCK: [2019-04-24 Wed 21:33]--[2019-04-24 Wed 21:42] =>  0:09
+  :END:
+** TASK
+# Based on example project. Follow the pattern of existing use case docs.
+# https://github.com/semaphoreci-demos/semaphore-demo-zeit-now
+
+** NOTES
+
+# export ZEIT_TOKEN=mdH8eXtbZg6WWw50E7LSzn9B
+
+# `--> now --token $ZEIT_TOKEN --local-config production.json
+# > Deploying ~/jobs/upwork/plume/semaphore-demo-zeit-now under tomfern
+# > Using project semaphore-demo
+# > Synced 2 files (214.49KB) [4s]
+# > https://semaphore-demo-q0d5xm4xm.now.sh [v2] [2s]
+# ┌ index.js                               Ready               [31s]
+# └── λ index.js (339.74KB) [gru1]
+# ┌ controllers/index.controller.js        Ready               [34s]
+# └── λ controllers/index.controller.js (2.63KB) [gru1]
+# > Ready! Aliased to https://semaphore-demo.tomfern.now.sh [in clipboard] [41s]
+
+# > Deploying ~/jobs/upwork/plume/semaphore-demo-zeit-now under tomfern
+# > Using project semaphore-demo-staging
+# > https://semaphore-demo-staging-38v9tfukp.now.sh [v2] [2s]
+# ┌ index.js                               Ready               [31s]
+# └── λ index.js (325.36KB) [gru1]
+# ┌ controllers/index.controller.js        Ready               [31s]
+# └── λ controllers/index.controller.js (2.63KB) [gru1]
+# > Ready! Aliased to https://semaphore-demo-staging.tomfern.now.sh [in clipboard] [37s]
+
+# *** Packages
+
+# API Client
+
+# Tests: Jest
+# https://jestjs.io/
+#     "test": "NODE_ENV=test PORT=3000 jest --coverage --bail"
+# Coverage: Jest
+
+# Web framework: express
+# http://expressjs.com/
+
+# Helmet: express security middleware
+# https://helmetjs.github.io/
+# Nvm: Node Version manager
+# https://nvm.sh
+
+** EXTRAS
+*** Testing pipeline
+    :LOGBOOK:
+    CLOCK: [2019-04-24 Wed 14:10]--[2019-04-24 Wed 14:52] =>  0:42
+    CLOCK: [2019-04-24 Wed 13:27]--[2019-04-24 Wed 13:31] =>  0:04
+    :END:
+
+# ** [DOCUMENT STARTS]
+
+
+This guide explains how use Semaphore to build, test and deploy an application to Zeit Now.
+
+*** PR
+    :LOGBOOK:
+    CLOCK: [2019-04-25 Thu 21:34]--[2019-04-25 Thu 22:17] =>  0:43
+    :END:
+** Demo project
+
+Semaphore provides a demo project:
+
+- [[https://github.com/semaphoreci-demos/semaphore-demo-zeit-now]]
+
+The demo consists of an API server that replies with a simple JSON payload.
+The project runs on [[https://nodejs.org][Node.js]]. It uses [[http://expressjs.com/][Express]] for the web framework and [[https://jestjs.io/][Jest]] for testing.
+
+** Overview of the pipelines
+
+The demo has 3 annotated pipelines:
+
+- ~semaphore.yml~: continuous integration.
+  - Builds and tests the application.
+- ~deploy-production.yml~: production deployment.
+  - Deploys to Zeit Now production site.
+- ~deploy-staging.yml~: staging deployment.
+  - Deploys to the Zeit Now staging site.
+
+** Continuous integration pipeline
+
+#+BEGIN_SRC yaml
+# Use the latest stable version of Semaphore 2.0 YML syntax:
+version: v1.0
+
+# Name your pipeline. In case you connect multiple pipelines with promotions,
+# the name will help you differentiate between, for example, a CI build phase
+# and delivery phases.
+name: Build and test Express.js app
+
+# An agent defines the environment in which your code runs.
+# It is a combination of one of available machine types and operating
+# system images.
+# See https://docs.semaphoreci.com/article/20-machine-types
+# and https://docs.semaphoreci.com/article/32-ubuntu-1804-image
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+# Blocks are the heart of a pipeline and are executed sequentially.
+# Each block has a task that defines one or more jobs. Jobs define the
+# commands to execute.
+# See https://docs.semaphoreci.com/article/62-concepts
+blocks:
+  - name: Install dependencies
+    task:
+      jobs:
+        - name: npm install and cache
+          commands:
+            # Get the latest version of our source code from GitHub:
+            - checkout
+
+            # Use the version of Node.js specified in .nvmrc.
+            # Semaphore provides nvm preinstalled.
+            - nvm use
+            - node --version
+            - npm --version
+
+            # Restore dependencies from cache. This command will not fail in
+            # case of a cache miss. In case of a cache hit, npm install will
+            # run very fast.
+            # For more info on caching, see https://docs.semaphoreci.com/article/68-caching-dependencies
+            - cache restore client-node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),client-node-modules-$SEMAPHORE_GIT_BRANCH,client-node-modules-master
+            - npm install
+
+            # Store the latest version of node modules in cache to reuse in
+            # further blocks:
+            - cache store client-node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json) node_modules
+
+  - name: Run tests
+    task:
+      jobs:
+        - name: npm test
+          commands:
+            - checkout
+            - nvm use
+            - cache restore client-node-modules-$SEMAPHORE_GIT_BRANCH-$(checksum package-lock.json),client-node-modules-$SEMAPHORE_GIT_BRANCH,client-node-modules-master
+            - npm test
+
+promotions:
+  # Deployment to staging can be triggered manually:
+  - name: Deploy to staging
+    pipeline_file: deploy-staging.yml
+
+  # Automatically deploy to production on successful builds on master branch:
+  - name: Deploy to production
+    pipeline_file: deploy-production.yml
+    auto_promote_on:
+      - result: passed
+        branch:
+          - master
+#+END_SRC
+
+Just 2 blocks make the CI pipeline:
+
+#+caption: CI Pipeline
+#+name: CI Pipeline
+[[https://github.com/semaphoreci-demos/semaphore-demo-zeit-now/blob/master/images/semaphore-zeit-now-ci.png][CI Pipeline]]
+
+- npm install and cache:
+  - Downloads and installs the Node.js packages.
+  - Builds the app and saves it to the cache.
+- npm test:
+  - Runs unit and coverage tests.
+
+Two [[https://docs.semaphoreci.com/article/50-pipeline-yaml#promotions][promotions]] branch out of the CI pipeline:
+
+- Deploy to production: automatically started once all tests are green for the master branch.
+- Deploy to staging: manually started from Semaphore's dashboard.
+
+# At the end of a
+# If all tests are gree, the end of the CI pipeline triggers an auto promotion for
+# the production deployment.
+# The end of the CI pipeline, if all tests have passed,
+
+ # Once the CI pipeline completes successfully, an auto
+ # [[https://docs.semaphoreci.com/article/50-pipeline-yaml#promotions][promotion]] kicks in and the
+# production deployment starts.
+# For staging, the promotion can be triggered manually.
+
+** Continuous deployment pipeline
+
+#+BEGIN_SRC yaml
+version: v1.0
+name: Deploy to production
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Deploy to production
+    task:
+      secrets:
+        - name: now
+      jobs:
+      - name: Deploy to Zeit Now
+        commands:
+          - checkout
+          - nvm use
+          - npm install now -g
+          - now --token $ZEIT_TOKEN --local-config production.json
+#+END_SRC
+
+The deployment pipeline consists of one block:
+
+#+caption: CD Pipeline
+#+name: CD Pipeline
+[[https://github.com/semaphoreci-demos/semaphore-demo-zeit-now/blob/master/images/semaphore-zeit-now-cd-production.png][CD Pipeline]]
+
+*** Node.js
+
+Both [[https://docs.semaphoreci.com/article/32-ubuntu-1804-image#javascript-via-node-js][nvm]] and [[https://www.npmjs.com][npm]] are pre-installed on Semaphore's Ubuntu image.
+We can use the them to switch Node.js versions and install packages.
+
+*** Deployment
+    :LOGBOOK:
+    CLOCK: [2019-04-25 Thu 15:45]--[2019-04-25 Thu 15:54] =>  0:09
+    CLOCK: [2019-04-25 Thu 15:32]--[2019-04-25 Thu 15:35] =>  0:03
+    :END:
+
+[[https://zeit.co/][Zeit Now]] is a cloud service for serverless websites and web applications.
+Deployment is done with their [[https://zeit.co/docs/v2/getting-started/installation/#now-cli][command interface]] and a config file:
+
+#+BEGIN_SRC javascript
+{
+  "version": 2,
+  "name": "semaphore-demo",
+  "builds": [
+      { "src": "**/*.js", "use": "@now/node" }
+  ]
+}
+#+END_SRC
+
+Both staging and production pipelines are practically identical.
+They only differ on the app ~name~, which maps to the final URL:
+
+- Production: ~semaphore-demo.USERNAME.now.sh~
+- Staging: ~semaphore-demo-staging.USERNAME.now.sh~
+
+** Run the demo yourself
+
+You can get started right away with Semaphore.
+Running and deploying the demo by yourself takes only a few minutes:
+
+*** Get a Zeit token
+
+1. Create a [[https://zeit.co][Zeit]] account.
+2. Open your account *Settings*
+3. Go to the *Tokens* tab.
+4. Click on the *Create* button.
+5. Enter a name for the token, something descriptive like: semaphore-zeit-now
+
+#+caption: Create token
+#+name: Create token
+[[https://github.com/semaphoreci-demos/semaphore-demo-zeit-now/blob/master/images/zeit-create-token.png][Create Token]]
+
+@6. Copy the generated token and keep it safe.
+
+*** Create the pipeline on Semaphore
+
+# Before starting with the proper pipeline. S
+Now add the token to Semaphore:
+
+1. Create an account for [[https://semaphoreci.com][Semaphore]].
+2. On the left navigation bar, under *Configuration* click on *Secrets*.
+3. Hit the *Create New Secret* button.
+4. Create the secret as shown below. Copy the token obtained earlier.
+
+#+caption: Create secret
+#+name: Create secret
+[[https://github.com/semaphoreci-demos/semaphore-demo-zeit-now/blob/master/images/semaphore-create-secret.png][Create secret]]
+
+To run the project on Semaphore:
+
+1. Fork the [[https://github.com/semaphoreci-demos/semaphore-demo-zeit-now][Demo project]] on GitHub.
+2. Clone the repository on your local machine.
+3. In Semaphore, follow the link on the sidebar to create a new project.
+4. Edit any file and do a push to GitHub, Semaphore starts automatically.
+
+#+caption: CI+CD Pipelines
+#+name: CI+CD Pipelines
+[[https://github.com/semaphoreci-demos/semaphore-demo-zeit-now/blob/master/images/semaphore-zeit-now-ci-cd.png]]
+
+Once deployment is completed, check out the new API service:
+
+#+caption: API Service
+#+name: API Service
+[[https://github.com/semaphoreci-demos/semaphore-demo-zeit-now/blob/master/images/semaphore-demo-zeit-now-json.png]]
+
+** See also
+
+- [[https://docs.semaphoreci.com/category/56-guided-tour][Semaphore guided tour]]
+- [[https://docs.semaphoreci.com/article/50-pipeline-yaml][Pipelines reference]]
+- [[https://docs.semaphoreci.com/article/66-environment-variables-and-secrets][Environment variables and secrets]]
+- [[https://docs.semaphoreci.com/article/82-language-javascript-and-nodejs][JavaScript and Node.js]]

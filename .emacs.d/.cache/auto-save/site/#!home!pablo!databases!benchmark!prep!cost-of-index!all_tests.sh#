@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+outfile=all_tests_$(date +"%Y-%m-%d")
+
+(for i in `seq 0 8`; do 
+    . ./bulk_insert_2.sh
+done ) | tee -a $outfile
+
+# (for i in `seq 0 9`; do 
+#     . ./oltp_insert.sh
+# done ) | tee -a $outfile
+
+# (for i in `seq 0 9`; do 
+#     . ./general_test.sh oltp_read_only
+# done ) | tee -a $outfile
+
+# (for i in `seq 0 9`; do 
+#     . ./general_test.sh oltp_read_write
+# done ) | tee -a $outfile
+
+# (for i in `seq 0 9`; do 
+#     . ./general_test.sh oltp_write_only
+# done ) | tee -a $outfile
+
+# (for i in `seq 0 9`; do 
+#     . ./general_test.sh oltp_delete
+# done ) | tee -a $outfile

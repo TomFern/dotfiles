@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+# : ${BENCHMARK_DB:=$HOME/databases/benchmark}
+
+# latest version alias
+# LATEST=8.0
+# # default tag
+# TAG=5.7
+
+function usage () {
+    echo "Usage :  $0 ENGINE PRODUCT VERSION CONFIG -- [PARAMETERS]
+    Multi-engine container starter
+
+    Options:
+      -h help
+"
+}
+
+while getopts ":h" opt
+do
+    case $opt in
+        h) usage; exit 0;;
+        * )  echo -e "\n  Option does not exist : $OPTARG\n"
+             usage; exit 1   ;;
+    esac
+done
+shift $(($OPTIND-1))
+engine=$1
+shift
+product=$1
+shift
+version=$1
+shift
+config=$1
+shift
+OTHERARGS=$@
+
+set -o nounset
+
+cmd=
+case $engine in
+    docker|d)
+        if [ -z "$product" ] || [ -z "$version" ]; then
+            docker images
+        else 
+            cmd="docker pull $product:$version"
+        fi
+        ;;
+    lxc|l)
+        if [ -z "$product" ] || [ -z "$version" ]; then
+            sudo lxc-ls -f
+        else
+            cmd="systemd start lxc@${product}-${version}.service"
+        fi
+        ;;
+    nspawn|systemd-nspawn|s)
+        # ?
+        ;;
+    rocket|rkt|r)
+        # ?
+        ;;
+esac
+echo "$cmd"

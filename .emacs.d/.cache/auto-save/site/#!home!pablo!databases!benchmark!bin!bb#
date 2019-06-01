@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+: ${BENCHMARK_DB:=$HOME/databases/benchmark}
+BKP="$BENCHMARK_DB/backup"
+set -o nounset
+
+function usage () {
+    echo "Usage :  gobble-datum [FILES ...]
+    Load test results into benchmark db (test/prod)
+
+    Options:
+        -P             Load in production
+        -h|help        Display this message
+    "
+}
+
+ID=NULL
+OTHERARGS=
+PROD=
+while getopts ":Phv" opt
+do
+  case $opt in
+      P) PROD=1;; 
+      h|help     )  usage; exit 0   ;;
+      * )  echo -e "\n  Option does not exist : $OPTARG\n"
+          usage; exit 1   ;;
+  esac
+done
+shift $(($OPTIND-1))
+O

@@ -1,0 +1,147 @@
+#!/usr/bin/env bash
+# custom classifier tool - basic positive categories
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ZIP="$DIR/zip"
+TRAIN="$DIR/train"
+
+[[ -z "$CNFDIR" ]] && CNFDIR="$DIR/cnf"
+function usage () {
+    echo "Usage :  $0 COMMAND [OPTIONS]
+    Manage custom classifiers for Watson Visual Recognition
+
+    Commands:
+      clean     Delete training zips
+      list      List custom classifiers w/status
+      prepare   Prepare training zips (-c CLASSIFIER)
+      create    Create custom classifier (-c CLASSIFIER)
+      delete    Delete custom classifier (-i C_ID)
+      classify  Classify an image file (-f IMAGE)
+
+    Training examples files:
+      train/
+            CLASSIFIER/
+                      CATEG1/<IMAGES>
+                      CATEG2/<IMAGES>
+                      CATEGn/<IMAGES>
+                      negative/<IMAGES>
+
+    Examples:
+
+      Create custom classifier: dogs
+          classifier.sh prepare -c dogs
+          classifier.sh create -c dogs
+          classifier.sh list
+
+      Classify an image
+          classifier.sh classify -f goodboi.jpg
+
+
+    Options:
+        -h|help         Display this message
+        -c CLASSIFIER   Classifier name
+        -i C_ID         Classifier ID
+        -f IMAGE        Image to classify
+    "
+}
+
+set -o nounset
+COMMAND=$1
+shift
+while getopts ":c:i:f:hv" opt
+do
+    case $opt in
+        c)CLASSIFIER=$OPTARG;;
+        i)C_ID=$OPTARG;;
+        f)IMAGE=$OPTARG;;
+        h|help     )  usage; exit 0   ;;
+        * )  echo -e "\n  Option does not exist : $OPTARG\n"
+             usage; exit 1   ;;
+    esac
+done
+shift $(($OPTIND-1))
+OTHERARGS=$@
+
+
+# watson visual recognition
+
+VERSION=2018-03-19
+
+# instance qa
+# API_KEY=bZESNJdrx5QKrbWK7A9EYHbyFD2qQJNLYzAYcMIcBwix
+# API_KEY=-1SNpzuba21ebAc6bHDJwA59JmuvVWSPxMAUBhUq2Oif
+# API_URL="https://stgwat-us-south-mzr-cruiser6.us-south.containers.mybluemix.net/visual-recognition/api"
+
+# instance 8787
+# API_URL="https://gateway.watsonplatform.net/visual-recognition/api"
+# API_KEY="kkGd4wk7m3ptVuVWB3pUyeRo1eY10ZOkCJbdxWD5RYXC"
+
+case "$COMMAND" in
+    clean)
+        rm -rf "$ZIP"
+        ;;
+    list)
+        curl $OTHERARGS -X GET \
+             -u "apikey:$API_KEY" \
+             -H "Accept: application/json" \
+             "$API_URL/v3/classifiers?version=$VERSION"
+        ;;
+    prepare)
+        # (cd res/$CLASSIFIER/positive; zip ${CLASSIFIER}_positive_examples.zip *)
+        # mv res/$CLASSIFIER/positive/${CLASSIFIER}_positive_examples.zip .
+        # (cd res/$CLASSIFIER/negative; zip ${CLASSIFIER}_negative_examples.zip *)
+        # mv res/$CLASSIFIER/negative/${CLASSIFIER}_negative_examples.zip .
+
+        rm -rf "$ZIP/$CLASSIFIER"
+        mkdir -p "$ZIP/$CLASSIFIER"
+
+        (cd "$TRAIN/$CLASSIFIER";
+         for subdir in `find -type d`; do
+             if [ "$subdir" = "./negative" ]; then
+                 (cd "negative"; detox *;  zip "negative_examples.zip" *)
+                 mv "negative/negative_examples.zip" "$ZIP/$CLASSIFIER"
+             else
+                 (cd "$subdir"; detox *;  zip "${subdir}_positive_examples.zip" *)
+                 mv "$subdir/${subdir}_positive_examples.zip" "$ZIP/$CLASSIFIER"
+             fi
+        done
+        )
+        ;;
+    create)
+            # --form "negative_examples=@${CLASSIFIER}_negative_examples.zip" \
+            # --form "${CLASSIFIER}_positive_examples=@${CLASSIFIER}_positive_examples.zip" \
+            form=$(cd "$ZIP/$CLASSIFIER";
+             for f in *_positive_examples.zip; do
+                 category=$(echo "$f" | sed 's/.zip//')
+                 echo -n '--form '$category'=@'${ZIP}/${CLASSIFIER}/${f}' '
+             done
+             if [ -f negative_examples.zip ]; then
+                 echo -n '--form negative_examples=@'${ZIP}/${CLASSIFIER}/negative_examples.zip' '
+             fi
+            ) 
+            # echo $form
+            # exit 1
+            curl $OTHERARGS -X POST \
+             -u "apikey:$API_KEY" \
+             -H "Accept: application/json" \
+             --form "name=$CLASSIFIER" \
+             $form \
+             "$API_URL/v3/classifiers?version=$VERSION"
+        ;;
+    delete)
+        curl $OTHERARGS -X DELETE \
+           -u "apikey:$API_KEY" \
+           -H "Accept: application/json" \
+           "$API_URL/v3/classifiers/${C_ID}?version=$VERSION"
+          ;;
+    classify)
+        curl $OTHERARGS -X POST \
+             -u "apikey:$API_KEY" \
+             -H "Accept: application/json" \
+             --form "images_file=@${IMAGE}" \
+             --form "owners=IBM,me" \
+             "$API_URL/v3/classify?version=$VERSION"
+     # *) usage; exit 1;;
+        ;;
+    *) usage; exit 1;;
+esac

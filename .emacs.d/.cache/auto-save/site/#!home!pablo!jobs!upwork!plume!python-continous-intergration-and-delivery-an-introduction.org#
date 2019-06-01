@@ -1,0 +1,1378 @@
+* Python Continuous Integration and Delivery: An Introduction
+#+BEGIN: clocktable :scope subtree :maxlevel 2
+#+CAPTION: Clock summary at [2019-04-25 Thu 23:21]
+| Headline                              | Time    |      |
+|---------------------------------------+---------+------|
+| *Total time*                          | *18:50* |      |
+|---------------------------------------+---------+------|
+| Python Continuous Integration and...  | 18:50   |      |
+| \_  Fix pipeline browser failure      |         | 0:29 |
+| \_  Introduction                      |         | 0:52 |
+| \_  Demo application                  |         | 1:17 |
+| \_  Run the demo on your computer     |         | 0:12 |
+| \_  Deploy to PythonAnywhere          |         | 1:50 |
+| \_  Semaphore CI                      |         | 1:04 |
+| \_  Benefits of Continuous Deployment |         | 0:13 |
+| \_  Deployment with Semaphore         |         | 2:20 |
+| \_  Conclusion                        |         | 1:07 |
+#+END:
+
+  :LOGBOOK:
+  CLOCK: [2019-04-21 Sun 00:01]--[2019-04-21 Sun 01:01] =>  1:00
+  CLOCK: [2019-04-20 Sat 22:14]--[2019-04-20 Sat 23:14] =>  1:00
+  CLOCK: [2019-04-20 Sat 10:30]--[2019-04-20 Sat 11:04] =>  0:34
+  CLOCK: [2019-04-20 Sat 01:02]--[2019-04-20 Sat 01:17] =>  0:15
+  CLOCK: [2019-04-19 Fri 00:55]--[2019-04-19 Fri 01:15] =>  0:20
+  CLOCK: [2019-04-18 Thu 13:41]--[2019-04-18 Thu 14:25] =>  0:44
+  CLOCK: [2019-04-17 Wed 11:17]--[2019-04-17 Wed 11:50] =>  0:33
+  CLOCK: [2019-04-17 Wed 10:04]--[2019-04-17 Wed 10:43] =>  0:39
+  CLOCK: [2019-04-16 Tue 17:40]--[2019-04-16 Tue 18:50] =>  1:10
+  CLOCK: [2019-04-16 Tue 00:26]--[2019-04-16 Tue 01:15] =>  0:49
+  CLOCK: [2019-04-15 Mon 21:31]--[2019-04-15 Mon 22:44] =>  1:13
+  CLOCK: [2019-04-14 Sun 18:44]--[2019-04-14 Sun 19:07] =>  0:23
+  CLOCK: [2019-04-14 Sun 14:52]--[2019-04-14 Sun 15:38] =>  0:46
+  :END:
+** EXTRAS
+** Fix pipeline browser failure
+   :LOGBOOK:
+   CLOCK: [2019-04-24 Wed 12:00]--[2019-04-24 Wed 12:29] =>  0:29
+   :END:
+
+LISTENING on PORT 8000
+semapho+  1489     1  0 15:02 ?        00:00:00 ./agent serve --auth-token-secret 5dd479439a03716430b035046d97dff35a9e6c92ad0ffd7f5a15120a7f4e50d419af57393d0358a7f013a3977305ff9165a27a89a35fbce29a9f5629075012155fa36ab0ccad2ca52e4f41ebbf9a5390
+
+
+# IDEAS
+# generate API KEYS
+# test pa_django with environment variables and .env
+
+# This is a continuation from the docs update. The goal is to write a detailed
+# article similar to this one which is focused on CircleCI. Elaborate all aspects of
+# the example project, including Python/Django tools used, and then Semaphore concepts.
+
+# https://realpython.com/python-continuous-integration/
+
+# There should be a section in which we show how to do deployment with Semaphore
+# with a manual promotion to staging and automatic deployment to production on
+# master branch.
+
+# The example project as is doesn't contain deployment steps. I'll ask a developer
+# to extend with instructions on how to deploy to PythonAnywhere, as in this
+# tutorial. If you can handle this without much effort too, let me know as that'd
+# be easier.
+
+# Before diving deep into writing, please share an outline.
+
+# deployment tutorial
+# https://tutorial.djangogirls.org/en/deploy/
+# https://help.pythonanywhere.com/pages/DeployExistingDjangoProject/
+# https://help.pythonanywhere.com/pages/DeployExistingDjangoProject/
+# https://docs.semaphoreci.com/article/66-environment-variables-and-secrets
+# https://help.pythonanywhere.com/pages/environment-variables-for-web-apps/
+# https://docs.semaphoreci.com/article/100-heroku-deployment
+
+# NOTES
+# How far into the django code should we delve into?
+
+# PythonAnywhere production
+# git clone -b python-anywhere https://github.com/TomFern/semaphore-demo-python-django.git production
+# mkvirtualenv --python=/usr/bin/python3.7 production.tomfern.com
+# pip install -r requirements.txt
+# pip install -r python-dotenv
+# vi ~/.env-production
+# web stuff
+# web stuff
+
+# PythonAnywhere manual setup
+# https://help.pythonanywhere.com/pages/DeployExistingDjangoProject/
+# git clone https://github.com/TomFern/semaphore-demo-python-django.git
+# mkvirtualenv --python=/usr/bin/python3.7 mysite-virtualenv
+# cd semaphore-demo-python-django
+# pip install -r requirements.txt
+
+# create WSGI from Web Tab - manual configuration
+# On the virtualenv section type path
+# /home/tomfern/.virtualenvs/mysite-virtualenv
+# On the code section type path
+# /home/tomfern/semaphore-demo-python-django
+
+# automatic deployment
+# add python-dotenv to requirements
+# edit settings.py
+# create .env
+# edit PA WSGI.py
+
+# secrets
+# ssh-keygen
+# ssh-copy-id
+# sem create secret ssh-key --file ~/.ssh/id_rsa:/home/semaphore/.ssh/id_rsa_pythonanywhere
+  # sem create secret env-staging --file .env-staging:/home/semaphore/.env-staging
+  # sem create secret env-production --file .env-production:/home/semaphore/.env-production
+
+
+# EXAMPLE WSGI
+
+# # load environment
+# from dotenv import load_dotenv
+# env_file = os.path.expanduser('~/.env-production')
+# load_dotenv(env_file)
+
+# Database setup
+# create db pydjango from website
+
+# vi pydjango_ci_integration/settings.py
+
+# python manage.py migrate
+# python manage.py createsuperuser
+
+# Reload Web application and test it
+# http://tomfern.pythonanywhere.com/
+# http://tomfern.pythonanywhere.com/admin
+
+
+** Introduction
+   :LOGBOOK:
+   CLOCK: [2019-04-16 Tue 12:38]--[2019-04-16 Tue 13:30] =>  0:52
+   :END:
+
+In this article we're going learn how to build, test and deploy a
+Python website.
+By the end of the article you'll understand how to use a continuous integration
+and delivery platform, [[https://semaphoreci.com][Semaphore]], to automate the whole process.
+# We'll discuss all all the steps in detail.
+
+** Demo application
+
+In this section we will play with the demo application, a task manager.
+It's a simple website where we can create, edit and delete tasks.
+We'll also have a separate admin site to manage users and permissions.
+The website is built with Python and Django. The data will be stored on MySQL.
+
+# - Application framework: [[https://www.djangoproject.com/][Django]]
+[[https://www.djangoproject.com/][Django]] is web application framework based on the MVC (Model-View-Controller)
+pattern. As such, it keeps a strict separation between the data *model*, the
+rendering of *views*. The application login is managed by the *controller*.
+This approach encourages modularity and easier development.
+
+*** Prerequisites
+
+Before getting started you'll need the following:
+
+- [[https://git-scm.com/][Git]].
+- [[https://www.python.org/about/gettingstarted/][Python 3]].
+- Either a [[https://mariadb.org][MariaDB]] or a [[https://www.mysql.com][MySQL]] database.
+
+# pip
+# curl https://bootstrap.pypa.io/get-pip.py | python
+
+# Everything set up? Shall we get started? Good:
+
+# Shall we get started? Good:
+
+*** Get the code
+
+1. Create an account on [[https://github.com][GitHub]].
+2. Go to [[https://github.com/semaphoreci-demos/semaphore-demo-python-django][Semaphore Django demo]] and hit the *Fork* button on the top right.
+3. Click on the *Clone or download* button and copy the provided URL.
+4. Open a terminal on your computer and paste the URL:
+
+#+BEGIN_SRC sh
+$ git clone https://github.com/<the rest of the URL>
+#+END_SRC
+
+# Now we can get busy
+
+*** What do we have here?
+    :LOGBOOK:
+    CLOCK: [2019-04-19 Fri 10:17]--[2019-04-19 Fri 10:47] =>  0:30
+    :END:
+
+Exploring our new project we find:
+
+- ~README.md~: instructions for installing and running the app.
+- ~requirements.txt~: list of python packages required for the project.
+- ~tasks~: contains the main code for our app.
+- ~pydjango_ci_integration~:
+  - settings.py: main django config, includes db connection parameters.
+  - urls.py: url route config.
+  - wsgi.py: web server code.
+- ~.semaphore~: contains the continuous integration config.
+
+Examining the contents of ~requirements.txt~ reveals some interesting information:
+
+- ~nose~ and ~coverage~: unit tests
+
+Developers use unit tests to find errors.
+They validate code behavior by running small pieces of it and comparing the results.
+The [[https://nose.readthedocs.io/en/latest/][nose]] package runs the test cases. And [[https://coverage.readthedocs.io/en/v4.5.x/][coverage]] measures the effectiveness of the tests, it can figure out which parts
+are tested and which are not.
+
+- ~pylint~: static code analysis.
+
+[[https://www.pylint.org/][pylint]] scans the code for anomalies: bad coding practices, missing
+documentation, unused variables, among other dubious things.
+It adheres to the official Python [[https://www.python.org/dev/peps/pep-0008/][PEP8]] style guide.
+By following a guide, we get better code readability and easier collaboration in
+a development team.
+
+- ~selenium~: browser testing
+     :LOGBOOK:
+     CLOCK: [2019-04-19 Fri 20:49]--[2019-04-19 Fri 21:36] =>  0:47
+     :END:
+
+[[https://www.seleniumhq.org/][Selenium]] is a browser automation tool primarily used to test websites.
+Tests done on the browser can cover parts that otherwise can't be tested,
+such as javascript running on the client.
+
+** Run the demo on your computer
+
+To the see application in action, we still have some work ahead of us.
+
+*** Create a database
+    :LOGBOOK:
+    CLOCK: [2019-04-20 Sat 13:42]--[2019-04-20 Sat 13:54] =>  0:12
+    :END:
+
+Tasks are stored on a database called ~pydjango~:
+
+#+BEGIN_SRC sh
+$ mysql -u root -ANe"CREATE DATABASE pydjango;"
+#+END_SRC
+
+If you have set a password for root: add ~-p~ or ~--password=~ to the last command.
+
+*** Some assembly required
+
+We need to make some modifications to the project.
+Being a demo, all its settings such as the database user and password are
+hardcoded.
+This is not a big problem as long as we are running the app on our computer.
+However, when it's time to go online, we're going to need a more practical and secure way to handle settings.
+# We can get this with environment variables.
+
+Edit the settings file: ~pydjango_ci_settings/settings.py~.
+First locate the section near the top that deals with the ~SECRET_KEY~. Replace
+the line:
+
+#+BEGIN_SRC python
+SECRET_KEY = 'g!^gs#bib&6sn5ow5i&ho0bj4dlz(y%v9!h-fnmh#6h=u_&ip='
+#+END_SRC
+
+With this:
+
+#+BEGIN_SRC python
+SECRET_KEY = os.getenv('SECRET_KEY','g!^gs#bib&6sn5ow5i&ho0bj4dlz(y%v9!h-fnmh#6h=u_&ip=')
+#+END_SRC
+
+Next, locate the section that handles database parameters and replace the whole block:
+
+#+BEGIN_SRC python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'pydjango',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }
+}
+#+END_SRC
+
+With this:
+
+#+BEGIN_SRC python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DB_NAME','pydjango'),
+        'USER': os.getenv('DB_USER','root'),
+        'PASSWORD': os.getenv('DB_PASSWORD',''),
+        'HOST': os.getenv('DB_HOST','127.0.0.1'),
+        'PORT': os.getenv('DB_PORT','3306')
+    }
+}
+#+END_SRC
+
+# ~os.getenv~ retrieves the environment variable and  and, if not found, it uses a default value.
+# Basically, we are adding ~os.getenv~, which tries to access the environment variable and, if not
+# found, uses a default value.
+# In this fashion, we can set environment variables as needed.
+
+Lastly, we should add a another package to ~requirements.txt~. We'll be using
+the ~dotenv~ module to read environment files.
+
+#+BEGIN_SRC sh
+$ echo "python-dotenv" >> requirements.txt
+#+END_SRC
+
+Make these changes stick by doing a push into our repository:
+
+#+BEGIN_SRC sh
+$ git add requirements.txt
+$ git add pydjango_ci_integration/settings.py
+$ git commit -m "Added environment variable support"
+$ git push origin master
+#+END_SRC
+
+*** Create a virtualenv and install dependencies
+
+# The application needs the packages listed on ~requirements.txt~.
+# One option is to install them as global packages on our computer.
+# The problem with this approach is that should we have other python projects working on,
+# we are likely to have version conflicts.
+
+A virtualenv is a special directory for Python that will contain the requirements.
+Create a virtualenv and activate it:
+# We're going to download and install the python packages in a special directory
+
+# The best approach is to create an special directory, a virtualenv, that contains links to python and a copy of all the packages.
+# So projects can have different versions of packages without conflict.
+
+#+BEGIN_SRC sh
+$ python -m venv virtualenv
+$ source ./virtualenv/bin/activate
+#+END_SRC
+
+# Once activated, Python will run from the virtualenv and, more inportantly,
+# packages athe
+# packages
+# will be installed in it, instead of as global packages.
+# From this point on, w
+# all packages for this session will be installed in the ~virtualenv~ directory.
+
+# Should we want to leave the virtualenv:
+
+# #+BEGIN_SRC sh
+# $ deactivate
+# #+END_SRC
+
+# With a virtualenv, installing dependencies is quick and painless:
+Install the packages as usual:
+
+#+BEGIN_SRC sh
+$ pip install -r requirements.txt
+#+END_SRC
+
+Django should now be installed.
+
+*** Django setup
+
+Our ~pydjango~ database is empty. Django will take care of that:
+
+#+BEGIN_SRC sh
+$ python manage.py migrate
+#+END_SRC
+
+~manage.py~ is Django's main administration script. ~migrate~ creates and updates all db entities automatically.
+Thus, each time we modify our data model, we need to repeat the migration.
+
+We should also create an administration user. It will allow us to manage users and permissions:
+
+#+BEGIN_SRC sh
+$ python manage.py createsuperuser
+#+END_SRC
+
+*** Fire it up
+
+We're all set. Start the application. With Python and Django we don't need a web server such as Apache or ngnix.
+
+#+BEGIN_SRC sh
+$ python manage.py runserver
+#+END_SRC
+
+Open a browser and contemplate your shiny new website in all its glory.
+The main site is found at [[http://127.0.0.1:8000][http://127.0.0.1:8000]].
+The admin backoffice should be located at [[http://127.0.0.1:8000/admin]].
+
+[[./public/semaphore_demo_python_django_initial.png]]
+
+** Deploy to PythonAnywhere
+
+# Playing with the application on your computer is nice and well. But
+
+Websites are meant to run on the internet. In this section we'll see
+how we can publish our app for the world to enjoy.
+PythonAnywhere is a hosting provider that, as the name suggests, specializes in Python.
+In this section, we'll learn how to use it.
+# We can host our project
+# lets us run any Python application, and the best of it all is that
+# we can get started for free.
+
+*** Sign up with PythonAnywhere
+    :LOGBOOK:
+    CLOCK: [2019-04-20 Sat 11:40]--[2019-04-20 Sat 12:55] =>  1:15
+    :END:
+
+Head to [[https://pythonanywhere.com][PythonAnywhere]] and create an account. The free tier allows one web
+application and MySQL databases, plenty for our immediate needs.
+# More advanced techniques discussed later will require a paid account, though.
+
+# The default website is ~USERNAME.pythonanywhere.com~, to pick a nice username when signing up.
+
+# For now a free account is enough. However, some more advanced techniques discussed below will
+# required a paid account.
+
+*** Create database
+     :LOGBOOK:
+     CLOCK: [2019-04-18 Thu 14:41]--[2019-04-18 Thu 15:05] =>  0:24
+     :END:
+
+Go to *Databases*
+
+[[./public/pa_databases.png]]
+
+Set up a database password. Avoid using the same password as the login:
+
+[[./public/pa_init_mysql.png]]
+
+Take note of the database host address.
+
+Create a database called ~pydjango_production~
+
+# We'll need, at most, two databases, one for production and one for staging.
+# Right now we are taking care of production. Staging will We'll talk about staging later.
+
+# - ~pydjango_production~
+# - ~pydjango_staging~
+
+[[./public/pa_create_db.png]]
+
+You'll notice your username has been automatically prefixed to the database,
+that's just how PythonAnywhere does things.
+
+[[./public/pa_databases_list.png]]
+
+*** Create an API Token
+
+An API Token is required for the next automation step.
+To request one:
+# In order to create the website from the PythonAnywhere machine, we need to
+# request a token. This is easily done and we only have to do it one time:
+
+1. Go to *Account*
+2. Click *API Token* tab.
+3. Hit the *Create* button.
+4. Take note of the API Token shown.
+
+*** Create the website
+
+Go to *Dashboard* and click the *Bash* button under New console:
+
+[[./public/pa_new_console.png]]
+
+# We'll work on the opened console.
+
+Create a file called ~.env-production~:
+
+#+BEGIN_SRC sh
+# ~/.env-production
+
+# This value is found on PythonAnywhere Accounts->API Token.
+export API_TOKEN=<PYTHON_ANYWHERE_API_TOKEN>
+
+# Django Secret Key - Use a long random string for security.
+export SECRET_KEY=<DJANGO_SECRET_KEY>
+
+# These values can be located on PythonAnywhere Databases tab.
+export DB_HOST=<DATABASE_HOST_ADDRESS>
+export DB_USER=<USERNAME>
+export DB_PASSWORD=<DATABASE_PASSWORD>
+# The name of the DB is prefixed with USERNAME$
+export DB_NAME='<USERNAME>$pydjango_production'
+export DB_PORT=3306
+#+END_SRC
+
+Source the environment variables to make them available in your session:
+
+#+BEGIN_SRC sh
+$ . ~/.env-production
+#+END_SRC
+
+Now we're ready to create the website. Luckily for us, there is an official helper script.
+If you own a domain and wish to use it for your site, use the following command:
+
+#+BEGIN_SRC sh
+$ pa_autoconfigure_django.py --python=3.7 --domain=<YOUR_WEBSITE_ADDRESS> <GITHUB_REPOSITORY_URL>
+#+END_SRC
+
+# #+BEGIN_SRC sh
+# $ pa_autoconfigure_django.py --python=3.7 --domain=tasks.myawesomedomain.com https://github.com/....
+# #+END_SRC
+
+If you don't have a domain, just skip the ~--domain~ option to use the default:
+ ~USERNAME.pythonanywhere.com~.
+
+#+BEGIN_SRC sh
+$ pa_autoconfigure_django.py --python=3.7 <GITHUB_REPOSITORY_URL>
+#+END_SRC
+
+*** Create a CNAME
+
+This step is only required if you're using your own domain.
+Go to *Web*, copy the value under *DNS Setup*.
+
+[[./public/pa_web_cname.png]]
+
+Now, head to your domain's DNS Provider to create a CNAME record pointing that address.
+
+*** Edit WSGI
+    :LOGBOOK:
+    CLOCK: [2019-04-20 Sat 14:03]--[2019-04-20 Sat 14:14] =>  0:11
+    :END:
+
+WSGI is Python's web server. We need to modify it to make the environment variables
+available inside the application.
+
+Go to *Web* and open the *WSGI configuration file* link.
+
+[[./public/pa_wsgi_link.png]]
+
+We need three lines added near the end of the file:
+
+#+BEGIN_SRC python
+# This file contains the WSGI configuration required to serve up your
+# Django app
+import os
+import sys
+
+# Add your project directory to the sys.path
+settings_path = '/home/tomfern/staging.tomfern.com'
+sys.path.insert(0, settings_path)
+
+# Set environment variable to tell django where your settings.py is
+os.environ['DJANGO_SETTINGS_MODULE'] = 'pydjango_ci_integration.settings'
+
+# -------> ADD THESE NEXT THREE LINES <-------
+from dotenv import load_dotenv
+env_file = os.path.expanduser('~/.env-production)
+load_dotenv(env_file)
+# --------------------------------------------
+
+# Set the 'application' variable to the Django wsgi app
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+#+END_SRC
+
+*** Go Live!
+
+Time for all the hard work to pay off.
+Go back to *Web* and click on the *Reload* button.
+Welcome to your new website.
+
+** The importance of Continuous Integration
+
+# Hopefully, so far everything has run smooothly.
+# We used a demo project that we know works well and has been tested.
+# Would it be that the life of a software developer is always so easy.
+
+# Once we start working on improving the project,
+# we need a way to ensure the new features work
+# and, at the same time, that we're not breaking anything.
+
+# For this we need to establish methods of reliable and frequent testing.
+# There are multiple approachs to testing, the best teams include many in their projects:
+
+# [ examine contents of requirements.txt here ? ]
+# An interesting exercise is to examine the contents of ~requirements.txt~
+
+# - Unit testing
+# - Static code
+# - Browser
+# - Security
+
+Testing is part of the everyday life of a developer, that's just how it is. When done
+badly, it is tedious, ineffective and counter-productive.
+But proper testing brings a ton of benefits: stability, quality, fewer conflicts, less
+errors and confidence on the correctness of the code.
+
+
+# We'll find errors earlier, spend
+# more time buildings stuff instead of fixing it and have a higher confidence in
+# the correctness of our code.
+
+Continuous integration (CI) is a programming discipline in which the application is
+built and tested each time code is modified. By making multiple small changes
+instead of a big one, problems are detected earlier and corrected faster.
+Such a paradigm, clearly, calls for an automated system to carry out all the
+steps. In such systems, code travels over a path, a pipeline, and it must pass an ever growing number of tests.
+
+# But CI is more than testing and automation. CI calls for a different programming
+# mindset and culture.
+
+# - Early detection of errors
+# - D
+
+# It not only about testing or benefits, it's also about programming culture and discipline
+
+# Doing all these tests as frequently as possible help detect errors quickly.
+# Ideally, each time new code is pushed into the repository.
+# However, testing is both tedious and error-prone. It would be a waste of valuable time
+# manually testing everything all the time.
+
+# Continuous Integration is a software development practice that enables us to
+# automatically build and test our code.
+# Instead of making big changes and then spending hours fixing errors and conflicts.
+# We make small incremental changes and repeat all the tests.
+# This gives us many benefits:
+
+# - Detect and fix errors early.
+# - Reduce conflicts, avoid integration hell.
+# - Reduce time for releasing new versions
+# - Improve quality and stability
+
+In the past, developers had to buy servers and manage infrastructure in order to do CI,
+which obviously increased costs beyond the reach of small teams.
+Fortunately, in this cloud enabled world, everyone can enjoy the benefits of CI.
+# We'll see how we can use [[https://semaphoreci.com][Semaphore]] to add value to our project.
+
+** Semaphore CI
+    :LOGBOOK:
+    CLOCK: [2019-04-16 Tue 15:52]--[2019-04-16 Tue 16:23] =>  0:31
+    :END:
+
+[[https://semaphoreci.com][Semaphore]] adds value to our project sans the hassle of managing a CI infrastructure.
+# Semaphore is a complete solution.
+# Semaphore can automatically connect to your repos, get the code, run the tests
+# and any other tasks and deploy the application.
+
+# We can create simple or complex setups to meet the needs of our project
+# the source code to an actual living application.
+
+The demo project already includes a Semaphore config.
+So we can get started in a couple of minutes:
+
+*** Sign up with Semaphore
+
+Go to [[https://semaphoreci.com][Semaphore]] and click on the *Sign up with GitHub* button.
+
+*** Connect your repository
+
+Under Projects, click on *New*. You'll see a list of your repositories:
+
+[[./public/semaphore_add_repository.png]]
+
+Click on the *Add repository* button.
+
+*** Push to GitHub
+
+To start the pipeline, edit or create any file and push to GitHub:
+
+#+BEGIN_SRC sh
+$ touch test_pipeline.md
+$ git add test_pipeline.md
+$ git commit -m "added semaphore"
+$ git push origin master
+#+END_SRC
+
+That's it! Go back to your Semaphore dashboard and there's the pipeline:
+
+[[./public/semaphore-demo-python-django-pipeline.png]]
+
+*** The Continuous Integration Pipeline
+    :LOGBOOK:
+    CLOCK: [2019-04-19 Fri 00:20]--[2019-04-19 Fri 00:45] =>  0:25
+    CLOCK: [2019-04-18 Thu 23:46]--[2019-04-18 Thu 23:54] =>  0:08
+    :END:
+
+This is a good chance to review the config.
+Take a look at the ~.semaphore/semaphore.yml~ file:
+
+#+BEGIN_SRC yaml
+# .semaphore/semaphore.yml
+
+# Use the latest stable version of Semaphore 2.0 YML syntax:
+version: v1.0
+
+# Name your pipeline. In case you connect multiple pipelines with promotions,
+# the name will help you differentiate between, for example, a CI build phase
+# and delivery phases.
+name: Semaphore Python / Django Example Pipeline
+
+# An agent defines the environment in which your code runs.
+# It is a combination of one of available machine types and operating
+# system images.
+# See https://docs.semaphoreci.com/article/20-machine-types
+# and https://docs.semaphoreci.com/article/32-ubuntu-1804-image
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+# Blocks are the heart of a pipeline and are executed sequentially.
+# Each block has a task that defines one or more jobs. Jobs define the
+# commands to execute.
+# See https://docs.semaphoreci.com/article/62-concepts
+blocks:
+  - name: "install dependencies"
+    task:
+      prologue:
+        commands:
+          - sem-version python 3.7
+          - sudo apt-get update && sudo apt-get install -y python3-dev && sudo apt-get install default-libmysqlclient-dev
+      jobs:
+        - name: pip
+          commands:
+            - checkout
+            - cache restore requirements-$semaphore_git_branch-$(checksum requirements.txt),requirements-$semaphore_git_branch-,requirements-master-
+            - pip download --cache-dir .pip_cache -r requirements.txt
+            - cache store requirements-$semaphore_git_branch-$(checksum requirements.txt) .pip_cache
+
+  - name: "Run Code Analysis"
+    task:
+      prologue:
+        commands:
+          - sem-version python 3.7
+          - checkout
+          - cache restore requirements-$SEMAPHORE_GIT_BRANCH-$(checksum requirements.txt)
+          - pip install -r requirements.txt --cache-dir .pip_cache
+      jobs:
+        - name: Pylint
+          commands:
+            # list out files that are in directory and working tree
+            # grep -v will exclude the files being considered for pylint
+            # grep -E will matches files having .py extension
+            # This command will help to pass required python files to pylint along with pylint_djanog plugin
+            # Pylint with -E option will display only if there is any error
+            - git ls-files | grep -v 'migrations' | grep -v 'settings.py' | grep -v 'manage.py' | grep -E '.py$' |
+              xargs pylint -E --load-plugins=pylint_django
+
+  - name: "Run Unit Tests"
+    task:
+      prologue:
+        commands:
+          - sem-version python 3.7
+          - sem-service start mysql
+          - checkout
+          - cache restore requirements-$SEMAPHORE_GIT_BRANCH-$(checksum requirements.txt)
+          - pip install -r requirements.txt --cache-dir .pip_cache
+      jobs:
+        - name: Model Test
+          commands:
+            - python manage.py test tasks.tests.test_models
+        - name: View Test
+          commands:
+            - python manage.py test tasks.tests.test_views
+
+  - name: "Run Browser Tests"
+    task:
+      env_vars:
+        - name: DB_NAME
+          value: 'pydjango'
+      prologue:
+        commands:
+          - sem-version python 3.7
+          - sem-service start mysql
+          - sudo apt-get install -y -qq mysql-client
+          - mysql --host=0.0.0.0 -uroot -e "create database $DB_NAME"
+          - checkout
+          - cache restore requirements-$SEMAPHORE_GIT_BRANCH-$(checksum requirements.txt)
+          - pip install -r requirements.txt --cache-dir .pip_cache
+          - nohup python manage.py runserver &
+      jobs:
+        - name: Browser Test
+          commands:
+            - python manage.py test tasks.tests.test_browser
+
+  - name: "Run Security Tests"
+    task:
+      jobs:
+        - name: Deployment Checklist
+          commands:
+           - checkout
+           - sem-version python 3.7
+           - cache restore requirements-$SEMAPHORE_GIT_BRANCH-$(checksum requirements.txt)
+           - pip install -r requirements.txt --cache-dir .pip_cache
+           - python manage.py check --deploy --fail-level ERROR
+#+END_SRC
+
+A lot to unpack here. I'll go step by step. It starts with the config ~version~ and a ~name~.
+
+#+BEGIN_SRC yaml
+version: v1.0
+name: Semaphore Python / Django Example Pipeline
+#+END_SRC
+
+The pipeline runs on a ~agent~, which basically is a [[https://docs.semaphoreci.com/article/20-machine-types][virtual machine]] paired with
+an operating system.
+The machine is automatically managed by Semaphore.
+We're using *e1-standard-2* machine (2 vCPUs, 4GB, 25GB disk) with an [[https://docs.semaphoreci.com/article/32-ubuntu-1804-image][Ubuntu 18.04 LTS]] image.
+
+#+BEGIN_SRC yaml
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+#+END_SRC
+
+~Blocks~ define the pipeline steps. Each block has a ~task~, and each a task contains one or more ~jobs~. All jobs within a
+block run concurrently. Blocks, on the other hand, run sequentially. Once all
+jobs on a block are completed, the next block starts.
+
+The first block installs Linux and Python packages.
+
+#+BEGIN_SRC yaml
+blocks:
+  - name: "Install Dependencies"
+    task:
+      prologue:
+        commands:
+          - sem-version python 3.7
+          - sudo apt-get update && sudo apt-get install -y python3-dev && sudo apt-get install default-libmysqlclient-dev
+      jobs:
+        - name: pip
+          commands:
+            - checkout
+            - cache restore requirements-$SEMAPHORE_GIT_BRANCH-$(checksum requirements.txt),requirements-$SEMAPHORE_GIT_BRANCH-,requirements-master-
+            - pip download --cache-dir .pip_cache -r requirements.txt
+            - cache store requirements-$SEMAPHORE_GIT_BRANCH-$(checksum requirements.txt) .pip_cache
+#+END_SRC
+
+Commands in use:
+
+- The ~prologue~ is executed before each job.
+- [[https://docs.semaphoreci.com/article/54-toolbox-reference#sem-version][sem-version]] is used to set the active python version.
+- [[https://docs.semaphoreci.com/article/54-toolbox-reference#checkout][checkout]] clones the code from GitHub.
+- [[https://docs.semaphoreci.com/article/54-toolbox-reference#cache][cache]] is used to store and retrieve files between jobs, here it's used for the
+  python packages.
+
+          # See https://docs.semaphoreci.com/article/32-ubuntu-1804-image#databases-and-services
+          # Also https://docs.semaphoreci.com/article/54-toolbox-reference#sem-service
+The "Run Code Analysis" block uses ~pylint~ to review the code. Each job runs on
+a clean environment, so we need to retrieve the code and packages each time.
+
+#+BEGIN_SRC yaml
+  - name: "Run Code Analysis"
+    task:
+      prologue:
+        commands:
+          - sem-version python 3.7
+          - checkout
+          - cache restore requirements-$SEMAPHORE_GIT_BRANCH-$(checksum requirements.txt)
+          - pip install -r requirements.txt --cache-dir .pip_cache
+      jobs:
+        - name: Pylint
+          commands:
+            - git ls-files | grep -v 'migrations' | grep -v 'settings.py' | grep -v 'manage.py' | grep -E '.py$' |
+              xargs pylint -E --load-plugins=pylint_django
+#+END_SRC
+
+The next block runs the Django models and views unit tests. The tests run in parallel,
+each with its own separate MySQL database, started with [[https://docs.semaphoreci.com/article/54-toolbox-reference#sem-service][sem-service]].
+
+#+BEGIN_SRC yaml
+  - name: "Run Unit Tests"
+    task:
+      prologue:
+        commands:
+          - sem-version python 3.7
+          - sem-service start mysql
+          - checkout
+          - cache restore requirements-$SEMAPHORE_GIT_BRANCH-$(checksum requirements.txt)
+          - pip install -r requirements.txt --cache-dir .pip_cache
+      jobs:
+        - name: Model Test
+          commands:
+            - python manage.py test tasks.tests.test_models
+        - name: View Test
+          commands:
+            - python manage.py test tasks.tests.test_views
+#+END_SRC
+
+In order to run browser tests, the application and a database need to be
+started. The ~prologue~ takes care of this. Once started, a selenium test is
+executed on a Google Chrome instance.
+
+#+BEGIN_SRC yaml
+  - name: "Run Browser Tests"
+    task:
+      env_vars:
+        - name: DB_NAME
+          value: 'pydjango'
+      prologue:
+        commands:
+          - sem-version python 3.7
+          - sem-service start mysql
+          - sudo apt-get install -y -qq mysql-client
+          - mysql --host=0.0.0.0 -uroot -e "create database $DB_NAME"
+          - checkout
+          - cache restore requirements-$SEMAPHORE_GIT_BRANCH-$(checksum requirements.txt)
+          - pip install -r requirements.txt --cache-dir .pip_cache
+          - nohup python manage.py runserver &
+      jobs:
+        - name: Browser Test
+          commands:
+            - python manage.py test tasks.tests.test_browser
+#+END_SRC
+
+The last block does the security checklist. It will tell us if the app is ready for deployment.
+
+#+BEGIN_SRC yaml
+  - name: "Run Security Tests"
+    task:
+      jobs:
+        - name: Deployment Checklist
+          commands:
+           - checkout
+           - sem-version python 3.7
+           - cache restore requirements-$SEMAPHORE_GIT_BRANCH-$(checksum requirements.txt)
+           - pip install -r requirements.txt --cache-dir .pip_cache
+           - python manage.py check --deploy --fail-level ERROR
+#+END_SRC
+
+** Benefits of Continuous Deployment
+   :LOGBOOK:
+   CLOCK: [2019-04-20 Sat 01:00]--[2019-04-20 Sat 01:13] =>  0:13
+   :END:
+
+
+Deployment is a complex process with a lot of moving parts.
+It would be a shame if, after painstainkinly writing tests for everything, the
+application crashes due to a faulty deployment.
+
+Continuous Deployment (CD) is an extension of the CI concept, in fact, most
+integration tools don't make a great distinction between CI and CD.
+A CD pipeline performs all the deployment
+steps as a repeatable, battle-hardened process.
+
+Even the best test in the world can't catch all errors. Moreover, there are some problems that may
+only be found when the app is live. Think, for example, a website that
+perfectly passes all tests but crashes on production because the hosting
+provider has the wrong database version.
+
+To avoid this kind of problems, it is a good strategy to have at least two copies
+of the app: *production* for our users and *staging* as guinea pig for developers.
+ # to check everything is working.
+Staging and production ought to be identical, this includes all the infrastructure,
+operating system, database and packages versions.
+
+# For our project, staging will automatically run each time the code passes all
+#  the tests. For production we'll choose when to deploy.
+
+
+# So far we managed to setup a pipeline to automatically test the project.
+# Continuous Deployment extends this process to automatically publish the
+# application to internet.
+
+# Think how far we've gone. We've started with nothing and now we have a published application
+# and CI system to test.
+# We can get started on improving our application.
+
+# However there is still room for improvement. Once we have a new version and we're confident is ready to the published
+# we would need to manually upload the code to PythonAnywhere.
+
+# As CI enables us to make more frequent updates, manually uploading the new versions will turn a hassle.
+
+# What can we do? The answer is the same as before: automatize.
+# Continous Deployment is the practice of frequently releasing new versions.
+# We can extend the CI concept with CD.
+
+** Deployment with Semaphore
+   :LOGBOOK:
+   CLOCK: [2019-04-18 Thu 15:24]--[2019-04-18 Thu 15:55] =>  0:31
+   :END:
+
+We're going to write two new pipelines:
+
+- Production: deploys manually at our convenience.
+- Staging: deploys to the staging site every time all the test pass.
+
+Pipelines are connected with [[https://docs.semaphoreci.com/article/67-deploying-with-promotions][promotions]]. Both deployments will branch out of the CI pipeline.
+Promotions can be started manually or triggered automatically by user-defined conditions.
+We can create complex setups by chaining pipelines.
+# We'll connect the main pipeline to the staging and production.
+# A promotion points to the next pipeline to be triggered. A pipeline can have many child
+# promotions, chained or in parallel.
+
+*** SSH Access
+
+From here on, we need a paid account on PythonAnywhere, no way around it.
+We need direct ssh access. If you are subscribing, consider buying two websites,
+the second is going to be staging.
+# The fist paid tier is enough for this next section, altough if
+# possible, we should subscribe to 2 websites second website will be used for staging.
+
+# Until now we have made use of the console-based browser. For automated
+# deployments we need direct ssh access.
+
+If you don't have a ssh key already on your machine, generating a new one is just
+a matter of seconds. Just leave blank the passphrase when asked:
+
+#+BEGIN_SRC sh
+$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/tom/.ssh/id_rsa):
+Created directory '/home/tom/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/tom/.ssh/id_rsa.
+Your public key has been saved in /home/tom/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:c1zTZkOtF79WD+2Vrs5RiU4oWNImt96JkQWGiHAnA38 tom@ix
+The key's randomart image is:
++---[RSA 2048]----+
+| oo+... .o    .. |
+|  o.+. .o .  o ..|
+|   . E o = .o =o+|
+|    .   B.+..++oB|
+|       .S=o. o.*=|
+|        .o= + .+o|
+|         o o oo  |
+|            ...  |
+|            .o   |
++----[SHA256]-----+
+#+END_SRC
+
+# To copy the key to the server
+Now we just need to let the server know about our key.
+Use your PythonAnywhere username and password:
+
+#+BEGIN_SRC sh
+$ ssh-copy-id <USERNAME>@ssh.pythonanywhere.com
+#+END_SRC
+
+Try logging in now, no password should be required:
+
+#+BEGIN_SRC sh
+$ ssh <USERNAME>@ssh.pythonanywhere.com
+<<<<<<:>~ PythonAnywhere SSH. Help @ https://help.pythonanywhere.com/pages/SSHAccess
+#+END_SRC
+
+*** Secrets
+
+The deployment process needs some secret data, for example the ssh key to
+connect to PythonAnywhere server. The environment file also has sensitive
+information, so we need to protect it.
+
+Semaphore provides a secure mechanism to store sensitive information.
+We can easily create secrets from Semaphore's dashboard. Go to *Secrets* under
+*Configuration* and use the *Create New Secret* button.
+
+[[./public/semaphore_new_secret.png]]
+
+Add the ssh key, upload your ~.ssh/id_rsa~ key to Semaphore.
+
+[[./public/semaphore_ssh_key.png]]
+
+Now we need a copy of the environment file. It's the same file created when
+we were publishing the website:
+
+#+BEGIN_SRC sh
+# ~/.env-production
+
+# This value is found on PythonAnywhere Accounts->API Token.
+export API_TOKEN=<PYTHON_ANYWHERE_API_TOKEN>
+
+# Django Secret Key - Use a long random string for security.
+export SECRET_KEY=<DJANGO_SECRET_KEY>
+
+# These values can be located on PythonAnywhere Databases tab.
+export DB_HOST=<DATABASE_HOST_ADDRESS>
+export DB_USER=<USERNAME>
+export DB_PASSWORD=<DATABASE_PASSWORD>
+# The name of the DB is prefixed with USERNAME$
+export DB_NAME='<USERNAME>$pydjango_production'
+export DB_PORT=3306
+#+END_SRC
+
+Upload the production environment file:
+
+[[./public/semaphore_env_prod.png]]
+
+*** Production Pipeline
+    :LOGBOOK:
+    CLOCK: [2019-04-18 Thu 16:13]--[2019-04-18 Thu 16:38] =>  0:25
+    CLOCK: [2019-04-16 Tue 12:04]--[2019-04-16 Tue 12:34] =>  0:30
+    CLOCK: [2019-04-14 Sun 19:40]--[2019-04-14 Sun 20:34] =>  0:54
+    :END:
+
+To deploy the website, create a new pipeline file called
+~.semaphore/deploy-production.yml~.
+
+#+BEGIN_SRC yaml
+# .semaphore/deploy-production.yml
+
+version: v1.0
+name: Deploy Django to PythonAnywhere
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: "Deploy production"
+    task:
+      # make secrets accessible for this job
+      secrets:
+        - name: env-production
+        - name: ssh-key
+      env_vars:
+        # Your PythonAnywhere username
+        - name: SSH_USER
+          value: <USERNAME>
+        # host for ssh connection
+        - name: SSH_HOST
+          value: ssh.pythonanywhere.com
+        # Your website URL without HTTP or HTTPS
+        - name: APP_URL
+          value: <PRODUCTION_APP_URL>
+      jobs:
+        - name: Push code to production
+          commands:
+            - checkout
+            # prepare deploy script, subtitute environment variables
+            - envsubst < deploy.sh > ~/deploy-production.sh
+            # ensure correct permissions for ssh key
+            - chmod 0600 ~/.ssh/id_rsa_pythonanywhere
+            # add remote host to know_hosts
+            - ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+            # ensure ssh will use the key
+            - ssh-add ~/.ssh/id_rsa_pythonanywhere
+            # copy environment file to remote machine
+            - scp ~/.env-production $SSH_USER@$SSH_HOST:~/.env-production
+            # copy deploy script to remote machine
+            - scp ~/deploy-production.sh $SSH_USER@$SSH_HOST:~/deploy-production.sh
+            # execute deploy script remotely
+            - ssh $SSH_USER@$SSH_HOST sh deploy-production.sh
+#+END_SRC
+
+The pipeline has only one block: "Deploy production".
+It begins by invoking the secrets we just created: the environment and the ssh key:
+
+#+BEGIN_SRC yaml
+# make secrets accessible for this job
+secrets:
+  - name: env-production
+  - name: ssh-key
+#+END_SRC
+
+Some environment variables are declared:
+
+#+BEGIN_SRC yaml
+env_vars:
+  # user for ssh connection
+  - name: SSH_USER
+    value: tomfern
+  # host for ssh connection
+  - name: SSH_HOST
+    value: ssh.pythonanywhere.com
+  # application url without HTTP or HTTPS
+  - name: APP_URL
+    value: production.tomfern.com
+#+END_SRC
+
+Finally, we're going to write a helper script: ~deploy.sh~ to run commands on PythonAnywhere server.
+~envsubst~ reads the script and replaces all the environment variables with its values.
+Thus, the script itself is kept secret-free and we can check it in source control:
+
+#+BEGIN_SRC yaml
+- checkout
+# prepare deploy script, subtitute environment variables
+- envsubst < deploy.sh > ~/deploy-production.sh
+#+END_SRC
+
+Here we manage the ssh stuff: set key permissions and prevent confirmation
+message from the ssh client:
+# Here we set the permissions for the key and ensure it will be used to connect.
+# ~ssh-keyscan~ is used to prevent a confirmation message from ssh:
+
+#+BEGIN_SRC yaml
+# ensure correct permissions for ssh key
+- chmod 0600 ~/.ssh/id_rsa_pythonanywhere
+# add remote host to know_hosts
+- ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+# ensure ssh will use the key
+- ssh-add ~/.ssh/id_rsa_pythonanywhere
+#+END_SRC
+
+Now copy the environment file to the remote server with ~scp~.
+#  Notice it's using
+# environment variables defined earlier:
+
+#+BEGIN_SRC yaml
+# copy environment file to remote machine
+- scp ~/.env-production $SSH_USER@$SSH_HOST:~/.env-production
+# copy deploy script to remote machine
+- scp ~/deploy-production.sh $SSH_USER@$SSH_HOST:~/deploy-production.sh
+#+END_SRC
+
+The last command executes the deploy script on the remote machine:
+
+#+BEGIN_SRC yaml
+# execute deploy script remotely
+- ssh $SSH_USER@$SSH_HOST sh deploy-production.sh
+#+END_SRC
+
+I mentioned ~deploy.sh~ but haven't showed it yet. Here it is:
+
+#+BEGIN_SRC sh
+# deploy.sh
+
+# pull updated version of branch from repo
+cd $BASEDIR
+git fetch --all
+git reset --hard origin/$SEMAPHORE_GIT_BRANCH
+
+# perform django migration task
+workon $APP_URL
+python manage.py migrate
+
+# restart web application
+touch /var/www/"$(echo "$WEBAPP" | sed 's/\./_/g')"_wsgi.py
+#+END_SRC
+
+In short, the script does 3 things:
+
+- Updates the app code from the repository.
+- Executes ~manage.py migrate~, in case there new code has additional tables.
+- Restarts the web application by updating the ~wsgi.py~ file
+
+Now all that remains is to link the pipelines. This is achieved
+adding a promotion to the end of ~.semaphore/semaphore.yml~:
+
+#+BEGIN_SRC sh
+# .semaphore/semaphore.yml
+
+# promotion to production
+promotions:
+  # manually deploy to production
+  - name: Production deploy
+    pipeline_file: deploy-production.yml
+#+END_SRC
+
+Push all the updated files to your repository:
+
+#+BEGIN_SRC sh
+$ git add .semaphore
+$ git add deploy.sh
+$ git commit -m "added manual deployment to production"
+$ git push origin master
+#+END_SRC
+
+[[./public/semaphore_demo_python_django_production.png]]
+
+Hit the *Promote* button to start the deployment.
+
+*** Staging Website and Pipeline
+
+# In an ideal world, we would be finished. We have an application continually
+# tested. Unfortunately, in the real world, even the best tests can fail detect errors.
+# If there is some problem with the code, the deployment or the hosting
+# environment, our website can go down.
+
+# Some problems can only be detected on a live application. The solution is
+# creating a second copy of the website, as identical as possible as production,
+# to serve as a guinea pig. If the website deploys successfully to staging, we can
+# be confident it will work on production.
+
+# To setup a second site, we'll need our paid plan to be upgraded to 2 sites.
+
+I'll leave to you the creation the of the staging website.
+It won't be hard, I promise, just repeat the steps we've already done:
+
+# The setup of a second website is left as an exercises to the reader, feel free
+# to scroll up to review the steps:
+
+1. Create a ~pydjango_staging~ database.
+2. Create an ~.env-staging~ environment file that connects to ~pydjango_staging~ db
+3. Upload env-staging as a secret to Semaphore.
+4. On PythonAnywhere: source the staging environment and create new website with ~pa_autoconfigure_django~, you'll need a different
+   address than production.
+5. Modify the ~WSGI.py~ file for the new site, load the staging environment file.
+6. If using a custom domain, add a CNAME for the new site on your DNS provider.
+7. Reload the application.
+
+The only tricky thing is that you can't use the same address than in production.
+
+Once the staging site is up, create a new staging pipeline ~.semaphore/deploy-staging.yml~:
+
+#+BEGIN_SRC yaml
+# .semaphore/deploy-staging.yml
+
+version: v1.0
+name: Deploy Django to PythonAnywhere
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: "Deploy staging"
+    task:
+      # make secrets accessible for this job
+      secrets:
+        - name: env-staging
+        - name: ssh-key
+      env_vars:
+        # Your PythonAnywhere username
+        - name: SSH_USER
+          value: <USERNAME>
+        # host for ssh connection
+        - name: SSH_HOST
+          value: ssh.pythonanywhere.com
+        # Your website URL without HTTP or HTTPS
+        - name: APP_URL
+          value: <STAGING_APP_URL>
+      jobs:
+        - name: Push code to staging
+          commands:
+            - checkout
+            # prepare deploy script, subtitute environment variables
+            - envsubst < deploy.sh > ~/deploy-staging.sh
+            # ensure correct permissions for ssh key
+            - chmod 0600 ~/.ssh/id_rsa_pythonanywhere
+            # add remote host to know_hosts
+            - ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts
+            # ensure ssh will use the key
+            - ssh-add ~/.ssh/id_rsa_pythonanywhere
+            # copy environment file to remote machine
+            - scp ~/.env-staging $SSH_USER@$SSH_HOST:~/.env-staging
+            # copy deploy script to remote machine
+            - scp ~/deploy-staging.sh $SSH_USER@$SSH_HOST:~/deploy-staging.sh
+            # execute deploy script remotely
+            - ssh $SSH_USER@$SSH_HOST sh deploy-staging.sh
+#+END_SRC
+
+And add a promotion on ~.semaphore/semaphore.yml~:
+
+#+BEGIN_SRC yaml
+promotions:
+  # automatically deploy to staging on success
+  - name: Staging deploy
+    pipeline_file: deploy-staging.yml
+    auto_promote_on:
+      - result: passed
+  # manually deploy to production
+  - name: Production deploy
+    pipeline_file: deploy-production.yml
+#+END_SRC
+
+And push the updated files to your repository.
+
+#+BEGIN_SRC sh
+$ git add .semaphore/semaphore.yaml .semaphore/deploy-staging.yaml
+$ git commit -m "Add staging pipeline"
+$ git push origin master
+#+END_SRC
+
+# The staging deploy pipeline is set to automatically start when the tests results
+# succeed.
+# That way staging works as another type of test, that only runs when all the
+# previous tests have passed.
+We use ~auto_promote_on~ to start Staging as soon as previous tests pass:
+
+[[./public/semaphore_demo_python_django_staging.png]]
+
+Excellent! No errors, it's safe to deploy to production.
+
+** Conclusion
+   :LOGBOOK:
+   CLOCK: [2019-04-20 Sat 15:22]--[2019-04-20 Sat 16:29] =>  1:07
+   :END:
+
+We have covered a lot of ground.
+I hope that the tools and practices discussed here can add value to your projects,
+improve your team effectiveness and make your life easier.
+
+For the next steps, I suggest browsing [[https://docs.semaphoreci.com/][Semaphore's docs]] and, of course, writing
+a pipeline for your own application. Good luck!

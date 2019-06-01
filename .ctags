@@ -1,0 +1,9 @@
+--langdef=txt2tags
+--langmap=txt2tags:.t2t
+--regex-txt2tags=/^ *(={1,5})([^=].*[^=])\1$/\1 \2/d,definition/
+--regex-txt2tags=/^%!include:\s*(.*)$/\1/m,modules/
+--langdef=Powershell
+--langmap=Powershell:.psm1
+--langmap=Powershell:.ps1
+--regex-Powershell=/function\s+(script:)?([a-zA-Z\-]+)/\2/m, method/i
+--regex-Powershell=/\$(global:)?([a-zA-Z\-]+)/\2/v, variable/i

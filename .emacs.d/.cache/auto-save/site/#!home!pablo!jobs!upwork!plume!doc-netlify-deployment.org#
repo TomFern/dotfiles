@@ -1,0 +1,384 @@
+* Continuous deployment to Netlify
+#+BEGIN: clocktable :scope subtree :maxlevel 2
+#+CAPTION: Clock summary at [2019-05-13 Mon 11:27]
+| Headline                         | Time   |      |
+|----------------------------------+--------+------|
+| *Total time*                     | *4:36* |      |
+|----------------------------------+--------+------|
+| Continuous deployment to Netlify | 4:36   |      |
+| \_  [EXTRA]                      |        | 1:29 |
+| \_  [INTRO]                      |        | 0:10 |
+| \_  Overview of the pipeline     |        | 0:15 |
+#+END:
+
+  :LOGBOOK:
+  CLOCK: [2019-05-12 Sun 18:21]--[2019-05-12 Sun 18:44] =>  0:23
+  CLOCK: [2019-05-12 Sun 18:20]--[2019-05-12 Sun 18:20] =>  0:00
+  CLOCK: [2019-05-12 Sun 14:19]--[2019-05-12 Sun 14:51] =>  0:32
+  CLOCK: [2019-05-12 Sun 14:09]--[2019-05-12 Sun 14:19] =>  0:10
+  CLOCK: [2019-05-12 Sun 13:35]--[2019-05-12 Sun 13:40] =>  0:05
+  CLOCK: [2019-05-12 Sun 13:16]--[2019-05-12 Sun 13:26] =>  0:10
+  CLOCK: [2019-05-12 Sun 00:07]--[2019-05-12 Sun 00:20] =>  0:13
+  CLOCK: [2019-05-10 Fri 17:20]--[2019-05-10 Fri 17:53] =>  0:33
+  CLOCK: [2019-05-10 Fri 17:01]--[2019-05-10 Fri 17:20] =>  0:19
+  CLOCK: [2019-05-10 Fri 16:46]--[2019-05-10 Fri 16:55] =>  0:09
+  CLOCK: [2019-05-10 Fri 15:25]--[2019-05-10 Fri 15:32] =>  0:07
+  CLOCK: [2019-05-09 Thu 18:43]--[2019-05-09 Thu 18:44] =>  0:01
+  :END:
+** [TASK]
+
+We have an example project https://github.com/semaphoreci-demos/semaphore-demo-static-website with deployment to S3. As of today, to Netlify as well.
+
+The S3 path has been documented on https://docs.semaphoreci.com/article/97-continuous-deployment-static-website
+
+Let's introduce a new page which would skip the CI stage (refer to the page
+above for that), and just provide step by step instructions needed to get the
+credentials,
+files from Netlify and set up a deployment pipeline on Semaphore.
+
+At the end we can link to it on the existing static website page as an alternative deployment scenario.
+
+Marko Base blog: https://dev.to/markoa/introduction-to-continuous-integration-and-delivery-with-semaphore-20-3k0m
+demo revamp: https://github.com/semaphoreci-demos/semaphore-demo-static-website/pull/1
+
+** [EXTRA]
+   :LOGBOOK:
+   CLOCK: [2019-05-10 Fri 14:29]--[2019-05-10 Fri 14:56] =>  0:27
+   CLOCK: [2019-05-10 Fri 13:59]--[2019-05-10 Fri 14:12] =>  0:13
+   CLOCK: [2019-05-10 Fri 00:10]--[2019-05-10 Fri 00:37] =>  0:27
+   CLOCK: [2019-05-09 Thu 21:40]--[2019-05-09 Thu 22:02] =>  0:22
+   :END:
+
+- deployment to S3: Secret aws-credentials not found
+- deployment to Netlify: Secret netlify-authentication not found
+
+#+BEGIN_SRC yaml
+# .semaphore/semaphore.yml
+version: v1.0
+name: "Gatsby pipeline"
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: ⏬ Install dependencies
+    task:
+      jobs:
+      - name: npm install
+        commands:
+          - checkout
+          # Reuse dependencies from cache and avoid installing them from scratch:
+          - cache restore node-modules-$(checksum package-lock.json),node-modules-
+          - npm install
+          - cache store node-modules-$(checksum package-lock.json) node_modules
+
+  - name: 🧱 Build site
+    task:
+      jobs:
+      - name: Build
+        commands:
+          - checkout
+          - cache restore node-modules-$(checksum package-lock.json),node-modules-
+          # Replace this with command(s) that build your website:
+          - npm run build --prefix-path
+          # The script puts website files in directory `public`,
+          # store it in cache to propagate to deployment:
+          - cache store website-build public
+
+promotions:
+  - name: S3 Production deploy
+    pipeline_file: production-deploy-s3.yml
+    auto_promote_on:
+      - result: passed
+        branch:
+          - master
+  - name: Netlify Production deploy
+    pipeline_file: production-deploy-netlify.yml
+    auto_promote_on:
+      - result: passed
+        branch:
+          - master
+
+#+END_SRC
+
+
+#+BEGIN_SRC yaml
+# .semaphore/production-deploy-netlify.yml
+version: v1.0
+name: Deploy website
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: 🏁 Deploy
+    task:
+      # Mount a secret which defines /home/semaphore/.netlify/config.json and
+      # /home/semaphore/.netlify/state.json.
+      # By mounting it, we make the files available in the job environment.
+      #
+      # Follow the comments in ./secrets/netlify-secret.sample.yml
+      #
+      # For info on creating secrets, see:
+      # https://docs.semaphoreci.com/article/66-environment-variables-and-secrets
+      secrets:
+        - name: netlify-authentication
+      jobs:
+        - name: Copy to netlify
+          commands:
+            - npm install netlify-cli -g
+            - cache restore website-build
+            - netlify deploy --dir=public --prod
+  - name: 🔍 UI test
+    task:
+      jobs:
+        - name: Check live website
+          commands:
+            - checkout
+            - cache restore node-modules-$(checksum package-lock.json),node-modules-
+            - npm run nightwatch
+#+END_SRC
+
+- netlify deploy
+- netlify json secrets: state and config
+- nightwatch must exist in node_modules
+- website-build
+
+create site from github link, dashboar netlify
+wait
+netlify login
+cd basedir
+netlify status
+netlify link
+
+
+npm run build --prefix-path
+npm start
+
+
+$$$
+# opens browser window
+netlify login
+# needs create site beforehand in dashboard?
+netlify link
+
+netlify deploy --dir=public --prod
+netlify sites:list
+
+** [FIXES]
+
+npm run nightwatch
+npm ERR! missing script: nightwatch
+
+
+ 4887  npm install --save-dev nightwatch
+
+scripts {
+
+    "nightwatch": "./node_modules/.bin/nightwatch"
+
+}
+
+module.exports = {
+  'Test live website' : function (client) {
+    client
+    .url('https://semaphore-netlify.netlify.com')
+      .waitForElementVisible('body', 1000)
+      .assert.title('All posts | Gatsby Starter Blog')
+      .end();
+  }
+};
+** [INTRO]
+   :LOGBOOK:
+   CLOCK: [2019-05-12 Sun 00:34]--[2019-05-12 Sun 00:44] =>  0:10
+   :END:
+
+This guide shows you how to use Semaphore to continuously deploy a static
+website to Netlify.
+Before starting, you will need:
+# To follow this guide
+
+    - A [[https://netlify.com][Netlify]] account.
+    - A working [[https://docs.semaphoreci.com/article/63-your-first-project][project]] with a CI pipeline that builds the website.
+
+As a starting point,
+you may refer to the
+[[https://docs.semaphoreci.com/article/97-continuous-deployment-static-website#define-the-pipeline][continous deployment of a static website]] case,
+which uses Node.js to generate a website.
+# In addition, the
+# [[https://github.com/semaphoreci-demos/semaphore-demo-static-website][semaphore-demo-static-website]] repository includes a pipeline that deploys to Netlify.
+
+** Overview of the pipeline
+   :LOGBOOK:
+   CLOCK: [2019-05-11 Sat 00:18]--[2019-05-11 Sat 00:33] =>  0:15
+   :END:
+
+Create a deployment pipeline as ~.semaphore/production-deploy-netlify.yml~:
+
+#+BEGIN_SRC yaml
+# .semaphore/production-deploy-netlify.yml
+
+version: v1.0
+name: Deploy website
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: 🏁 Deploy
+    task:
+      # Mount a secret which defines /home/semaphore/.netlify/config.json and
+      # /home/semaphore/.netlify/state.json.
+      # For info on creating secrets, see:
+      # https://docs.semaphoreci.com/article/66-environment-variables-and-secrets
+      secrets:
+        - name: netlify-authentication
+      jobs:
+        - name: Copy to netlify
+          commands:
+            - npm install netlify-cli -g
+            # restore the website cached as website-build
+            - cache restore website-build
+            # deploy the contents of the public directory
+            - netlify deploy --dir=public --prod
+#+END_SRC
+
+The pipeline shown above assumes that the website files are generated in the ~public~
+directory and [[https://docs.semaphoreci.com/article/54-toolbox-reference#cache][cached]] with the key: ~website-build~.
+You may need to adjust the last two commands of the job to suit your needs.
+
+# [ PIC OF THE PIPELINE ? ]
+
+*** Add a promotion to deployment
+
+Add a [[https://docs.semaphoreci.com/article/67-deploying-with-promotions][promotion]] to your existing ~semaphore.yml~ file:
+# Start by defining a promotion at the end of your semaphore.yml file:
+
+  #+BEGIN_SRC yaml
+    - name: Netlify Production deploy
+      pipeline_file: production-deploy-netlify.yml
+      auto_promote_on:
+        - result: passed
+          branch:
+            - master
+  #+END_SRC
+
+This will start the deployment on every successful revision on the master branch.
+For more details regarding promotions, consult the
+[[https://docs.semaphoreci.com/article/50-pipeline-yaml#promotions][reference documentation]].
+# You can define any number of pipelines using multiple promotions.
+# ** Deployment to Netlify
+*** Netlify credentials
+
+# To obtain the necesary Netlify credentials files, follow this instructions:
+# To obtain Netlify's credentials, you must link your project and site.
+To obtain your Netlify files:
+
+1. Install the [[https://www.netlify.com/docs/cli/][netlify command line interface]]:
+  #+BEGIN_SRC bash
+  $ npm install netlify-cli -g
+  #+END_SRC
+
+2. Login to your Netlify account:
+
+  #+BEGIN_SRC bash
+  $ netlify login
+  #+END_SRC
+  This opens a browser window, follow the instructions to get authorized.
+  # Follow the on-screen instructions to login.
+  # When completed, ~netlify-cli~ creates a token in ~$HOME/.netlify/config.json~.
+
+3. Link your project's directory with the Netlify site. The actual command depends on
+   whether you are updating an existing site or creating a new one. If you are:
+
+   - Creating a new site:
+
+     #+BEGIN_SRC bash
+     $ cd /your/project/path
+     $ netlify init
+     #+END_SRC
+
+   - Updating a previously existing site:
+
+     #+BEGIN_SRC bash
+     $ cd /your/project/path
+     $ netlify link
+     #+END_SRC
+
+*** Store credentials on Semaphore
+
+You need to upload two files to Semaphore in order to allow access to your Netlify
+account and site.
+[[https://docs.semaphoreci.com/article/66-environment-variables-and-secrets][Secrets]]
+are the best way to store private data such as authentication
+tokens and passwords.
+You can securely send the files to Semaphore using [[https://docs.semaphoreci.com/article/53-sem-reference][sem cli]]:
+
+  #+BEGIN_SRC bash
+  $ cd /your/project/path
+  $ sem create secret netlify-authentication \
+      --file .netlify/state.json:/home/semaphore/.netlify/state.json \
+      --file ~/.netlify/config.json:/home/semaphore/.netlify/config.json
+  #+END_SRC
+
+To see the secrets stored on Semaphore:
+
+  #+BEGIN_SRC bash
+  $ sem get secrets
+  #+END_SRC
+
+# You must upload two files to Semaphore to enable connections to Netlify.
+# Semaphore needs two files to connect to your Netlify site:
+
+# A secure way to pass our credentials to Semaphore is by defining a [[https://docs.semaphoreci.com/article/66-environment-variables-and-secrets][secret]].
+# Create a new secret based on local netlify files:
+
+  # - ~config.json~: authentication
+  # - ~state.json~: located at your project
+# Alternatively, you can use Semaphore's dashboard:
+
+#   1. On the left navigation bar, go *Secrets* under Configuration.
+#   2. Click on *Create new secret*
+#   3. Upload the ~$HOME/.netlify/config.json~ and ~.netlify/state.json~ files:
+#     (TODO : chec file)
+#   4. Create the files as shown:
+#      - ~$HOME/.netlify/config.json~
+#      - ~.netlify/state.json~
+
+#     #+caption: Upload files
+#     [[file:./public/semaphore-create-secret-netlify.png]]
+
+*** Start deployment
+
+The workflow will start as soon as the changes are pushed to your repository:
+
+  #+BEGIN_SRC bash
+  $ git add .semaphore/production-deploy-netlify.yml
+  $ git add .semaphore/semaphore.yml
+  $ git commit -m "add deployment"
+  $ git push
+  #+END_SRC
+
+# Once the initial CI pipeline completes successfully, the deployment will start automatically.
+
+That’s all.
+Your website will be automatically deployed
+for every successful update on the master branch.
+With a setup like this, you can prevent any build errors from reaching
+your site.
+# Your website will now be continuously deployed every time
+# there is a valid update on the website master branch.
+# the website is
+# there is a
+# valid change on master branch.
+# Deployment won't run on other branches and pull requests.
+# However, Semaphore will report a build failure in case there's an error which
+# prevents
+# the website to be generated, so that you can fix it before merging to master.
+
+** See also
+
+- [[https://docs.semaphoreci.com/category/56-guided-tour][Semaphore guided tour]]
+- [[https://docs.semaphoreci.com/article/50-pipeline-yaml][Pipelines reference]]
+- [[https://docs.semaphoreci.com/article/54-toolbox-reference][Toolbox reference]]

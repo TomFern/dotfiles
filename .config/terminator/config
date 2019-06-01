@@ -1,0 +1,336 @@
+[global_config]
+  enabled_plugins = ActivityWatch, TerminalShot, Logger
+  geometry_hinting = True
+  handle_size = 2
+  scroll_tabbar = True
+  sticky = True
+  suppress_multiple_term_dialog = True
+  tab_position = right
+[keybindings]
+  split_horiz = <Primary><Alt>h
+  split_vert = <Primary><Alt>v
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    background_color = "#011116"
+    copy_on_selection = True
+    cursor_color = "#4afcd6"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#ffffff"
+    palette = "#022026:#b2302d:#00a941:#59819c:#459a86:#00599d:#5d7e19:#405555:#384451:#ff4242:#2aea5e:#8ed4fd:#61d5ba:#1298ff:#98d028:#58fbd6"
+    scrollback_infinite = True
+    use_system_font = False
+  [[3024 Day]]
+    background_color = "#f7f7f7"
+    copy_on_selection = True
+    cursor_color = "#4a4543"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#4a4543"
+    palette = "#090300:#db2d20:#01a252:#fded02:#01a0e4:#a16a94:#b5e4f4:#a5a2a2:#5c5855:#e8bbd0:#3a3432:#4a4543:#807d7c:#d6d5d4:#cdab53:#f7f7f7"
+    scrollback_infinite = True
+    use_system_font = False
+  [[3024 Night]]
+    background_color = "#090300"
+    copy_on_selection = True
+    cursor_color = "#a5a2a2"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#a5a2a2"
+    palette = "#090300:#db2d20:#01a252:#fded02:#01a0e4:#a16a94:#b5e4f4:#a5a2a2:#5c5855:#e8bbd0:#3a3432:#4a4543:#807d7c:#d6d5d4:#cdab53:#f7f7f7"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Aci]]
+    background_color = "#0d1926"
+    copy_on_selection = True
+    cursor_color = "#c4e9ff"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#b4e1fd"
+    palette = "#363636:#ff0883:#83ff08:#ff8308:#0883ff:#8308ff:#08ff83:#b6b6b6:#363636:#ff0883:#83ff08:#ff8308:#0883ff:#8308ff:#08ff83:#b6b6b6"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Aco]]
+    background_color = "#1f1305"
+    copy_on_selection = True
+    cursor_color = "#bae2fb"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#b4e1fd"
+    palette = "#3f3f3f:#ff0883:#83ff08:#ff8308:#0883ff:#8308ff:#08ff83:#bebebe:#474747:#ff1e8e:#8eff1e:#ff8e1e:#0883ff:#8e1eff:#1eff8e:#c4c4c4"
+    scrollback_infinite = True
+    use_system_font = False
+  [[AdventureTime]]
+    background_color = "#1f1d45"
+    copy_on_selection = True
+    cursor_color = "#efbf38"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#f8dcc0"
+    palette = "#050404:#bd0013:#4ab118:#e7741e:#0f4ac6:#665993:#70a598:#f8dcc0:#4e7cbf:#fc5f5a:#9eff6e:#efc11a:#1997c6:#9b5953:#c8faf4:#f6f5fb"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Afterglow]]
+    background_color = "#212121"
+    copy_on_selection = True
+    cursor_color = "#d0d0d0"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#d0d0d0"
+    palette = "#151515:#ac4142:#7e8e50:#e5b567:#6c99bb:#9f4e85:#7dd6cf:#d0d0d0:#505050:#ac4142:#7e8e50:#e5b567:#6c99bb:#9f4e85:#7dd6cf:#f5f5f5"
+    scrollback_infinite = True
+    use_system_font = False
+  [[AlienBlood]]
+    background_color = "#0f1610"
+    copy_on_selection = True
+    cursor_color = "#73fa91"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#637d75"
+    palette = "#112616:#7f2b27:#2f7e25:#717f24:#2f6a7f:#47587f:#327f77:#647d75:#3c4812:#e08009:#18e000:#bde000:#00aae0:#0058e0:#00e0c4:#73fa91"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Argonaut]]
+    background_color = "#0e1019"
+    copy_on_selection = True
+    cursor_color = "#ff0018"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#fffaf4"
+    palette = "#232323:#ff000f:#8ce10b:#ffb900:#008df8:#6d43a6:#00d8eb:#ffffff:#444444:#ff2740:#abe15b:#ffd242:#0092ff:#9a5feb:#67fff0:#ffffff"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Arthur]]
+    background_color = "#1c1c1c"
+    copy_on_selection = True
+    cursor_color = "#e2bbef"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#ddeedd"
+    palette = "#3d352a:#cd5c5c:#86af80:#e8ae5b:#6495ed:#deb887:#b0c4de:#bbaa99:#554444:#cc5533:#88aa22:#ffa75d:#87ceeb:#996600:#b0c4de:#ddccbb"
+    scrollback_infinite = True
+    use_system_font = False
+  [[AtelierSulphurpool]]
+    background_color = "#202746"
+    copy_on_selection = True
+    cursor_color = "#979db4"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#979db4"
+    palette = "#202746:#c94922:#ac9739:#c08b30:#3d8fd1:#6679cc:#22a2c9:#979db4:#6b7394:#c76b29:#293256:#5e6687:#898ea4:#dfe2f1:#9c637a:#f5f7ff"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Atom]]
+    background_color = "#161719"
+    copy_on_selection = True
+    cursor_color = "#d0d0d0"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#c5c8c6"
+    palette = "#000000:#fd5ff1:#87c38a:#ffd7b1:#85befd:#b9b6fc:#85befd:#e0e0e0:#000000:#fd5ff1:#94fa36:#f5ffa8:#96cbfe:#b9b6fc:#85befd:#e0e0e0"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Batman]]
+    background_color = "#1b1d1e"
+    copy_on_selection = True
+    cursor_color = "#fcef0c"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#6f6f6f"
+    palette = "#1b1d1e:#e6dc44:#c8be46:#f4fd22:#737174:#747271:#62605f:#c6c5bf:#505354:#fff78e:#fff27d:#feed6c:#919495:#9a9a9d:#a3a3a6:#dadbd6"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Borland]]
+    background_color = "#0000a4"
+    copy_on_selection = True
+    cursor_color = "#ffa560"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#ffff4e"
+    palette = "#4f4f4f:#ff6c60:#a8ff60:#ffffb6:#96cbfe:#ff73fd:#c6c5fe:#eeeeee:#7c7c7c:#ffb6b0:#ceffac:#ffffcc:#b5dcff:#ff9cfe:#dfdffe:#ffffff"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Bright Lights]]
+    background_color = "#191919"
+    copy_on_selection = True
+    cursor_color = "#f34b00"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#b3c9d7"
+    palette = "#191919:#ff355b:#b7e876:#ffc251:#76d4ff:#ba76e7:#6cbfb5:#c2c8d7:#191919:#ff355b:#b7e876:#ffc251:#76d5ff:#ba76e7:#6cbfb5:#c2c8d7"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Brogrammer]]
+    background_color = "#131313"
+    copy_on_selection = True
+    cursor_color = "#b9b9b9"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#d6dbe5"
+    palette = "#1f1f1f:#f81118:#2dc55e:#ecba0f:#2a84d2:#4e5ab7:#1081d6:#d6dbe5:#d6dbe5:#de352e:#1dd361:#f3bd09:#1081d6:#5350b9:#0f7ddb:#ffffff"
+    scrollback_infinite = True
+    use_system_font = False
+  [[C64]]
+    background_color = "#40318d"
+    copy_on_selection = True
+    cursor_color = "#7869c4"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#7869c4"
+    palette = "#090300:#883932:#55a049:#bfce72:#40318d:#8b3f96:#67b6bd:#ffffff:#000000:#883932:#55a049:#bfce72:#40318d:#8b3f96:#67b6bd:#f7f7f7"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Darkside]]
+    background_color = "#222324"
+    copy_on_selection = True
+    cursor_color = "#bbbbbb"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#bababa"
+    palette = "#000000:#e8341c:#68c256:#f2d42c:#1c98e8:#8e69c9:#1c98e8:#bababa:#000000:#e05a4f:#77b869:#efd64b:#387cd3:#957bbe:#3d97e2:#bababa"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Github]]
+    background_color = "#f4f4f4"
+    copy_on_selection = True
+    cursor_color = "#3f3f3f"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#3e3e3e"
+    palette = "#3e3e3e:#970b16:#07962a:#f8eec7:#003e8a:#e94691:#89d1ec:#ffffff:#666666:#de0000:#87d5a2:#f1d007:#2e6cba:#ffa29f:#1cfafe:#ffffff"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Man Page]]
+    background_color = "#fef49c"
+    copy_on_selection = True
+    cursor_color = "#7f7f7f"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#000000"
+    palette = "#000000:#cc0000:#00a600:#999900:#0000b2:#b200b2:#00a6b2:#cccccc:#666666:#e50000:#00d900:#e5e500:#0000ff:#e500e5:#00e5e5:#e5e5e5"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Material colors]]
+    background_color = "#1E282C"
+    copy_on_selection = True
+    cursor_color = "#657B83"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#C3C7D1"
+    palette = "#073641:#EB606B:#C3E88D:#F7EB95:#80CBC3:#FF2490:#AEDDFF:#FFFFFF:#002B36:#EB606B:#C3E88D:#F7EB95:#7DC6BF:#6C71C3:#34434D:#FFFFFF"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Neutron]]
+    background_color = "#1c1e22"
+    copy_on_selection = True
+    cursor_color = "#f6f7ec"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#e6e8ef"
+    palette = "#23252b:#b54036:#5ab977:#deb566:#6a7c93:#a4799d:#3f94a8:#e6e8ef:#23252b:#b54036:#5ab977:#deb566:#6a7c93:#a4799d:#3f94a8:#ebedf2"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Ollie]]
+    background_color = "#222125"
+    copy_on_selection = True
+    cursor_color = "#5b6ea7"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#8a8dae"
+    palette = "#000000:#ac2e31:#31ac61:#ac4300:#2d57ac:#b08528:#1fa6ac:#8a8eac:#5b3725:#ff3d48:#3bff99:#ff5e1e:#4488ff:#ffc21d:#1ffaff:#5b6ea7"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Pali]]
+    background_color = "#232e37"
+    copy_on_selection = True
+    cursor_color = "#e3ecf5"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#d9e6f2"
+    palette = "#0a0a0a:#ab8f74:#74ab8f:#8fab74:#8f74ab:#ab748f:#748fab:#f2f2f2:#5d5d5d:#ff1d62:#9cc3af:#ffd00a:#af9cc3:#ff1d62:#4bb8fd:#a020f0"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Panda]]
+    background_color = "#292a2b"
+    copy_on_selection = True
+    cursor_color = "#f0eeee"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#e6e6e6"
+    palette = "#676b79:#ff2c6d:#19f9d8:#ffb86c:#45a9f9:#b084eb:#6fc1ff:#d3d7cf:#676b79:#ff9ac1:#19f9d8:#ffcc95:#45a9f9:#b084eb:#6fc1ff:#eeeeec"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Red Alert]]
+    background_color = "#762423"
+    copy_on_selection = True
+    cursor_color = "#ffffff"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#ffffff"
+    palette = "#000000:#d62e4e:#71be6b:#beb86b:#489bee:#e979d7:#6bbeb8:#d6d6d6:#262626:#e02553:#aff08c:#dfddb7:#65aaf1:#ddb7df:#b7dfdd:#ffffff"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Red Planet]]
+    background_color = "#222222"
+    copy_on_selection = True
+    cursor_color = "#c2b790"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#c2b790"
+    palette = "#202020:#8c3432:#728271:#e8bf6a:#69819e:#896492:#5b8390:#b9aa99:#676767:#b55242:#869985:#ebeb91:#60827e:#de4974:#38add8:#d6bfb8"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Shaman]]
+    background_color = "#001015"
+    copy_on_selection = True
+    cursor_color = "#4afcd6"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#405555"
+    palette = "#012026:#b2302d:#00a941:#5e8baa:#449a86:#00599d:#5d7e19:#405555:#384451:#ff4242:#2aea5e:#8ed4fd:#61d5ba:#1298ff:#98d028:#58fbd6"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Slate]]
+    background_color = "#222222"
+    copy_on_selection = True
+    cursor_color = "#87d3c4"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#35b1d2"
+    palette = "#222222:#e2a8bf:#81d778:#c4c9c0:#264b49:#a481d3:#15ab9c:#02c5e0:#ffffff:#ffcdd9:#beffa8:#d0ccca:#7ab0d2:#c5a7d9:#8cdfe0:#e0e0e0"
+    scrollback_infinite = True
+    use_system_font = False
+  [[SpaceGray]]
+    background_color = "#20242d"
+    copy_on_selection = True
+    cursor_color = "#b3b8c3"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#b3b8c3"
+    palette = "#000000:#b04b57:#87b379:#e5c179:#7d8fa4:#a47996:#85a7a5:#b3b8c3:#000000:#b04b57:#87b379:#e5c179:#7d8fa4:#a47996:#85a7a5:#ffffff"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Tomorrow Night]]
+    background_color = "#1d1f21"
+    copy_on_selection = True
+    cursor_color = "#c5c8c6"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#c5c8c6"
+    palette = "#000000:#cc6666:#b5bd68:#f0c674:#81a2be:#b294bb:#8abeb7:#ffffff:#000000:#cc6666:#b5bd68:#f0c674:#81a2be:#b294bb:#8abeb7:#ffffff"
+    scrollback_infinite = True
+    use_system_font = False
+  [[UnderTheSea]]
+    background_color = "#011116"
+    copy_on_selection = True
+    cursor_color = "#4afcd6"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#ffffff"
+    palette = "#022026:#b2302d:#00a941:#59819c:#459a86:#00599d:#5d7e19:#405555:#384451:#ff4242:#2aea5e:#8ed4fd:#61d5ba:#1298ff:#98d028:#58fbd6"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Vag]]
+    background_color = "#191f1d"
+    copy_on_selection = True
+    cursor_color = "#e5f0fa"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#d9e6f2"
+    palette = "#303030:#a87139:#39a871:#71a839:#7139a8:#a83971:#3971a8:#8a8a8a:#494949:#b0763b:#3bb076:#76b03b:#763bb0:#b03b76:#3b76b0:#cfcfcf"
+    scrollback_infinite = True
+    use_system_font = False
+  [[Violet Dark]]
+    background_color = "#1c1d1f"
+    copy_on_selection = True
+    cursor_color = "#708284"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#708284"
+    palette = "#56595c:#c94c22:#85981c:#b4881d:#2e8bce:#d13a82:#32a198:#c9c6bd:#45484b:#bd3613:#738a04:#a57705:#2176c7:#c61c6f:#259286:#c9c6bd"
+    scrollback_infinite = True
+    use_system_font = False
+  [[ayu]]
+    background_color = "#0f1419"
+    copy_on_selection = True
+    cursor_color = "#f29718"
+    font = FantasqueSansMono NF 12
+    foreground_color = "#e6e1cf"
+    palette = "#000000:#ff3333:#b8cc52:#e7c547:#36a3d9:#f07178:#95e6cb:#ffffff:#323232:#ff6565:#eafe84:#fff779:#68d5ff:#ffa3aa:#c7fffd:#ffffff"
+    scrollback_infinite = True
+    use_system_font = False

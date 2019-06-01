@@ -1,0 +1,2722 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2018-10-17 Wed 22:27 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="pablo" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org6b1c373">1. Overview</a></li>
+<li><a href="#org2301078">2. Tricks</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orge2d45a0">2.0.1. Benchmark single query w/Procedures</a></li>
+<li><a href="#org008a807">2.0.2. Export query as CSV in server</a></li>
+<li><a href="#org1302895">2.0.3. Instant memory date table</a></li>
+<li><a href="#orgcb4f8d2">2.0.4. Regexp</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org370421c">3. Query Box</a>
+<ul>
+<li><a href="#orgac22b3b">3.1. Show table status</a></li>
+<li><a href="#orgcc17245">3.2. Information schema</a></li>
+<li><a href="#org76f7a25">3.3. InnoDB, space, format, size</a></li>
+</ul>
+</li>
+<li><a href="#org2b9a653">4. Troubleshooting</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org32ae40a">4.0.1. Lost root password, reset password</a></li>
+<li><a href="#orga3f4c75">4.0.2. Orphaned views</a></li>
+<li><a href="#org51bd861">4.0.3. Missing Tables</a></li>
+<li><a href="#org0d49174">4.0.4. Table corruption</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org6853cf6">5. Index</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org44514f9">5.0.1. Find ID-like named columns that are un-indexed</a></li>
+<li><a href="#org8075610">5.0.2. Index merging tips</a></li>
+<li><a href="#org8982586">5.0.3. Covering indexes tips</a></li>
+<li><a href="#org17b4356">5.0.4. Interesting facts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org05ea6a9">6. Performance</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orga45988b">6.0.1. Profiling</a></li>
+<li><a href="#org55b05d5">6.0.2. sysbench</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgf4f544c">7. Security</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org8f451eb">7.0.1. Grant &amp; Revoke DB level</a></li>
+<li><a href="#orge2bcd28">7.0.2. Grant Server level</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org2ecd9a4">8. Replication</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org8f52c05">8.0.1. Table sync (pt-table-sync)</a></li>
+</ul>
+</li>
+<li><a href="#orgd5e6601">8.1. Setup replication</a></li>
+</ul>
+</li>
+<li><a href="#orgea804b7">9. Scheduler Events</a></li>
+<li><a href="#org7c21804">10. DBA / Sysadmin</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org75c04fc">10.0.1. MySQL Tuning</a></li>
+<li><a href="#orgdde3070">10.0.2. Linux Tuning</a></li>
+<li><a href="#org0333b83">10.0.3. Logrotate example script</a></li>
+<li><a href="#orgb3f30b9">10.0.4. Heartbeat monitoring</a></li>
+<li><a href="#orge3e9378">10.0.5. Innodb file per table (older mysqls)</a></li>
+<li><a href="#orge722ffd">10.0.6. perl modules DBD</a></li>
+<li><a href="#org7d3eb2d">10.0.7. xtrabackup innobackupex snapshots</a></li>
+<li><a href="#org04eeddb">10.0.8. logical dump mysqldump</a></li>
+<li><a href="#org4870fce">10.0.9. Point in time recovery</a></li>
+<li><a href="#org4e71e03">10.0.10. space usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org3c59a00">11. Internals</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgffa5777">11.0.1. PROCESSLIST</a></li>
+<li><a href="#org04037a3">11.0.2. Innodb Show Engine</a></li>
+<li><a href="#org333a81d">11.0.3. Collation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org57aff39">12. Installations</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org6a00a73">12.0.1. Service install</a></li>
+<li><a href="#org8a69c6b">12.0.2. Multiple instances in server</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org1eef714">13. Advanced tools</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgf9f88f4">13.0.1. Percona query digest</a></li>
+<li><a href="#org857683d">13.0.2. General log (Poor's man audit)</a></li>
+<li><a href="#org521dfc5">13.0.3. Sample dbs</a></li>
+<li><a href="#orgb74ca2e">13.0.4. Percona PMM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgccb80bb">14. Changelogs</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org3b6ee73">14.0.1. 5.6 Changes from 5.5 to 5.6</a></li>
+<li><a href="#org11c2d58">14.0.2. 5.6 to 5.7</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6b1c373" class="outline-2">
+<h2 id="org6b1c373"><span class="section-number-2">1</span> Overview</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Current state
+</p>
+
+<pre class="example">
+-- built in
+show engines;
+show databases;
+show table status;
+show engine innodb status;
+show slave status\G
+show master status\G
+show tables;
+show processlist;
+-- performance schema
+select * from sys.processlist;
+select * from sys.statement_analysis;
+select * from sys.schema_table_statistics;
+select * from sys.schema_index_statistics;
+select * from sys.io_global_by_file_by_latency;
+select * from performance_schema.events_statements_current;
+select * from performance_schema.events_statements_history;
+select * from performance_schema.events_stages_current;
+select * from performance_schema.events_waits_current;
+-- row-level locks/waits
+select * from information_schema.INNODB_TRX;
+select * from information_schema.INNODB_LOCK;
+</pre>
+
+<p>
+Recent state
+</p>
+
+<pre class="example">
+select * from performance_schema.events_statements_summary_by_digest;
+select * from performance_schema.events_statement_history;
+select * from performance_schema.events_stages_history;
+select * from performance_schema.events_waits_history;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org2301078" class="outline-2">
+<h2 id="org2301078"><span class="section-number-2">2</span> Tricks</h2>
+<div class="outline-text-2" id="text-2">
+<pre class="example">
+
+-- disable safe updates/session
+set sql_safe_updates = 0;
+
+-- convert/cast to INTEGER numeric
+CONVERT( field , unsigned )
+
+-- rollback procedure
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+ROLLBACK;
+RESIGNAL;
+END;
+
+-- throw exception in procedure
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'an error has occured too bad';
+
+-- faster replacement for IN ( )
+FIND_IN_SET(COLUMN, 'key1,key2,key3)
+</pre>
+</div>
+
+<div id="outline-container-orge2d45a0" class="outline-4">
+<h4 id="orge2d45a0"><span class="section-number-4">2.0.1</span> Benchmark single query w/Procedures</h4>
+<div class="outline-text-4" id="text-2-0-1">
+<pre class="example">
+-- parameter: in turns int
+declare i int default 0;
+while i &lt; turns do 
+  &lt;QUERY&gt;
+	set i = i + 1;
+end while;
+</pre>
+</div>
+</div>
+<div id="outline-container-org008a807" class="outline-4">
+<h4 id="org008a807"><span class="section-number-4">2.0.2</span> Export query as CSV in server</h4>
+<div class="outline-text-4" id="text-2-0-2">
+<pre class="example">
+SELECT * from TABLE
+INTO OUTFILE '/var/lib/mysql-files/export.csv'
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org1302895" class="outline-4">
+<h4 id="org1302895"><span class="section-number-4">2.0.3</span> Instant memory date table</h4>
+<div class="outline-text-4" id="text-2-0-3">
+<p>
+<a href="https://stackoverflow.com/questions/9295616/how-to-get-list-of-dates-between-two-dates-in-mysql-select-query">https://stackoverflow.com/questions/9295616/how-to-get-list-of-dates-between-two-dates-in-mysql-select-query</a>
+</p>
+<pre class="example">
+set NAMES latin1;
+
+select * from 
+(select adddate('1970-01-01',t4.i*10000 + t3.i*1000 + t2.i*100 + t1.i*10 + t0.i) selected_date from
+ (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t0,
+ (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t1,
+ (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t2,
+ (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t3,
+ (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t4) v
+where selected_date between '2012-02-10' and '2012-02-15'
+</pre>
+
+<pre class="example">
+select
+DATE_FORMAT(m1, '%Y-%m-01 %H:%i.%s')
+from
+(
+select
+('2018-01-01')
++INTERVAL m MONTH as m1
+from
+(
+select @rownum:=@rownum+1 as m from
+(select 1 union select 2 union select 3 union select 4) t1,
+(select 1 union select 2 union select 3 union select 4) t2,
+(select 1 union select 2 union select 3 union select 4) t3,
+(select 1 union select 2 union select 3 union select 4) t4,
+(select @rownum:=-1) t0
+) d1
+) d2
+where m1 &lt;= NOW()
+order by m1 
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgcb4f8d2" class="outline-4">
+<h4 id="orgcb4f8d2"><span class="section-number-4">2.0.4</span> Regexp</h4>
+<div class="outline-text-4" id="text-2-0-4">
+<pre class="example">
+  LIKE 'A_C' -- match A*C (only one character)
+LIKE 'A\%\C' -- match A%C
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org370421c" class="outline-2">
+<h2 id="org370421c"><span class="section-number-2">3</span> Query Box</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-orgac22b3b" class="outline-3">
+<h3 id="orgac22b3b"><span class="section-number-3">3.1</span> Show table status</h3>
+<div class="outline-text-3" id="text-3-1">
+<pre class="example">
+show table status from &lt;SCHEMA&gt; where name = '&lt;TABLE&gt;';
+</pre>
+</div>
+</div>
+<div id="outline-container-orgcc17245" class="outline-3">
+<h3 id="orgcc17245"><span class="section-number-3">3.2</span> Information schema</h3>
+<div class="outline-text-3" id="text-3-2">
+<pre class="example">
+-- db size
+SELECT
+  table_schema AS 'SCHEMA',
+  ROUND(((sum(data_length) + sum(index_length)) / 1024 / 1024), 2) `Size (MiB)`,
+  ROUND((sum(index_length) / 1024 / 1024), 2)               `Size index (MiB)`,
+  ROUND((sum(data_length) / 1024 / 1024), 2)                `Size data (MiB)`
+FROM information_schema.TABLES
+WHERE `table_schema` = '&lt;SCHEMA&gt;'
+group by 1
+ORDER BY (data_length + index_length) DESC;
+
+-- table size, data, index
+SELECT
+  table_name   AS                                        `Table`,
+  ROUND(((data_length + index_length) / 1024 / 1024), 2) `Size (MiB)`,
+  ROUND(((index_length) / 1024 / 1024), 2)               `Size index (MiB)`,
+  ROUND(((data_length) / 1024 / 1024), 2)                `Size data (MiB)`
+FROM information_schema.TABLES
+WHERE `table_schema` = '&lt;SCHEMA&gt;'
+ORDER BY (data_length + index_length) DESC;
+</pre>
+</div>
+</div>
+<div id="outline-container-org76f7a25" class="outline-3">
+<h3 id="org76f7a25"><span class="section-number-3">3.3</span> InnoDB, space, format, size</h3>
+<div class="outline-text-3" id="text-3-3">
+<pre class="example">
+-- ROW_FORMAT FILE_FORMAT PAGE_SIZE
+SELECT *
+FROM INFORMATION_SCHEMA.INNODB_SYS_TABLESPACES
+where NAME='&lt;SCHEMA&gt;/&lt;TABLE&gt;';
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2b9a653" class="outline-2">
+<h2 id="org2b9a653"><span class="section-number-2">4</span> Troubleshooting</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org32ae40a" class="outline-4">
+<h4 id="org32ae40a"><span class="section-number-4">4.0.1</span> Lost root password, reset password</h4>
+<div class="outline-text-4" id="text-4-0-1">
+<pre class="example">
+# stop / kill mysql
+systemctl stop mysqld
+kill &lt;PID&gt;
+
+cat &lt;&lt;EOF &gt;reset_root.sql
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'NewPassword';
+EOF
+
+# start mysql with init-file (check other args)
+mysqld --user mysql --init-file=reset_root.sql
+
+# check connection, start mysql normally
+systemctl start mysqld
+</pre>
+</div>
+</div>
+<div id="outline-container-orga3f4c75" class="outline-4">
+<h4 id="orga3f4c75"><span class="section-number-4">4.0.2</span> Orphaned views</h4>
+<div class="outline-text-4" id="text-4-0-2">
+<p>
+Orphan Views do not have a valid definer. They will prevent <b>mysqldump</b> from working on the schema
+</p>
+
+<p>
+Find Orphan Views
+</p>
+
+<pre class="example">
+SELECT table_schema, table_name, view_definition, definer
+FROM information_schema.views v
+WHERE 
+    SECURITY_TYPE = 'DEFINER'
+    AND v.definer not in (select DISTINCT(CONCAT(user,'@',host)) as definer from mysql.user);
+</pre>
+
+<p>
+Find Invalid Views
+</p>
+
+<p>
+Table reference doesn't exist
+</p>
+
+<pre class="example">
+SELECT *
+    FROM  information_schema.tables 
+    WHERE table_type='VIEW' 
+        AND table_comment LIKE '%invalid%';
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org51bd861" class="outline-4">
+<h4 id="org51bd861"><span class="section-number-4">4.0.3</span> Missing Tables</h4>
+<div class="outline-text-4" id="text-4-0-3">
+<p>
+Some tables might show on SHOW TABLES but can't be dropped or selected.
+Check for InnoDB Errors on the LAST FOREIGN KEY ERROR Section on
+</p>
+
+<pre class="example">
+SHOW INNODB ENGINE STATUS;
+</pre>
+
+<p>
+You can try an altenative way to delete them is to do a:
+</p>
+
+<pre class="example">
+CREATE TABLE DB.TABLE_NAME (a varchar(1)) STORAGE=MyISAM;
+DROP TABLE DB.TABLE_NAME;
+</pre>
+</div>
+</div>
+<div id="outline-container-org0d49174" class="outline-4">
+<h4 id="org0d49174"><span class="section-number-4">4.0.4</span> Table corruption</h4>
+<div class="outline-text-4" id="text-4-0-4">
+<pre class="example">
+mysqlcheck DB mysqlcheck DB TABLE
+innochecksum --count /var/lib/mysql/ibdata1 innochecksum --log mylog.txt
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org6853cf6" class="outline-2">
+<h2 id="org6853cf6"><span class="section-number-2">5</span> Index</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+General multiple-key index strategy (left-&gt;right)
+</p>
+
+<ol class="org-ol">
+<li>Columns on the WHERE clause</li>
+<li>Columns on the ORDER BY/GROUP BY clause (matching sort order)</li>
+<li>Columns on the SELECT clause (for a covering index)</li>
+</ol>
+
+
+<p>
+USE INDEX
+FORCE INDEX
+IGNORE INDEX
+</p>
+
+<pre class="example">
+show index from &lt;TABLE&gt;;
+alter table &lt;TABLE&gt; add index &lt;IDX_NAME&gt; (&lt;COLUMN&gt;);
+
+-- unused index list (since last table alter)
+select * from sys.`schema_unused_indexes`
+</pre>
+
+<p>
+<b>Unused indexes</b>
+</p>
+<pre class="example">
+-- Find worthwhile unused index to delete
+-- tune where conditions to fit your system
+select 
+	U.object_schema,U.object_name,U.index_name,
+	I.ENGINE,I.CREATE_TIME,I.TABLE_ROWS
+from sys.schema_unused_indexes U
+inner join information_schema.TABLES I 
+on I.TABLE_SCHEMA=U.object_schema and I.TABLE_NAME=U.object_name
+where 
+  I.CREATE_TIME &lt; now()-interval 1 month
+and U.index_name not like 'FK%'
+and I.TABLE_ROWS &gt; 1000000
+</pre>
+</div>
+
+<div id="outline-container-org44514f9" class="outline-4">
+<h4 id="org44514f9"><span class="section-number-4">5.0.1</span> Find ID-like named columns that are un-indexed</h4>
+<div class="outline-text-4" id="text-5-0-1">
+<pre class="example">
+SELECT t.TABLE_SCHEMA, t.TABLE_NAME, c.COLUMN_NAME, IFNULL(kcu.CONSTRAINT_NAME, 'Not indexed') AS `Index`
+FROM information_schema.TABLES t
+INNER JOIN information_schema.`COLUMNS` c
+    ON c.TABLE_SCHEMA = t.TABLE_SCHEMA
+    AND c.TABLE_NAME = t.TABLE_NAME
+    AND c.COLUMN_NAME LIKE '%Id'
+LEFT JOIN information_schema.`KEY_COLUMN_USAGE` kcu
+    ON kcu.TABLE_SCHEMA = t.TABLE_SCHEMA
+    AND kcu.TABLE_NAME = t.TABLE_NAME
+    AND kcu.COLUMN_NAME = c.COLUMN_NAME
+    AND kcu.ORDINAL_POSITION = 1    
+WHERE kcu.TABLE_SCHEMA IS NULL
+AND t.TABLE_SCHEMA NOT IN ('information_schema', 'performance_schema', 'mysql');
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org8075610" class="outline-4">
+<h4 id="org8075610"><span class="section-number-4">5.0.2</span> Index merging tips</h4>
+<div class="outline-text-4" id="text-5-0-2">
+<p>
+To try disabling the index merge and see if timing changes, use set
+optimizer\<sub>switch</sub> = 0 or IGNORE INDEX
+</p>
+
+<p>
+INTERSECT: use single index for relevant columns UNION: There can be a
+high number of rows as a result of the union, when indexes are not very
+selective
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8982586" class="outline-4">
+<h4 id="org8982586"><span class="section-number-4">5.0.3</span> Covering indexes tips</h4>
+<div class="outline-text-4" id="text-5-0-3">
+<pre class="example">
+select * from mytable
+use index myindex ;
+</pre>
+
+<p>
+Extra: Using index
+</p>
+
+<p>
+SELECTed columns must be covered by an index (+PRIMARY/CLUSTER index)
+</p>
+
+<p>
+Sort Index
+</p>
+
+<p>
+When sort is not using an index:
+</p>
+
+<p>
+Extra: Using filesort
+</p>
+
+<p>
+Other type: Index
+</p>
+
+<p>
+Only works when the ORDER BY matches exactly the Index order
+</p>
+</div>
+</div>
+<div id="outline-container-org17b4356" class="outline-4">
+<h4 id="org17b4356"><span class="section-number-4">5.0.4</span> Interesting facts</h4>
+<div class="outline-text-4" id="text-5-0-4">
+<p>
+Innodb
+  BTREE is a family of index implementations, dependent on the actual storage engine
+  InnoDB BTREE is optimized for range scans, leaf nodes are also linked sequentially in both directions
+  PRIMARY KEY on Innodb is clustered always, there is always an explicit or implicity PRIMARY
+  25% - 50% empty pages in tree
+  string indexes are not different from numerics
+  LIKE 'ABC%' is really a range scan: min &lt; x &lt; max
+    but '%ABC' can't use optimal range scan, so avoid when possible, there is an added cost with leading %
+  PRIMARY KEY is implicitly appended to all indexes
+</p>
+
+<p>
+Innodb Multi-column indexes/ Sorting
+  As soon as the optimizer sees a RANGE (&lt;, &gt;, between) in the where it will stop to use the index on that column, it can only left part of the index.
+  Try to only use &lt; &gt; or between on the last column of an index, IN(..) is OK
+  Sorting only for sencond or later keys does not work
+  Sorting works only with = in WHERE, so IN(..) is not OK
+  Index helps only with MIN() and MAX(), not AVG(), etc
+  Works best with WHERE A=1 and B=2, for A=2 or B=2 use 2 separate indexes on A and B
+</p>
+
+<p>
+JOINing
+  Performs joins as NESTED LOOPS, so join direction determines what indexes are used on each table
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org05ea6a9" class="outline-2">
+<h2 id="org05ea6a9"><span class="section-number-2">6</span> Performance</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Cardinality=number of unique values for a column
+For general server or consistently slow queries use <b>performance<sub>schema</sub></b>
+For queries with high performance variability also use the slow log
+</p>
+
+<p>
+Slowest queries: Group By, Order By, Distinct &lt;=&gt; Tmp Tables &lt;=&gt; Filesort
+</p>
+
+<p>
+Temporary Tables: 
+      can be triggered by: Range + Group by, Order By, etc
+   if table has TEXT/BLOB column then DISK. (Warning: TEXT can be implicit, eg.  concat(&#x2026;) &gt; 512 chars)
+   if table size &gt; min(tmp<sub>table</sub><sub>size</sub>, max<sub>heap</sub><sub>table</sub><sub>size</sub>) then DISK else MEMORY
+</p>
+
+<p>
+Index usage:
+   Loose index scan: fastest, only supports MAX()/MIN()
+   Tight index scan: good, supports all the aggregation functions
+</p>
+
+<p>
+Explain columns:
+  Type: (best to worst)
+     const: query match 1 row at most
+     eq<sub>ref</sub>: one row read for each combination of joins
+     ref: using indexed columns
+     range: using index to match range of values
+     ALL: full table scan 
+  Extra: (first 3 are good, loose is better than tight)
+     Using index for group-by: loose index scan if no tmp needed
+     Using index: covering index, tight index scan if no tmp needed
+     Using where: where will filter rows, applies to Type=ALL,ref
+     Using temporary: use a temp table (memory or disk)
+     Using filesort: use a temp file to sort (disk)
+</p>
+</div>
+
+<div id="outline-container-orga45988b" class="outline-4">
+<h4 id="orga45988b"><span class="section-number-4">6.0.1</span> Profiling</h4>
+<div class="outline-text-4" id="text-6-0-1">
+<p>
+Measure times for running a query
+</p>
+
+<pre class="example">
+set profiling = 1;
+
+&lt;RUN QUERY&gt;;
+
+show profiles;
+
+show profile for query 1;
+</pre>
+
+<p>
+Show profile but sorted by total time (query = 1)
+</p>
+
+<pre class="example">
+SELECT STATE, SUM(DURATION) AS Total_R,
+        ROUND(
+           100 * SUM(DURATION) /
+              (SELECT SUM(DURATION)
+               FROM INFORMATION_SCHEMA.PROFILING
+               WHERE QUERY_ID = @query_id
+           ), 2) AS Pct_R,
+        COUNT(*) AS Calls,
+        SUM(DURATION) / COUNT(*) AS 'R/Call'
+     FROM INFORMATION_SCHEMA.PROFILING
+     WHERE QUERY_ID = 1
+     GROUP BY STATE
+     ORDER BY Total_R DESC;
+</pre>
+
+<p>
+Status Counters
+</p>
+
+<pre class="example">
+FLUSH STATUS;
+
+&lt;RUN QUERY&gt;
+
+SHOW STATUS WHERE Variable_name LIKE 'Handler%'
+ OR Variable_name LIKE 'Created%';
+</pre>
+
+<p>
+Handler<sub>read</sub><sub>rnd</sub><sub>next</sub> -&gt; unindexed reads
+</p>
+</div>
+</div>
+
+<div id="outline-container-org55b05d5" class="outline-4">
+<h4 id="org55b05d5"><span class="section-number-4">6.0.2</span> sysbench</h4>
+<div class="outline-text-4" id="text-6-0-2">
+<pre class="example">
+create schema sbtest
+</pre>
+
+<pre class="example">
+sysbench oltp_insert --db-driver=mysql --mysql-user=USER1 --mysql-host=SQL1 prepare
+sysbench oltp_insert --db-driver=mysql --mysql-user=USER1 --mysql-host=SQL1 run
+sysbench oltp_insert --db-driver=mysql --mysql-user=USER1 --mysql-host=SQL1 cleanup
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgf4f544c" class="outline-2">
+<h2 id="orgf4f544c"><span class="section-number-2">7</span> Security</h2>
+<div class="outline-text-2" id="text-7">
+<pre class="example">
+select host, user from mysql.user;
+select host, db,  user from mysql.db;
+show grants;
+
+-- user creation
+create user 'name'@'host' identified by 'password';
+
+-- % matches *
+create user 'name'@'%' identified by 'password';
+
+-- _ matches a single char
+create user 'name'@'192.168.1.10_' identified by 'password';
+</pre>
+</div>
+
+<div id="outline-container-org8f451eb" class="outline-4">
+<h4 id="org8f451eb"><span class="section-number-4">7.0.1</span> Grant &amp; Revoke DB level</h4>
+<div class="outline-text-4" id="text-7-0-1">
+<p>
+Database name is not validated by grants.
+</p>
+
+<p>
+Flush is required, otherwise permissions don't take until restart. Also
+current sessions might need to switch dbs.
+</p>
+
+<p>
+with grant option allows user to grant/revoke the same privileges to
+other users
+</p>
+
+<p>
+DB level grant (mysql.db)
+</p>
+
+<pre class="example">
+grant all on &lt;DATABASE&gt;.* to 'user'@'host';
+flush privileges;
+
+grant create, drop, alter, insert, update, select, delete,
+  index, create index,
+  create routine, alter routine, execute
+  trigger   
+  on &lt;DATABASE&gt;.* to 'user'@'host' [with grant option];
+flush privileges;
+
+revoke create, drop, alter, insert, update, select, delete, index 
+  on &lt;DATABASE&gt;.* to 'user'@'host';
+flush privileges;
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orge2bcd28" class="outline-4">
+<h4 id="orge2bcd28"><span class="section-number-4">7.0.2</span> Grant Server level</h4>
+<div class="outline-text-4" id="text-7-0-2">
+<pre class="example">
+grant SUPER, RELOAD, SHUTDOWN, FILE ON *.* TO 'user'@'host';
+flush privileges;
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2ecd9a4" class="outline-2">
+<h2 id="org2ecd9a4"><span class="section-number-2">8</span> Replication</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Skip transactions with on slave with (careful!)
+</p>
+<pre class="example">
+STOP SLAVE;
+SET GLOBAL sql_slave_skip_counter = 1;
+START SLAVE;
+SHOW SLAVE STATUS \G
+</pre>
+</div>
+
+<div id="outline-container-org8f52c05" class="outline-4">
+<h4 id="org8f52c05"><span class="section-number-4">8.0.1</span> Table sync (pt-table-sync)</h4>
+<div class="outline-text-4" id="text-8-0-1">
+<pre class="example">
+# sync DSN1 -&gt; DSN2
+pt-table-sync DSN1,D=DB,t=tab DSN2 --print
+pt-table-sync DSN1,D=DB,t=tab DSN2 --execute
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgd5e6601" class="outline-3">
+<h3 id="orgd5e6601"><span class="section-number-3">8.1</span> Setup replication</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+Replication is only async.
+Modes: statement (default), row, mixed-format
+</p>
+
+<ol class="org-ol">
+<li>Enable binlog (master)</li>
+</ol>
+<pre class="example">
+# /etc/my.cnf (master)
+# ~~~~~~~~~~~~~~~~~~~~
+
+[mysqld]
+server_id = 1
+log_bin = mysql-bin
+# binlog_do_db = db1,db2,db3 # optionally log some dbs only
+# bind-address = 127.0.0.1
+</pre>
+
+<p>
+log<sub>bin</sub> : name of the replication log binary 
+binlog<sub>do</sub><sub>db</sub> : list of db to replicate
+</p>
+
+<ol class="org-ol">
+<li>Restart instance</li>
+
+<li>Create user for replication slave</li>
+</ol>
+<pre class="example">
+CREATE USER 'repluser'@'%' IDENTIFIED BY 'P@$$w0rd';
+GRANT REPLICATION SLAVE ON *.* TO 'repluser'@'%';
+FLUSH PRIVILEGES;
+</pre>
+
+<ol class="org-ol">
+<li>Take a full backup of DBs on master</li>
+
+<li>Get replication status values on master</li>
+</ol>
+
+<pre class="example">
+show master status \G
+</pre>
+
+<ol class="org-ol">
+<li>Edit the instance section my.cnf and restart the slave (slave)</li>
+</ol>
+<pre class="example">
+# /etc/my.cnf (slave)
+# ~~~~~~~~~~~~~~~~~~~
+
+# must be unique in replication network
+server_id=2
+</pre>
+
+<ol class="org-ol">
+<li>Start replication</li>
+</ol>
+<pre class="example">
+-- check repl not running on slave (must be empty)
+show master status \G
+show slave status \G
+stop slave;
+
+-- connect to master (use values from show master status)
+CHANGE MASTER TO
+    MASTER_HOST = '192.168.1.100',
+    MASTER_USER = 'repluser',
+    MASTER_PASSWORD = 'P@$$w0rd',
+    MASTER_LOG_FILE = 'mysql-bin.000001',
+    MASTER_LOG_POS = 107;
+
+-- check slave is config
+show slave status \G
+start slave;
+
+-- Slave_IO_Running and Slave_SQL_Running should now both be “Yes.”
+-- replication should be working now
+</pre>
+
+<p>
+<b>To daisy chains master-slaves</b>
+</p>
+
+<p>
+On the middle servers (the ones running as slaves+master): enable
+<b>log-slave-updates</b>
+</p>
+
+<pre class="example">
+# /etc/my.cnf (middle servers, master+slave)
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+log_bin=mysql-bin
+server_id=NN
+log-slave-updates=ON
+</pre>
+
+<p>
+Troubleshooting
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgea804b7" class="outline-2">
+<h2 id="orgea804b7"><span class="section-number-2">9</span> Scheduler Events</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+Scheduler runs per database. Need to be globally enabled, then create events with a schedule. 
+Expired events are deleted unless ON COMPLETION PRESERVE
+</p>
+
+<pre class="example">
+SET GLOBAL event_scheduler = ON;
+
+select @@event_scheduler;
+
+show events;
+show create event &lt;NAME&gt;;
+drop event &lt;NAME&gt;;
+
+ALTER EVENT &lt;NAME&gt; DISABLE;
+ALTER EVENT &lt;NAME&gt; ENABLE;
+</pre>
+
+<pre class="example">
+DELIMITER $$
+CREATE EVENT &lt;NAME&gt;
+    ON SCHEDULE
+        EVERY 1 DAY
+        STARTS CURRENT_TIMESTAMP
+        ENDS CURRENT_TIMESTAMP + INTERVAL 1 MONTH
+        ON COMPLETION PRESERVE
+    DO
+BEGIN
+ ...
+END; $$
+DELIMITER ;;
+</pre>
+</div>
+</div>
+<div id="outline-container-org7c21804" class="outline-2">
+<h2 id="org7c21804"><span class="section-number-2">10</span> DBA / Sysadmin</h2>
+<div class="outline-text-2" id="text-10">
+</div>
+<div id="outline-container-org75c04fc" class="outline-4">
+<h4 id="org75c04fc"><span class="section-number-4">10.0.1</span> MySQL Tuning</h4>
+<div class="outline-text-4" id="text-10-0-1">
+<p>
+Initial configuration generator: <a href="https://tools.percona.com">https://tools.percona.com</a>
+</p>
+
+<p>
+pt-variable-advisor
+</p>
+
+<p>
+Scout system
+</p>
+<pre class="example">
+lscpu
+lspci
+free -g
+vmstat
+</pre>
+
+<pre class="example">
+
+# most critical settings for performance
+innodb_buffer_pool_size=$(&gt;= 80% of RAM)
+innodb_flush_method=O_DIRECT
+innodb_flush_log_at_trx_commit=(0,1,2)
+innodb_log_file_size=(&gt;= 256MB)
+innodb_log_files_in_group=2
+innodb_file_per_table
+innodb_data_file_path=ibmdata1:10M:autoextend:max:10G
+
+# important with minor caveats
+join_buffer_size
+table_open_cache_instances
+skip_name_resolve=1
+open_files_limit
+table_definition_cache
+max_connections
+thread_cache
+table_open_cache
+table_open_cache_instances
+tmp_table_size
+max_heap_table_size
+query_cache_size
+sort_buffer_size
+default_storage_engine
+default_tmp_storage_engine
+read_rnd_buffer_size
+tmpdir
+
+#MYSAM
+key_buffer_size
+
+# other options to consider
+back_log
+max_allowed_packet
+max_connect_errors
+
+# fine-tuning
+innodb_file_format=(antelope,barracuda)
+innodb_lock_wait_timeout
+innodb_io_capacity
+innodb_io_capacity_max
+innodb_lru_scan_depth
+innodb_checksum_algorithm
+innodb_monitor_enable='%'
+innodb_buffer_pool_instances
+innodb_log_buffer_size
+innodb_buffer_pool_dump_now
+innodb_buffer_pool_dump_at_shutdown
+innodb_change_buffer_size
+innodb_read_io_threads
+innodb_write_io_threads
+innodb_undo_tablespaces
+innodb_undo_logs
+innodb_undo_directory
+
+# ssd 
+innodb_flush_neighbors
+
+# binlog POI Recovery &amp; replication
+master_info_repository
+relay_log_info_repository
+log_bin
+sync_binlog
+sync_relay_log
+expire_log_days
+
+# security
+old_passwords (disable)
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgdde3070" class="outline-4">
+<h4 id="orgdde3070"><span class="section-number-4">10.0.2</span> Linux Tuning</h4>
+<div class="outline-text-4" id="text-10-0-2">
+<p>
+Preferred FS: ext4 (noatime), xfs, LVM (no-snapshot)
+</p>
+
+<p>
+Be careful with NUMA (interleaving)
+</p>
+
+<p>
+Be careful with the OOM killer
+</p>
+
+<p>
+Manage File Cache, two strategies, small cache or large cache
+</p>
+
+<pre class="example">
+/etc/sysctl.conf
+~~~~~~~~~~~~~~~~
+
+vm.dirty_background_ratio = 5
+vm.dirty_ratio = 10
+</pre>
+<pre class="example">
+sysctl -w vm.dirty_background_ratio = 5
+sysctl -w vm.dirty_ratio = 10
+sysctl -p
+</pre>
+
+<p>
+Multiple-instances? Use <b>taskset</b> to set PID affinity to processors
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0333b83" class="outline-4">
+<h4 id="org0333b83"><span class="section-number-4">10.0.3</span> Logrotate example script</h4>
+<div class="outline-text-4" id="text-10-0-3">
+<pre class="example">
+# errorlog
+/var/lib/mysql/mysqld.log {
+        su mysql mysql
+        daily
+        notifempty
+        size=10M
+        rotate 20
+        missingok
+        create 640 mysql mysql
+        compress
+        postrotate
+           /dbastaff/cycle-errorlogs.sh -s SQL1
+        endscript
+}
+
+# slow log
+/var/lib/mysql/slow.log {
+        su mysql mysql
+        daily
+        notifempty
+        rotate 20
+        missingok
+        create 640 mysql mysql
+        compress
+        prerotate
+           /dbastaff/dba-archive-digest.sh -s SQL1
+        endscript
+        postrotate
+           /dbastaff/cycle-errorlogs.sh -s SQL1
+        endscript
+}
+</pre>
+</div>
+</div>
+<div id="outline-container-orgb3f30b9" class="outline-4">
+<h4 id="orgb3f30b9"><span class="section-number-4">10.0.4</span> Heartbeat monitoring</h4>
+<div class="outline-text-4" id="text-10-0-4">
+<pre class="example">
+# create heartbeat table on master
+pt-heartbeat --create-table --database mysql "h=HOST;port=3306;user=USER;password=PASSWORD" --update 
+pt-heartbeat --create-table --database mysql "h=HOST;port=3306;user=USER;password=PASSWORD" --update --daemonize
+# monitor slave
+pt-heartbeat --create-table --create-table-engine MEMORY --database mysql "h=SLAVE,P=3306,u=USER,p=PASS" --check --master-server-id 1
+pt-heartbeat --create-table --create-table-engine MEMORY --database mysql "h=SLAVE,P=3306,u=USER,p=PASS" --monitor --master-server-id 1
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orge3e9378" class="outline-4">
+<h4 id="orge3e9378"><span class="section-number-4">10.0.5</span> Innodb file per table (older mysqls)</h4>
+<div class="outline-text-4" id="text-10-0-5">
+<p>
+<a href="https://dba.stackexchange.com/questions/8982/what-is-the-best-way-to-reduce-the-size-of-ibdata-in-mysql">https://dba.stackexchange.com/questions/8982/what-is-the-best-way-to-reduce-the-size-of-ibdata-in-mysql</a>
+Steps: Dump all databases, Drop all databases, Shutdown, vi /etc/my.cnf
+</p>
+
+<pre class="example">
+/etc/my.cnf
+~~~~~~~~~~~
+
+[mysqld]
+innodb_file_per_table
+innodb_flush_method=O_DIRECT
+innodb_log_file_size=1G
+innodb_buffer_pool_size=4G
+</pre>
+
+<p>
+Cleanup: delete ibdata1, ib<sub>logfile</sub>{0,1}, Start server, Load all dbs • each table will have a .frm and .ibd file
+</p>
+</div>
+</div>
+<div id="outline-container-orge722ffd" class="outline-4">
+<h4 id="orge722ffd"><span class="section-number-4">10.0.6</span> perl modules DBD</h4>
+<div class="outline-text-4" id="text-10-0-6">
+<pre class="example">
+SUSE:  zypper install perl-DBD-mysql
+RH: yum install perl-DBD-mysql
+CPAN: cpan install DBD::mysql
+</pre>
+
+<p>
+<b><b>Manual</b></b>
+</p>
+
+<p>
+If you don't have internet conectivity do a manual install:
+</p>
+
+<p>
+Download perl package: <a href="http://search.cpan.org/~michielb/DBD-mysql/">http://search.cpan.org/~michielb/DBD-mysql/</a>
+</p>
+
+<p>
+Copy to server and unpack files
+</p>
+
+<pre class="example">
+
+# check paths
+mysql_config --libs
+mysql_config --cflags
+cd DBD-mysql....
+perl Makefile.PL
+make
+make test
+</pre>
+
+<p>
+Super manual
+</p>
+
+<p>
+Download your distibution perl mysqlclient develpment headers (eg:
+libmysqlclient-devel)
+</p>
+
+<pre class="example">
+export HOME=usr/bin
+mysql_config --libs
+mysql_config --cflags
+
+make clean
+perl Makefile.PL --libs="-L$HOME/usr/lib64/mysql -lmysqlclient -L..." --cflags="-L$HOME/usr/include/mysql ..."
+make
+make test
+</pre>
+
+<p>
+Example on SUSE 11:
+</p>
+
+<pre class="example">
+mkdir perl-DBD-mysql
+mv *tar.gz perl-DBD-mysql
+cd perl-DBD-mysql
+tar xvzf DBD-mysql*tar.gz
+tar xvzf libmysqlclient-devel*tar.gz
+export HOME=usr/bin
+mysql_config --libs
+mysql_config --cflags
+cd DBD-mysql*
+
+make clean
+perl Makefile.PL --libs="-L/home/fzavalia/perl-DBD-mysql/usr/lib64/mysql -lmysqlclient -L/usr/lib64 -lssl" --cflags="-I/home/fzavalia/perl-DBD-mysql/usr/include/mysql  -fmessage-length=0 -D_FORTIFY_SOURCE=2 -fstack-protector -funwind-tables -fasynchronous-unwind-tables -DPIC -fPIC -DUNDEF_HAVE_INITGROUPS -fno-strict-aliasing" --testuser=... --testpassword=... --testhost=...
+make
+make test
+
+sudo su -
+make install
+
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org7d3eb2d" class="outline-4">
+<h4 id="org7d3eb2d"><span class="section-number-4">10.0.7</span> xtrabackup innobackupex snapshots</h4>
+<div class="outline-text-4" id="text-10-0-7">
+<p>
+XTRABACKUP Percona XtraBackup
+</p>
+
+<p>
+Whole Instance Backup
+</p>
+
+<p>
+Backup Full
+</p>
+
+<p>
+Can be safely interrupted
+</p>
+
+<pre class="example">
+xtrabackup --defaults-file=/usr/my.cnf --backup --user=USER --password=PW --target-dir=/backups/
+# older versions
+innobackupex --defaults-file=/usr/my.cnf --backup --compress --user=mysql \
+  --socket=/var/lib/mysql/mysql.lock --rsync --password=secret --databases=mysql \
+  /backups
+</pre>
+
+<p>
+Backup <b>Incremental</b>
+</p>
+
+<p>
+You need to have the previous full or incremental:
+</p>
+<pre class="example">
+xtrabackup --backup --user=USER --password=PW \
+  --target-dir=/backups/mybackup_inc1 \
+  --incremental-basedir=/backups/mybackup_full xtrabackup --backup \
+  --user=USER --password=PW --target-dir=/backups/mybackup_inc2 \
+  --incremental-basedir=/backups/mybackup_inc1
+</pre>
+
+<p>
+<b>Decompress</b>
+</p>
+
+<p>
+Install qpress
+</p>
+<pre class="example">
+xtrabackup --decompress --remove-original --target-dir=/backups
+</pre>
+
+<p>
+<b>Prepare Full</b>
+</p>
+
+<p>
+Can't be safely interrupted
+</p>
+
+<pre class="example">
+xtrabackup --prepare --target-dir=/backups/mybackup
+</pre>
+
+<p>
+<b>Restore Full</b>
+</p>
+
+<ol class="org-ol">
+<li>Shutdown mysql</li>
+<li>Check mysqld is not running (ps -ef|grep mysqld)</li>
+<li>Move or delete DATADIR (eg /var/lib/mysql)</li>
+<li>Restore</li>
+</ol>
+
+<pre class="example">
+mv /var/lib/mysql{,.old}
+mkdir /var/lib/mysql
+xtrabackup --copy-back --target-dir=/backups/mybackup --datadir=/var/lib/mysql
+chown -R mysql:mysql /var/lib/mysql
+ls -la /var/lib/mysql
+</pre>
+
+<ol class="org-ol">
+<li>Start up mysql, check logs.</li>
+</ol>
+
+<p>
+<b>Prepare Incremental</b>
+</p>
+
+<p>
+You need to use &#x2013;apply-log-only or you won't be able to use
+incrementals. Backup will be only usable for full if you forget this
+</p>
+
+<p>
+A backup prepared with apply-log-only will still be usable as mysql
+automatically does the recovery/rollback. So it might be a good idea to
+use it always.
+</p>
+
+<pre class="example">
+   xtrabackup --prepare --apply-log-only --target-dir=/backups/mybackup_full --incremental-basedir=/backups/mybackup_inc1
+xtrabackup --prepare --apply-log-only --target-dir=/backups/mybackup_full --incremental-basedir=/backups/mybackup_inc2
+</pre>
+
+<p>
+(In the last step apply-log-only is optional)
+</p>
+
+<p>
+Now do a full restore of /backups/mybackup<sub>full</sub>
+</p>
+
+<p>
+<b>Database/Table Backup</b>
+</p>
+
+<p>
+Warning: ibdata is backed up for each DB. So there could be potentially a lot of data duplicated
+</p>
+
+<p>
+<b>Backup Full</b>
+</p>
+
+<pre class="example">
+xtrabackup --databases="myb1 myb2" -u USER -p PW
+--target-dir=/backups/mybackup\_full
+</pre>
+
+<p>
+<b>Export Tables</b>
+</p>
+
+<pre class="example">
+xtrabackup --prepare --export --innodb-file-per-table
+--target-dir=/backups/mybackup\_full
+</pre>
+
+<p>
+<b>Import tables (read manual)</b>
+</p>
+
+<p>
+Full Restore, Dump and Load
+</p>
+
+<p>
+Do a full restore in an empty dir
+</p>
+
+<p>
+Start a temp mysqld
+</p>
+
+<pre class="example">
+mysqld --user mysql --datadir /var/lib/mysql_tmp/ --port 10000 --socket /run/mysqld/mysqld_tmp.sock
+</pre>
+
+<p>
+Do a mysqldump, delete original db and load the dump.
+</p>
+</div>
+</div>
+<div id="outline-container-org04eeddb" class="outline-4">
+<h4 id="org04eeddb"><span class="section-number-4">10.0.8</span> logical dump mysqldump</h4>
+<div class="outline-text-4" id="text-10-0-8">
+<p>
+Database size (estimated)
+</p>
+
+<pre class="example">
+SELECT
+    Data_BB / POWER(1024,1) Data_KB,
+    Data_BB / POWER(1024,2) Data_MB,
+    Data_BB / POWER(1024,3) Data_GB
+FROM (SELECT SUM(data_length) Data_BB FROM information_schema.tables
+WHERE table_schema NOT IN ('information_schema','performance_schema','mysql')) A;
+</pre>
+
+<p>
+<b>Logical Backups</b>
+</p>
+
+<p>
+WARNING: orphaned views can prevent the dump from working on some dbs
+</p>
+
+<p>
+read-only locks all tables (general)
+</p>
+
+<pre class="example">
+-- leave a client connected with lock all tables
+-- all other clients will block
+flush tables with read lock;
+
+# simple dump the db
+mysqldump &lt;DATABASE&gt; &gt; &lt;DUMP_FILE&gt;.sql
+
+# more complete and with compression
+mysqldump --hex-blob --events --triggers --routines --disable-keys &lt;DATABASE&gt; | gzip -c &gt; &lt;DUMP_FILE&gt;.sql.gz
+
+-- unlock tables when finished
+unlock tables;
+</pre>
+
+<p>
+For innodb databases you could do something like this, wait for
+transactions are finishes, gets lock, saves binary log position and
+releases it:
+</p>
+
+<pre class="example">
+mysqldump --all-databases --master-data --single-transaction &gt; backup_sunday_1_PM.sql
+</pre>
+
+<p>
+With flush-logs ( master-data=2 is write informative message about binary log). After dump completes a new bin-log is created
+</p>
+
+<pre class="example">
+mysqldump --single-transaction --flush-logs --master-data=2  --all-databases &gt; backup_sunday_1_PM.sql
+</pre>
+
+<p>
+After dump is complete, any changes occurred during or after the dump
+are contained on the bin-logs stated on the sql output. Taking a 'tran
+dump' is just doing a FLUSH LOGS and copying the previous bin-log file
+to a backup location.
+</p>
+
+<p>
+Limitations: • changes to other innodb tables are not saved • do not
+allow administrative changes on tables during dump • non innodb tables
+should not be allowed to change during dump
+</p>
+
+<p>
+Options
+</p>
+
+<p>
+• &#x2013;add-drop-table • &#x2013;disable-keys : set disable indexes and keys for
+fast import • &#x2013;events : export events • &#x2013;hex-blob : for outputting
+binaries • &#x2013;tables : filter include tables • &#x2013;where : filter rows •
+&#x2013;triggers : export triggers • &#x2013;routines : export SPs
+</p>
+
+<p>
+Binary Logs
+</p>
+
+<p>
+If binary log is enabled (show binary logs), you can convert the binary
+log to sql statements:
+</p>
+
+<pre class="example">
+mysqlbinlog file1.bin file2.bin file3.bin &gt; text.sql
+</pre>
+
+<p>
+This can be used for point in time recovery &#x2013;start-date, etc
+</p>
+
+<pre class="example">
+mysqlbinlog --start-position=NNNNN start-log-file.bin next.bin next.bin &gt; recovery.sql
+</pre>
+
+<p>
+On each restart a new bin log file is created, or when you FLUSH LOGS
+(or mysqladmin flush-logs). Mysqldump has an option to flush logs
+</p>
+
+<p>
+Binary logs must be purged (PURGE BINARY LOGS) or set
+expire\<sub>logs</sub>\<sub>days</sub>, mysqldump has an option for this. But be careful
+when using replication, if replication is behind you may break it.
+</p>
+
+<p>
+<b>Restore Logical Backup</b>
+</p>
+
+<p>
+Load time can be improved with:
+</p>
+
+<pre class="example">
+-- beginning of filex
+SET AUTOCOMMIT = 0;
+SET FOREIGN_KEY_CHECKS=0;
+
+-- end of file
+SET AUTOCOMMIT = 0;
+SET FOREIGN_KEY_CHECKS=0;
+</pre>
+
+<pre class="example">
+create database &lt;DATABASE&gt;;
+
+# simple restore
+mysql &lt;DATABASE&gt; &lt; &lt;DUMP_FILE&gt;.sql
+
+# with compression
+gunzip -c &lt;DUMP_FILE&gt;.sql.gz  | mysql &lt;DATABASE&gt;
+# or
+zcat &lt;DUMP_FILE&gt;.sql.gz  | mysql &lt;DATABASE&gt;
+</pre>
+
+<p>
+<b>Physical Backups</b>
+</p>
+
+<ol class="org-ol">
+<li>Get data dir: show variables like 'datadir';</li>
+<li>Shutdown mysql</li>
+<li>Copy/Backup db files (idbdata) (preserve permissions)</li>
+<li>Start mysql</li>
+</ol>
+
+<p>
+<b>BCP can be simulated with OUTFILE</b>
+</p>
+
+<pre class="example">
+select * from &lt;TABLE&gt; into outfile '/full/path.txt';
+
+load data infile '/full/path.txt' into tablre &lt;TABLE&gt;;
+
+</pre>
+</div>
+</div>
+<div id="outline-container-org4870fce" class="outline-4">
+<h4 id="org4870fce"><span class="section-number-4">10.0.9</span> Point in time recovery</h4>
+<div class="outline-text-4" id="text-10-0-9">
+<ol class="org-ol">
+<li>Flush logs</li>
+<li></li>
+</ol>
+<pre class="example">
+FLUSH LOGS;
+</pre>
+
+<p>
+2a. Get master position from a dump
+</p>
+
+<pre class="example">
+zcat DUMP.sql.gz | head -n 100 | grep "CHANGE MASTER"
+</pre>
+
+<p>
+2b. Or use directly a datetime
+</p>
+
+<ol class="org-ol">
+<li>Generate recovery</li>
+</ol>
+<pre class="example">
+ls -1 mysql-bin.* | while read fn; do 
+  [[ $(echo "$fn" | awk -F'.' '{print $2}' | sed 's/\^0*//g') -ge 49546 ]] &amp;&amp; echo -n "$fn" ; 
+done | sort -u | xargs mysqlbinlog | nice -n 5 gzip - &gt; rollup.bin.gz
+</pre>
+
+<ol class="org-ol">
+<li>First file: fN position XXXXX</li>
+
+<li>When replaying transactions on the same server use &#x2013;disable-log-bin to prevent recreating the transactions again</li>
+</ol>
+
+<pre class="example">
+mysqlbinlog binlog-NNNN  --start-position=XXXXXX --to-last-log --stop-datetime="2018-03-29 12:35:50" [[--disable-log-bin]] | gzip - &gt; recovery-NNNN.sql.gz
+</pre>
+
+<ol class="org-ol">
+<li>Re-apply transactions</li>
+</ol>
+<pre class="example">
+zcat recovery-NNNN.sql.gz | mysql ...
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org4e71e03" class="outline-4">
+<h4 id="org4e71e03"><span class="section-number-4">10.0.10</span> space usage</h4>
+<div class="outline-text-4" id="text-10-0-10">
+<pre class="example">
+SELECT IFNULL(B.engine,'Total') "Storage Engine",
+CONCAT(LPAD(REPLACE(FORMAT(B.DSize/POWER(1024,pw),3),',',''),17,' '),'
+', SUBSTR(' KMGTP',pw+1,1),'B') "Data Size", CONCAT(LPAD(REPLACE(
+FORMAT(B.ISize/POWER(1024,pw),3),',',''),17,' '),' ', SUBSTR('
+KMGTP',pw+1,1),'B') "Index Size", CONCAT(LPAD(REPLACE(
+FORMAT(B.TSize/POWER(1024,pw),3),',',''),17,' '),' ', SUBSTR('
+KMGTP',pw+1,1),'B') "Table Size" FROM (SELECT engine,SUM(data_length)
+DSize,SUM(index_length) ISize, SUM(data_length+index_length) TSize
+FROM information_schema.tables WHERE table_schema NOT IN
+('mysql','information_schema','performance_schema') AND engine IS NOT
+NULL GROUP BY engine WITH ROLLUP) B, (SELECT 3 pw) A ORDER BY TSize;
+
+-- table sizes
+
+SELECT table_name AS =Table=, round(((data_length + index_length) /
+1024 / 1024), 2) =MB= FROM information_schema.TABLES ORDER BY =MB= desc
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3c59a00" class="outline-2">
+<h2 id="org3c59a00"><span class="section-number-2">11</span> Internals</h2>
+<div class="outline-text-2" id="text-11">
+</div>
+<div id="outline-container-orgffa5777" class="outline-4">
+<h4 id="orgffa5777"><span class="section-number-4">11.0.1</span> PROCESSLIST</h4>
+<div class="outline-text-4" id="text-11-0-1">
+<p>
+Sleep = Waiting for new query
+Query = Executing or sending results
+Locked = Waiting for lock (only MyISAM)
+Analyzing/Statistics = Running engine statistics &amp; query optimization
+Copying to tmp table [on disk] = copying data to tmp table (order,
+sort, union, etc)
+Sorting result = Sorting result set (filesort)
+Sending data = fetching data from storage, sending results to client
+</p>
+</div>
+</div>
+
+<div id="outline-container-org04037a3" class="outline-4">
+<h4 id="org04037a3"><span class="section-number-4">11.0.2</span> Innodb Show Engine</h4>
+<div class="outline-text-4" id="text-11-0-2">
+<p>
+<b>Transaction mode</b>
+</p>
+<pre class="example">
+SELECT @@GLOBAL.tx_isolation, @@tx_isolation;
+SET [SESSION|GLOBAL] TRANSACTION ISOLATION LEVEL &lt;KEYWORD&gt;
+</pre>
+
+<p>
+READ UNCOMMITED: no locks acquired, "dirty read"
+READ COMMITED: locks acquired are released after the statement that caused the lock
+REPEATEABLE READ:  (default) all locks acquired during transaction are kept during the whole transaction
+SERIALIZABLE: like repeatable read, each SELECT is it own transaction with LOCK IN SHARE MODE
+</p>
+
+<p>
+<b>Update table, no index on column</b>
+</p>
+
+<p>
+TRANSACTION in REPEATEABLE READ
+</p>
+
+<pre class="example">
+update employees set store_id = 0 where store_id = 1;
+---TRANSACTION 1EAB04, ACTIVE 7 sec
+633 lock struct(s), &lt;strong&gt;heap size 96696&lt;/strong&gt;, 218786 row lock(s), undo log entries 1
+MySQL thread id 4, OS thread handle 0x7f8dfc35d700, query id 47 localhost root
+show engine innodb status
+</pre>
+
+<p>
+heap size: memory allocated to locks
+row locks: rows or index entries locked
+undo log: rows modified
+</p>
+
+<p>
+Lots of locks for only 1 row updated
+</p>
+
+<p>
+TRANSACTION in READ COMMITTED
+</p>
+
+<pre class="example">
+---TRANSACTION 1EAB06, ACTIVE 11 sec
+631 lock struct(s), &lt;strong&gt;heap size 96696&lt;/strong&gt;, 1 row lock(s), undo log entries 1
+MySQL thread id 4, OS thread handle 0x7f8dfc35d700, query id 62 localhost root
+show engine innodb status
+</pre>
+
+<p>
+Only 1 lock for the row updated
+</p>
+
+<p>
+<b>Gap Locking</b>
+</p>
+
+<p>
+In REPEATABLE READ mode, using FOR UPDATE does a gap lock, locks the matching range of the table.
+In READ COMMITED mode, gap locks are never acquired, but may lead to 'phantom row' problem.
+</p>
+
+<pre class="example">
+select * from employees where id &gt; 100 FOR UPDATE;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org333a81d" class="outline-4">
+<h4 id="org333a81d"><span class="section-number-4">11.0.3</span> Collation</h4>
+<div class="outline-text-4" id="text-11-0-3">
+<p>
+MySQL Collation Coercibility
+</p>
+
+<p>
+Rules to automativally resolve collation mismatch
+To resolve mismatched collations MySQL always tries to use the collation with the lowerst coercibility value:
+</p>
+
+<ol class="org-ol">
+<li>Use the collation with the lowest coercibility value</li>
+<li>Both sides unicode or both sides not-unicode -&gt; error</li>
+<li>The side with unicode collation wins, convert the other value to utf</li>
+<li>The side with _bin collation wins, convert the other value</li>
+</ol>
+
+<p>
+Some tips:
+</p>
+
+<p>
+COLLATE forces coercibility to 0 (not coercible)
+CONCAT sets coercibility to 1
+Columns, procedures and variables have coercibility of 2
+System Constants are 3
+Literals are 4
+NULL is 5
+</p>
+
+<p>
+Strategies to fix collation errors
+</p>
+
+<ul class="org-ul">
+<li>Change the collation of one or both strings
+<b>collation<sub>connection</sub></b>, table column metadata</li>
+<li>Force one string to be not coercible
+COLLATE</li>
+<li>Change coercibility value of one or both strings
+CONCAT, CONCAT<sub>WS</sub></li>
+<li>Change encodings, so one side is utf and the other is not
+CONVERT USING, alter column, <b>character<sub>set</sub><sub>connection</sub></b>, <b>character<sub>set</sub><sub>client</sub></b></li>
+<li>Change encoding of one side to be _bin</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org57aff39" class="outline-2">
+<h2 id="org57aff39"><span class="section-number-2">12</span> Installations</h2>
+<div class="outline-text-2" id="text-12">
+</div>
+<div id="outline-container-org6a00a73" class="outline-4">
+<h4 id="org6a00a73"><span class="section-number-4">12.0.1</span> Service install</h4>
+<div class="outline-text-4" id="text-12-0-1">
+<p>
+mysqld<sub>safe</sub> &#x2013;user USER &#x2013;defaults-file=PATH
+</p>
+
+<p>
+In-Place Upgrade
+</p>
+
+<p>
+(always take a backup)
+</p>
+
+<pre class="example">
+   set GLOBAL innodb_fast_shutdown = 0;
+SHUTDOWN;
+</pre>
+
+<p>
+Upgrade/Reinstall new binaries. Start mysql.
+</p>
+
+<pre class="example">
+mysql_upgrade --user=USER --password=password --socket=SOCKET
+
+service mysqld restart
+
+mysql -u USER --password=password
+set GLOBAL show_compatibility_56;
+</pre>
+
+<p>
+Logical Upgrade
+</p>
+
+<p>
+• Dump all grants • Dump all databases • Stop mysql • Move / delete
+datadir • Install/Upgrade mysql binaries • Initalize new datadir
+</p>
+
+<pre class="example">
+mysqld --initialize-insecure --user=mysql --datadir=/var/lib/mysql/data
+</pre>
+
+<p>
+• Import grants (chseck for access after this) • Load all databases
+</p>
+
+<p>
+Utilities
+</p>
+
+<p>
+mysqladmin version mysqladmin ping mysqladmin status mysqladmin
+processlist
+</p>
+
+<p>
+mysqlcheck DB mysqlcheck DB TABLE
+</p>
+
+<p>
+mysqldump DB mysqldump DB TABLE
+</p>
+
+<p>
+mysqlshow DB mysqlshow DB TABLE
+</p>
+
+<p>
+mysqlbinlog mysqldumpslow
+</p>
+
+<p>
+innochecksum myisamchk myisamlog
+</p>
+</div>
+</div>
+<div id="outline-container-org8a69c6b" class="outline-4">
+<h4 id="org8a69c6b"><span class="section-number-4">12.0.2</span> Multiple instances in server</h4>
+<div class="outline-text-4" id="text-12-0-2">
+<p>
+source:
+<a href="https://www.percona.com/blog/2014/08/26/mysqld%5C_multi-how-to-run-multiple-instances-of-mysql/">https://www.percona.com/blog/2014/08/26/mysqld\_multi-how-to-run-multiple-instances-of-mysql/</a>
+</p>
+
+<p>
+Options:
+</p>
+
+<p>
+• Same binary • Separate binaries
+</p>
+
+<p>
+Same binaries
+</p>
+
+<pre class="example">
+#cp /etc/my.cnf /etc/my2.cnf
+mkdir /var/lib/mysql2
+chown -R mysql:mysql /var/lib/mysql2
+
+# setup port, directory and files
+vi /etc/my.cnf   # see below for text
+
+# check config for mysqld2
+my_print_defaults --defaults-file=/etc/my.cnf mysqld2
+
+# create system DBs
+mysqld --initialize --user mysql --datadir /var/lib/mysql2
+
+
+# first startup 
+mysqld --defaults-group-suffix=2 --user mysql
+
+# test connection
+mysql --socket=/run/mysqld/mysql2.sock
+
+# check for temp password on error.log
+alter user 'root'@'localhost' identified by 'SuperSecret';
+
+# add multi_admin user and grant privileges
+
+
+</pre>
+
+<pre class="example">
+/etc/my.cnf
+~~~~~~~~~~~
+
+[mysqld2]
+port = 3307
+datadir = /var/lib/mysql2
+socket = /run/mysqld/mysqld2.sock
+pid-file = /run/mysqld/mysqld2.pid
+</pre>
+
+<p>
+Add systemd unit
+</p>
+
+<pre class="example">
+# /etc/systemd/system/mysqld2.service
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[Unit]
+Description=MySQL database server (instance 2)
+After=syslog.target
+
+[Service]
+User=mysql
+Group=mysql
+
+ExecStart=/usr/bin/mysqld --defaults-group-suffix=2
+#ExecStartPost=/usr/bin/mysqld-post
+
+Restart=always
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+</pre>
+
+<p>
+Setup mysqld\<sub>multi</sub>
+</p>
+
+<p>
+Add the following lines to /etc/my.cnf
+</p>
+
+<pre class="example">
+/etc/my.cnf
+~~~~~~~~~~~
+
+[mysqld_multi]
+mysqld     = /usr/bin/mysqld_safe
+mysqladmin = /usr/bin/mysqladmin
+user       = multi_admin
+password   = SuperSecretPassword
+</pre>
+
+<p>
+Add the [mysqldNN] sections on /etc/my.cnf (see above)
+</p>
+
+<p>
+Get sample config with:
+</p>
+
+<pre class="example">
+mysqld_multi --example
+</pre>
+
+<p>
+Add the multi\<sub>admin</sub> user to all the mysql instances to be controlled
+</p>
+
+<pre class="example">
+GRANT SHUTDOWN ON *.* TO 'multi_admin'@'localhost' IDENTIFIED BY 'SuperSecretPassword';
+flush privileges;
+</pre>
+
+<p>
+Control the instances:
+</p>
+
+<pre class="example">
+mysqld_multi report
+mysqld_multi start 2
+mysqld_multi stop 2
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1eef714" class="outline-2">
+<h2 id="org1eef714"><span class="section-number-2">13</span> Advanced tools</h2>
+<div class="outline-text-2" id="text-13">
+</div>
+<div id="outline-container-orgf9f88f4" class="outline-4">
+<h4 id="orgf9f88f4"><span class="section-number-4">13.0.1</span> Percona query digest</h4>
+<div class="outline-text-4" id="text-13-0-1">
+<pre class="example">
+pt-query-digest --review h=localhost --no-report SRV1_slow*.log
+pt-query-digest --history h=localhost --no-report SRV1_slow*.log
+</pre>
+
+<p>
+To look at the specific query detail on the log:
+</p>
+
+<pre class="example">
+# --&gt; Query 1: 0.00 QPS, 0.00x concurrency, ID 0xF8D63BBF3321C08C at byte
+tail -c +22958 /path/to/query.log | head -n100 | less
+</pre>
+
+<p>
+Index Usage
+</p>
+
+<pre class="example">
+pt-index-usage armzqdb1sr1ud_3301_slow_20171213.log --host=db201 --port=3301 --user=gestionardba --password=gestionardba_db200
+</pre>
+</div>
+</div>
+<div id="outline-container-org857683d" class="outline-4">
+<h4 id="org857683d"><span class="section-number-4">13.0.2</span> General log (Poor's man audit)</h4>
+<div class="outline-text-4" id="text-13-0-2">
+<p>
+Create General log table:
+</p>
+
+<pre class="example">
+use mysql;
+
+CREATE TABLE `general_log` (
+   `event_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+                          ON UPDATE CURRENT_TIMESTAMP,
+   `user_host` mediumtext NOT NULL,
+   `thread_id` bigint(21) unsigned NOT NULL,
+   `server_id` int(10) unsigned NOT NULL,
+   `command_type` varchar(64) NOT NULL,
+   `argument` mediumtext NOT NULL
+  ) ENGINE=CSV DEFAULT CHARSET=utf8 COMMENT='General log';
+</pre>
+
+<p>
+Create Filtered table:
+</p>
+
+<pre class="example">
+use mysql;
+
+CREATE TABLE `general_log_filter` (
+   `event_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+                          ON UPDATE CURRENT_TIMESTAMP,
+   `user_host` mediumtext NOT NULL,
+   `thread_id` bigint(21) unsigned NOT NULL,
+   `server_id` int(10) unsigned NOT NULL,
+   `command_type` varchar(64) NOT NULL,
+   `argument` mediumtext NOT NULL
+  ) ENGINE=CSV DEFAULT CHARSET=utf8 COMMENT='General log';
+</pre>
+
+<p>
+Setup General Log
+</p>
+
+<pre class="example">
+   SET global general_log = 0;
+SET global log_output = 'table';
+select @@log_output;
+</pre>
+
+<p>
+Create procedure to rotate:
+</p>
+
+<pre class="example">
+USE `mysql`;
+DROP procedure IF EXISTS `sp_general_log_filter`;
+
+DELIMITER $$
+USE `mysq`$$
+CREATE PROCEDURE `sp_general_log_filter` ()
+BEGIN
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+ BEGIN
+   DO RELEASE_LOCK('event_general_log_filter');
+ END;
+ IF GET_LOCK('event_general_log_filter', 0) = 1 THEN
+
+   SET global general_log = 1;
+   insert into mysql.general_log_filter
+    select * from mysql.general_log
+    where argument like '%shutdown%';
+    truncate mysql.general_log;
+    SET global general_log = 1;
+  END IF;
+  DO RELEASE_LOCK('event_general_log_filter');
+
+END$$
+
+DELIMITER ;
+</pre>
+
+<p>
+Use an event to filter and purge ( ENABLE EVENT SCHEDULER )
+</p>
+
+<pre class="example">
+use mysql;
+
+DELIMITER //
+CREATE EVENT general_log_filter ON SCHEDULE EVERY 5 MINUTE DO
+BEGIN
+ CALL sp_general_log_filter();
+END;
+//
+DELIMITER ;
+</pre>
+
+<pre class="example">
+use mysql;
+
+DELIMITER //
+CREATE EVENT general_log_filter ON SCHEDULE EVERY 5 MINUTE DO
+BEGIN
+ DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+ BEGIN
+   DO RELEASE_LOCK('event_general_log_filter');
+ END;
+ IF GET_LOCK('event_general_log_filter', 0) THEN
+
+   SET global general_log = 0;
+   insert into mysql.general_log_filter
+    select * from mysql.general_log
+    where argument like '%shutdown%';
+    truncate mysql.general_log;
+    SET global general_log = 1;
+  END IF;
+  DO RELEASE_LOCK('event_general_log_filter');
+END;
+//
+DELIMITER ;
+</pre>
+
+<p>
+Enable:
+</p>
+
+<pre class="example">
+   use mysql;
+   SET global general_log = 0;
+ALTER EVENT general_log_filter ENABLE;
+</pre>
+
+<p>
+Disable
+</p>
+
+<pre class="example">
+use mysql;
+ALTER EVENT general_log_filter DISABLE;
+SET global general_log = 0;
+</pre>
+</div>
+</div>
+<div id="outline-container-org521dfc5" class="outline-4">
+<h4 id="org521dfc5"><span class="section-number-4">13.0.3</span> Sample dbs</h4>
+<div class="outline-text-4" id="text-13-0-3">
+<ol class="org-ol">
+<li>git clone <a href="https://github.com/datacharmer/test%5C_db">https://github.com/datacharmer/test\_db</a> cd test\<sub>db</sub>/</li>
+<li>db size is about 500MB</li>
+</ol>
+<pre class="example">
+mysql -p &lt; employees.sql 
+# ... or parititioned 
+mysql -p &lt; employees_partitioned.sql
+</pre>
+
+<ol class="org-ol">
+<li>run crc check</li>
+</ol>
+<pre class="example">
+mysql -p -t &lt; test_employees_sha.sql
+</pre>
+</div>
+</div>
+<div id="outline-container-orgb74ca2e" class="outline-4">
+<h4 id="orgb74ca2e"><span class="section-number-4">13.0.4</span> Percona PMM</h4>
+<div class="outline-text-4" id="text-13-0-4">
+<p>
+Server:
+<a href="https://www.percona.com/doc/percona-monitoring-and-management/architecture.html">https://www.percona.com/doc/percona-monitoring-and-management/architecture.html</a>
+</p>
+
+<p>
+PMM Docker Server: <a href="https://hub.docker.com/r/percona/pmm-server/">https://hub.docker.com/r/percona/pmm-server/</a>
+</p>
+
+<p>
+Permanent Container docker create<br />
+-v /opt/prometheus/data<br />
+-v /opt/consul-data<br />
+-v /var/lib/mysql<br />
+-v /var/lib/grafana<br />
+&#x2013;name pmm-data<br />
+percona/pmm-server:latest /bin/true
+</p>
+
+<p>
+Run server (port 80)
+</p>
+
+<p>
+docker run -d<br />
+-e DISABLE\<sub>TELEMETRY</sub>=true<br />
+-e DISABLE\<sub>UPDATE</sub>=true<br />
+-p 80:80<br />
+&#x2013;volumes-from pmm-data<br />
+&#x2013;name pmm-server<br />
+&#x2013;restart always<br />
+percona/pmm-server:latest
+</p>
+
+<p>
+Client:
+<a href="https://www.percona.com/doc/percona-monitoring-and-management/deploy/client/index.html#install-client">https://www.percona.com/doc/percona-monitoring-and-management/deploy/client/index.html#install-client</a>
+</p>
+
+<p>
+pmm-admin config &#x2013;server SERVER pmm-admin check-networking pmm-admin
+add mysql
+</p>
+
+<p>
+Client Tarball
+<a href="https://www.percona.com/downloads/pmm-client/LATEST/binary/tarball/">https://www.percona.com/downloads/pmm-client/LATEST/binary/tarball/</a>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgccb80bb" class="outline-2">
+<h2 id="orgccb80bb"><span class="section-number-2">14</span> Changelogs</h2>
+<div class="outline-text-2" id="text-14">
+</div>
+<div id="outline-container-org3b6ee73" class="outline-4">
+<h4 id="org3b6ee73"><span class="section-number-4">14.0.1</span> 5.6 Changes from 5.5 to 5.6</h4>
+<div class="outline-text-4" id="text-14-0-1">
+<p>
+New features
+</p>
+
+<p>
+• mysql\<sub>config</sub>\<sub>editor</sub> • stronger encryption for user account passwords
+• mysql.user table now has a password\<sub>expired</sub> • MySQL now has provision
+for checking password security • You can create FULLTEXT indexes on
+InnoDB tables, and query them using the MATCH() &#x2026; AGAINST syntax •
+Online DDL • InnoDB now supports the notion of "transportable
+tablespaces" • InnoDB now supports the DATA DIRECTORY='directory' clause
+of the CREATE TABLE • Optimizer statistics for InnoDB tables are
+gathered at more predictable intervals • New optimizations apply to
+read-only transactions, improving performance and concurrency for ad-hoc
+queries and report-generating applications. These optimizations are
+applied automatically when practical, or you can specify START
+TRANSACTION READ ONLY • New configuration option,
+innodb\<sub>compression</sub>\<sub>level</sub>, allows you to select a compression level for
+InnoDB compressed tables • InnoDB has several internal performance
+enhancements • To avoid a lengthy warmup period after restarting the
+server, particularly for instances with large InnoDB buffer pools, you
+can reload pages into the buffer pool immediately after a restart. • You
+can move the InnoDB undo log out of the system tablespace into one or
+more separate tablespaces.
+</p>
+
+<p>
+• The maximum number of partitions is increased to 8192. This number
+includes all partitions and all subpartitions of the table. • MySQL now
+supports transaction-based replication using global transaction
+identifiers (also known as "GTIDs"). • MySQL row-based replication now
+supports row image control. • Binary logs written and read by the MySQL
+Server are now crash-safe. • Optimizer enhancements. • MySQL Replication
+now supports parallel execution of transactions with multi-threading on
+the slave. • MySQL now per• mits fractional seconds for TIME, DATETIME,
+and TIMESTAMP
+</p>
+
+<p>
+Deprecations
+</p>
+
+<p>
+• As of MySQL 5.6.6, YEAR(2) is deprecated.
+</p>
+
+<p>
+Breaking changes
+</p>
+
+<p>
+• The server is free to choose any value from each group, so unless they
+are the same, the values chosen are indeterminate. Furthermore, the
+selection of values from each group cannot be influenced by adding an
+ORDER BY clause. • Relying on implicit GROUP BY sorting in MySQL 5.6 is
+deprecated. To achieve a specific sort order of grouped results, it is
+preferable to use an explicit ORDER BY clause. • The
+ERROR\<sub>FOR</sub>\<sub>DIVISION</sub>\<sub>BY</sub>\<sub>ZERO</sub>, NO\<sub>ZERO</sub>\<sub>DATE</sub>, and NO\<sub>ZERO</sub>\<sub>IN</sub>\<sub>DATE</sub>
+SQL modes are deprecated • The IGNORE clause for ALTER TABLE. ALTER
+IGNORE TABLE causes problems for replication • For TIME, DATETIME, and
+TIMESTAMP columns, the storage required for tables created before MySQL
+5.6.4 differs from storage required for tables created in 5.6.4 and
+later. This is due to a change in 5.6.4 that permits these temporal
+types to have a fractional part. • If any table was created with
+FULLTEXT indexes while the server character set was ucs2, utf16,
+utf16le, or utf32, repair it. • innodb\<sub>log</sub>\<sub>file</sub>\<sub>size</sub> should be set to
+a value greater than 10 times the largest BLOB data size found in the
+rows of your tables • TIMESTAMP columns not explicitly declared with the
+NULL attribute are assigned the NOT NULL attribute. • The first
+TIMESTAMP column in a table, if not declared with the NULL attribute or
+an explicit DEFAULT or ON UPDATE clause, is automatically assigned the
+DEFAULT CURRENT\<sub>TIMESTAMP</sub> and ON UPDATE CURRENT\<sub>TIMESTAMP</sub> attributes.
+• TIMESTAMP columns following the first one, if not declared with the
+NULL attribute or an explicit DEFAULT clause, are automatically assigned
+DEFAULT '0000-00-00 00:00:00' (the "zero" timestamp). • To upgrade
+servers used for replication, upgrade the slaves first, then the master.
+Replication between the master and its slaves should work provided that
+all use the same value of explicit\<sub>defaults</sub>\<sub>for</sub>\<sub>timestamp</sub>
+</p>
+</div>
+</div>
+<div id="outline-container-org11c2d58" class="outline-4">
+<h4 id="org11c2d58"><span class="section-number-4">14.0.2</span> 5.6 to 5.7</h4>
+<div class="outline-text-4" id="text-14-0-2">
+<p>
+5.7 Changes from 5.6 to 5.7
+</p>
+
+<p>
+New Features
+</p>
+
+<p>
+• MySQL now enables database administrators to establish a policy for
+automatic password expiratio • Administrators can lock and unlock
+accounts for better control over who can log in. • To make it easier to
+support secure connections, MySQL servers compiled using OpenSSL can
+automatically generate missing SSL and RSA certificate • SQL mode
+changes. Strict SQL mode for transactional storage engines
+(STRICT\<sub>TRANS</sub>\<sub>TABLES</sub>) is now enabled by default. • Implementation for
+the ONLY\<sub>FULL</sub>\<sub>GROUP</sub>\<sub>BY</sub> SQL mode has been made more sophisticated •
+Online ALTER TABLE. ALTER TABLE now supports a RENAME INDEX clause that
+renames an index. • InnoDB temporary table metadata is no longer stored
+to InnoDB system tables. • InnoDB now supports MySQL-supported spatial
+data types. • InnoDB supports multiple page cleaner threads for flushing
+dirty pages from buffer pool instances. • Support is added to InnoDB for
+full-text parser plugins. • InnoDB buffer pool dump and load operations
+are enhanced. • There is now a separate tablespace for all
+non-compressed InnoDB temporary tables. • VARCHAR size may be increased
+using an in-place ALTER TABLE • DDL performance for InnoDB temporary
+tables is improved through optimization of CREATE TABLE, DROP TABLE,
+TRUNCATE TABLE, and ALTER TABLE statements. • InnoDB supports the
+Transportable Tablespace feature for partitioned InnoDB tables and
+individual InnoDB table partitions. • The innodb\<sub>buffer</sub>\<sub>pool</sub>\<sub>size</sub>
+parameter is dynamic, allowing you to resize the buffer pool without
+restarting the server. • InnoDB supports indexing of spatial data types
+using SPATIAL indexes • InnoDB performs a bulk load when creating or
+rebuilding indexes. This method of index creation is known as a "sorted
+index build". This enhancement, which improves the efficiency of index
+creation, also applies to full-text indexes. • InnoDB supports native
+partitioning. • InnoDB supports the creation of general tablespaces
+using CREATE TABLESPACE. General tablespaces can be created outside of
+the MySQL data directory, are capable of holding multiple tables, and
+support tables of all row formats. • DYNAMIC replaces COMPACT as the
+implicit default row format for InnoDB tables. • As of MySQL 5.7.11,
+InnoDB supports data-at-rest encryption for file-per-table tablespaces.
+• JSON support. Beginning with MySQL 5.7.8, MySQL supports a native JSON
+type. • optimizer enhancements • Multiple triggers • Generated Columns.
+MySQL now supports the specification of generated columns in CREATE
+TABLE and ALTER TABLE statements. Values of a generated column are
+computed from an expression specified at column creation time. •
+Changing the replication master without STOP SLAVE. In MySQL 5.7.4 and
+later, the strict requirement to execute STOP SLAVE prior to issuing any
+CHANGE MASTER TO statement is removed. • Multi-source replication is now
+possible. MySQL Multi-Source Replication adds the ability to replicate
+from multiple masters to a slave.
+</p>
+
+<p>
+Deprecations
+</p>
+
+<p>
+• Using GRANT to create users. Instead, use CREATE USER. • GROUP BY
+implicitly sorts by default (that is, in the absence of ASC or DESC
+designators), but relying on implicit GROUP BY sorting in MySQL 5.7 is
+deprecated. To achieve a specific sort order of grouped results, it is
+preferable to use To produce a given sort order, use explicit ASC or
+DESC designators for GROUP BY columns or provide an ORDER BY clause. •
+The ENCRYPT(), ENCODE(), DECODE(), DES\<sub>ENCRYPT</sub>(), and DES\<sub>DECRYPT</sub>()
+encryption functions are deprecated. YEAR(2) data type was deprecated. •
+The Performance Schema tables are intended to replace the
+INFORMATION\<sub>SCHEMA</sub> tables.
+</p>
+
+<p>
+Breaking Changes
+</p>
+
+<p>
+• Passwords pre-4.1 removed • Password on mysql.user removed • As of
+MySQL 5.7.2, the server requires account rows in the mysql.user table to
+have a nonempty plugin column value and disables accounts with an empty
+value. This requires that you upgrade your mysql.user table to fill in
+all plugin values • TIME, DATETIME, and TIMESTAMP has fractional seconds
+precision • INSERT DELAYED is no longer supported. • Strict SQL mode for
+transactional storage engines (STRICT\<sub>TRANS</sub>\<sub>TABLES</sub>) is now enabled by
+default. • Implementation of the ONLY\<sub>FULL</sub>\<sub>GROUP</sub>\<sub>BY</sub> SQL mode has been
+made more sophisticated, to no longer reject deterministic queries that
+previously were rejected. In consequence, ONLY\<sub>FULL</sub>\<sub>GROUP</sub>\<sub>BY</sub> is now
+enabled by default, to prohibit nondeterministic queries containing
+expressions not guaranteed to be uniquely determined within a group. •
+In UNION statements, to apply ORDER BY or LIMIT to an individual SELECT,
+place the clause inside the parentheses that enclose the SELECT: • The
+changes to the default SQL mode result in a default sql\<sub>mode</sub> system
+variable value with these modes enabled: ONLY\<sub>FULL</sub>\<sub>GROUP</sub>\<sub>BY</sub>,
+STRICT\<sub>TRANS</sub>\<sub>TABLES</sub>, NO\<sub>ENGINE</sub>\<sub>SUBSTITUTION</sub>. • For statements such
+as DELETE or UPDATE that modify tables, using the merge strategy for a
+derived table that previously was materialized can result in an
+ER\<sub>UPDATE</sub>\<sub>TABLE</sub>\<sub>USED</sub> error. derived\<sub>merge</sub> must be disabled to fix
+this.
+</p>
+
+<p>
+• Previously, GET\<sub>LOCK</sub>() permitted acquisition of only one named lock
+at a time, and a second GET\<sub>LOCK</sub>() call released any existing lock. Now
+GET\<sub>LOCK</sub>() permits acquisition of more than one simultaneous named lock
+and does not release existing locks. • It is possible for a column
+DEFAULT value to be valid for the sql\<sub>mode</sub> value at table-creation time
+but invalid for the sql\<sub>mode</sub> value when rows are inserted or updated.
+This can affect replication if the slave is upgraded before the master.•
+</p>
+
+<p>
+• If you find that having ONLY\<sub>FULL</sub>\<sub>GROUP</sub>\<sub>BY</sub> enabled causes queries
+for existing applications to be rejected, either of these actions should
+restore operation:
+</p>
+
+<pre class="example">
+If it is possible to modify an offending query, do so, either so that nondeterministic nonaggregated columns are functionally dependent on GROUP BY columns, or by referring to nonaggregated columns using ANY_VALUE().
+
+If it is not possible to modify an offending query (for example, if it is generated by a third-party application), set the sql_mode system variable at server startup to not enable ONLY_FULL_GROUP_BY.
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: pablo</p>
+<p class="date">Created: 2018-10-17 Wed 22:27</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

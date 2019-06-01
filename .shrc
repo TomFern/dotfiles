@@ -15,6 +15,7 @@ export EDITOR=vim
 export PATH=$HOME/src/ibm/docker-apps:$PATH
 export PATH=$HOME/dotfiles/bin:$PATH
 
+
 # dba scipts
 if [ -r ~/databases/benchmark/activate ]; then
     . ~/databases/benchmark/activate
@@ -101,6 +102,7 @@ alias lo='libreoffice'
 alias turn-off='xset -display :0.0 dpms force off'
 alias en='su'
 alias D='docker'
+alias V='vagrant'
 
 
 # nocache
@@ -154,7 +156,7 @@ alias whatisall='whatis $(compgen -c) | sort'
 # alias clima='metar -d SABE'
 # alias clima-colonia='metar -d SUCA'
 alias rdesktop='rdesktop $RDESKTOP_OPTIONS '
-alias backup='nocache rsync -aP --exclude-from=$HOME/.rsync-homedir-excludes $HOME /mnt/backup/ix/home'
+#alias backup='nocache rsync -aP --exclude-from=$HOME/.rsync-homedir-excludes $HOME /mnt/backup/ix/home'
 
 alias dice='echo $((0x$(head -c5 /dev/random|xxd -ps)%6+1))'
 alias zip-parts='echo "Repairing zip volume into archive_repaired.zip" && zip --output archive_repaired.zip -F'

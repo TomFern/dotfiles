@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: rsync tmux
+# key: rsync
+# --
+
+#+BEGIN_SRC tmux :session default:0.0
+rsync -avz -e "ssh $1" $2@$3
+#+END_SRC

@@ -29,7 +29,9 @@ if [ -n "$DISPLAY" ] && [[ `tty` =~ ^/dev/pts ]]; then
     fi
 fi
 
-if command -v terminator >/dev/null 2>&1; then
+if command -v sakura >/dev/null 2>&1; then
+    sakura "$@"
+elif command -v terminator >/dev/null 2>&1; then
     terminator "$@"
 elif command -v konsole >/dev/null 2>&1; then
     if [ -n "$@" ]; then

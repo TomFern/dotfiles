@@ -1,0 +1,40 @@
+  [mysqld]
+datadir=/dsptool/databases/sr
+socket=/dsptool/databases/sr/mysql.sock
+user=mysql
+port=3306
+#tmpdir=/dsptool/backupsdb/tmpdb
+tmpdir=/dsptool/databases/tmpdb_sr
+innodb_buffer_pool_size= 8500M
+innodb_log_file_size= 512M
+table_open_cache = 4000
+#join_buffer_size = 2G
+join_buffer_size = 262144
+#key_buffer_size = 200M
+key_buffer_size = 8388608
+skip_name_resolve = ON
+event_scheduler = ON
+slow_query_log = ON
+#slow_query_file = /dsptool/databases/sr/slow.log
+long_query_time = 0.1
+log_queries_not_using_indexes = ON
+log_warnings = 2
+
+# binary logging
+log-bin=mysql-bin
+binlog_format = 'ROW'
+sync_binlog = 1
+server_id=2
+expire_logs_days = 10
+max_binlog_size = 100M
+#tuner
+binlog_cache_size = 16777216
+thread_cache_size=100
+
+#innodb_force_recovery = 6
+relay-log=mysql-relay-bin
+
+[mysqld_safe]
+log-error=/dsptool/databases/sr/mysql.err
+pid-file=/dsptool/databases/sr/mysql.pid
+

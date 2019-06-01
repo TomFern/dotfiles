@@ -1,0 +1,437 @@
+* Mr.Robot
+* G0 -> G0_NEW
+*** Snapshot
+
+#+BEGIN_SRC tmux :session default:G0
+ssh fzavalia@g0
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G0
+en
+en
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G0
+snap.sh -s g0 -o /dsptool/backupsdb/snap
+chown -R dsptool:dsptool /dsptool/backupsdb/snap
+chown -R dsptool:dsptool /dsptool/backupsdb/dump
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G0
+su - dsptool
+scp -r /dsptool/backupsdb/snap 129.39.182.183:/dsptool/databases/snap_g0
+exit
+#+END_SRC
+
+*** Reimage & repl-setup
+
+#+BEGIN_SRC tmux :session default:NEW
+ssh fzavalia@g0_new
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+en
+en
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+su - dsptool
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+cnf.sh add g0 -u gestionardba -P gestionardba_db200 -p 3306 -h 127.0.0.1 -c /etc/opt/rh/rh-mysql57/my.cnf
+exit
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+su - dsptool
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+cnf.sh add g0_old -u gestionardba -P gestionardba_db200 -p 3306 -h 129.39.182.200
+cd cnf/g0
+ln -s ../g0_old/mysql.cnf master.cnf
+exit
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+systemctl stop rh-mysql57-mysqld.service
+rm -rf /dsptool/databases/g0
+mv /dsptool/backupsdb/snap_g0 /dsptool/databases
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+reimage.sh -o /dsptool/databases/snap_g0 -c /etc/opt/rh/rh-mysql57/my.cnf
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+systemctl start rh-mysql57-mysqld.service
+systemctl status rh-mysql57-mysqld.service
+mysql_upgrade -u gestionardba --password="gestionardba_db200"
+mysqlcheck -u gestionardba --password="gestionardba_db200" --all-databases
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+systemctl restart rh-mysql57-mysqld.service
+systemctl status rh-mysql57-mysqld.service
+mysql_upgrade -u gestionardba --password="gestionardba_db200"
+#+END_SRC
+
+Check that master server is pingable from slave!
+
+#+BEGIN_SRC tmux :session default:NEW
+su - dsptool
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+repl-setup.sh -s g0 -o /dsptool/databases/snap_g0/
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+mysql -u gestionardba --password="gestionardba_db200"
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+show slave status\G
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+#+END_SRC
+
+* SR -> SR_NEW
+*** Snapshot
+
+#+BEGIN_SRC tmux :session default:SR
+ssh fzavalia@sr
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:SR
+en
+en
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:SR
+snap.sh -s sr -o /dsptool/backupsdb/snap
+chown -R dsptool:dsptool /dsptool/backupsdb/snap
+chown -R dsptool:dsptool /dsptool/backupsdb/dump
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:SR
+su - dsptool
+scp -r /dsptool/backupsdb/snap 129.39.182.182:/dsptool/databases/snap
+exit
+#+END_SRC
+
+*** Reimage & repl-setup
+
+#+BEGIN_SRC tmux :session default:NEW
+ssh fzavalia@sr_new
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+en
+en
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+su - dsptool
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+cnf.sh add sr -u gestionardba -P gestionardba_db200 -p 3306 -h 127.0.0.1 -c /etc/opt/rh/rh-mysql57/my.cnf
+exit
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+su - dsptool
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+cnf.sh add sr_old -u dsptool -P dsptool_db201 -p 3306 -h 129.39.182.201
+cd cnf/sr
+ln -s ../sr_old/mysql.cnf master.cnf
+exit
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+systemctl stop rh-mysql57-mysqld.service
+rm -rf /dsptool/databases/sr
+#mv /dsptool/backupsdb/snap_sr /dsptool/databases
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+reimage.sh -o /dsptool/databases/snap/snap -c /etc/opt/rh/rh-mysql57/my.cnf
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+systemctl start rh-mysql57-mysqld.service
+systemctl status rh-mysql57-mysqld.service
+mysql_upgrade -u dsptool --password="dsptool_db201"
+mysqlcheck -u dsptool --password="dsptool_db201" --all-databases
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+systemctl restart rh-mysql57-mysqld.service
+systemctl status rh-mysql57-mysqld.service
+mysql_upgrade -u dsptool --password="dsptool_db201"
+#+END_SRC
+
+Check that master server is pingable from slave!
+
+#+BEGIN_SRC tmux :session default:NEW
+#su - dsptool
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+repl-setup.sh -s sr -o /dsptool/databases/snap/snap -U repl_sr_new -P yW13znaButwcM3cCXbpn
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+mysql -u dsptool --password="dsptool_db201" -h armzqdb1sr1ud
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+show slave status\G
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+#+END_SRC
+
+* G0_NEW -> G1_NEW
+*** Snapshot
+
+#+BEGIN_SRC tmux :session default:G0
+ssh fzavalia@g0_new
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G0
+#en
+#en
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G0
+snap.sh -s g0 -o /dsptool/backupsdb/snap
+chown -R dsptool:dsptool /dsptool/backupsdb/snap
+chown -R dsptool:dsptool /dsptool/backupsdb/dump
+#+END_SRC
+
+# check that slave log position file exists
+
+#+BEGIN_SRC tmux :session default:G0
+su - dsptool
+scp -r /dsptool/backupsdb/snap g1:/dsptool/databases/snap_g0
+#exit
+#+END_SRC
+
+*** Reimage & repl-setup
+
+#+BEGIN_SRC tmux :session default:G1
+ssh fzavalia@g1_new
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G1
+#en
+#en
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G1
+su - dsptool
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+cnf.sh add g1 -u gestionardba -P gestionardba_db200 -p 3301 -h 127.0.0.1 -c /etc/opt/rh/rh-mysql57/my__g1__.cnf
+exit
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G1
+# su - dsptool
+  cd /dsptool/databases/scripts-dba
+  export PATH=$PWD:$PATH
+  . ./cnf.sh import
+  # cnf.sh add g0 -u gestionardba -P gestionardba_db200 -p 3306 -h g0
+  # cd cnf/g1
+  # ln -s ../g0/mysql.cnf master.cnf
+#  exit
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G1
+systemctl stop rh-mysql57-mysqld__g1__.service
+rm -rf /dsptool/databases/g1
+# mv /dsptool/backupsdb/snap_g0 /dsptool/databases
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G1
+reimage.sh -o /dsptool/databases/snap_g0 -c /etc/opt/rh/rh-mysql57/my__g1__.cnf
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G1
+systemctl start rh-mysql57-mysqld__g1__.service
+systemctl status rh-mysql57-mysqld__g1__.service
+# mysql_upgrade -u gestionardba --password="gestionardba_db200"
+mysqlcheck -u gestionardba --password="gestionardba_db200" --all-databases
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G1
+systemctl restart rh-mysql57-mysqld__g1__.service
+systemctl status rh-mysql57-mysqld__g1__.service
+#mysql_upgrade -u gestionardba --password="gestionardba_db200"
+#+END_SRC
+
+Check that master server is pingable from slave!
+
+#+BEGIN_SRC tmux :session default:G1
+su - dsptool
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+repl-setup.sh -s g1 -o /dsptool/databases/snap_g0/
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G1
+mysql -u gestionardba --password="gestionardba_db200" -h g0
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G1
+mysql -u gestionardba --password="gestionardba_db200" -P 3301
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G1
+show slave status\G
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G1
+stop slave;
+    SET GLOBAL sql_slave_skip_counter = 1;
+start slave;
+show slave status\G
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G1
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:G1
+su - dsptool
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+repl-setup.sh -s g0 -o /dsptool/databases/snap_g0/
+#+END_SRC
+
+* FIXUP SR
+*** Snapshot
+
+#+BEGIN_SRC tmux :session default:SR
+ssh fzavalia@sr
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:SR
+en
+en
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:SR
+snap.sh -s sr -o /dsptool/backupsdb/snap
+chown -R dsptool:dsptool /dsptool/backupsdb/snap
+chown -R dsptool:dsptool /dsptool/backupsdb/dump
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:SR
+su - dsptool
+scp -r /dsptool/backupsdb/snap 129.39.182.182:/dsptool/backupsdb/snap_sr
+exit
+#+END_SRC
+
+*** Reimage & repl-setup
+
+#+BEGIN_SRC tmux :session default:SR_NEW
+ssh fzavalia@sr_new
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:SR_NEW
+en
+en
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+#+END_SRC
+
+
+#+BEGIN_SRC tmux :session default:SR_NEW
+systemctl stop rh-mysql57-mysqld.service
+  systemctl stop rh-mysql57-mysqld__g1__.service
+  rm -rf /dsptool/databases/g1
+  # mkdir /dsptool/backupsdb/snap_sr/snap/
+  # cp /dsptool/backupsdb/snap_sr/*
+  # cp -r /dsptool/backupsdb/snap_sr/REPO_MF_V2
+  #cp -r /dsptool/backupsdb/snap_sr /dsptool/databases
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+reimage.sh -o /dsptool/databases/snap_sr -c /etc/opt/rh/rh-mysql57/my__g1__.cnf
+#+END_SRC
+
+# HAST ACA
+
+USUARIO REPL CREADO:
+   repl_g1_new@'%' identified by 'lxUcgHhUOeKezBJEvy4z';
+
+#+BEGIN_SRC tmux :session default:NEW
+systemctl start rh-mysql57-mysqld.service
+systemctl status rh-mysql57-mysqld.service
+mysql_upgrade -u dsptool --password="dsptool_db201"
+mysqlcheck -u dsptool --password="dsptool_db201" --all-databases
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+systemctl restart rh-mysql57-mysqld.service
+systemctl status rh-mysql57-mysqld.service
+mysql_upgrade -u dsptool --password="dsptool_db201"
+#+END_SRC
+
+Check that master server is pingable from slave!
+
+#+BEGIN_SRC tmux :session default:NEW
+su - dsptool
+cd /dsptool/databases/scripts-dba
+export PATH=$PWD:$PATH
+. ./cnf.sh import
+repl-setup.sh -s sr -o /dsptool/databases/snap_sr/
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+mysql -u dsptool --password="dsptool_db201"
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+show slave status\G
+#+END_SRC
+
+#+BEGIN_SRC tmux :session default:NEW
+#+END_SRC

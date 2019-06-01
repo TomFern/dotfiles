@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+: ${CLI_BOOKMARK_DIR:=$HOME/.cli-bookmarks}
+set -o nounset
+
+function usage () {
+    echo "Usage :  $0 
+    The lost command line bookmark program
+
+    Bookmark dir: CLI_BOOKMARK_DIR=$CLI_BOOKMARK_DIR
+
+    Options:
+      -h helo
+    "
+}
+
+while getopts ":h" opt
+do
+    case $opt in
+        h) usage; exit 0;;
+        * )  echo -e "\n  Option does not exist : $OPTARG\n"
+             usage; exit 1   ;;
+    esac
+done
+shift $(($OPTIND-1))
+OTHERARGS=$@
+
+if which pango2out >/dev/null 2>&1; then
+    function filter_out { 
+        pango2out 
+    }
+else
+    function filter_out { 
+        cat 
+    }
+fi
+
+select=$(cat "$CLI_BOOKMARK_DIR"/*.cb | rofi -dmenu -markup-rows | filter_out )
+echo $select | xclip
+echo $select | xclip -selection clipboard
+echo $select
