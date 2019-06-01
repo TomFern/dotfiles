@@ -1,5 +1,9 @@
 [global_config]
+<<<<<<< HEAD
   enabled_plugins = ActivityWatch, TerminalShot, Logger
+=======
+  enabled_plugins = TerminatorThemes, ActivityWatch, LaunchpadCodeURLHandler, TerminalShot, APTURLHandler, Logger, LaunchpadBugURLHandler
+>>>>>>> 01f5ac07c19cb2ef74f779b49846735c62a1d221
   geometry_hinting = True
   handle_size = 2
   scroll_tabbar = True
