@@ -1,6 +1,6 @@
 #!/bin/bash
 
-URLDIR=$HOME/.url
+URLDIR=$HOME/Dropbox/urls
 
 function usage() {
 cat <<EOF
