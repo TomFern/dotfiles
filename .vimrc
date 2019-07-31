@@ -587,6 +587,9 @@ nnoremap <F9> :w<CR>Dispatch<CR>
 
 let g:indentLine_char = '¦'
 let g:indentLine_noConcealCursor=""
+let g:indentLine_concealcursor = ""
+let g:indentLine_conceallevel = 0
+
 
 " }}}
 " incsearch {{{

@@ -44,6 +44,6 @@ killall grip 2>/dev/null
 sleep 1
 touch review.md
 grip review.md &
-xdg-open http://localhost:6419 &
+# xdg-open http://localhost:6419 &
 
 echo "$INPUT_FN" | entr pandoc -f $SW_f -t gfm "$INPUT_FN" -o review.md 
