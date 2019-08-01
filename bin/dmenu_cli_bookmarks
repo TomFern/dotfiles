@@ -4,7 +4,7 @@
 # - pango2out (https://github.com/DaveDavenport/pango2out)
 # - xclip
 
-: ${CLI_BOOKMARK_DIR:=$HOME/.cli-bookmarks}
+: ${CLI_BOOKMARK_DIR:=$HOME/Dropbox/databases/benchmark}
 set -o nounset
 
 function usage () {
