@@ -14,9 +14,10 @@ export EDITOR=vim
 # export VISUAL="/usr/bin/gvim --nofork"
 export PATH=$HOME/src/ibm/docker-apps:$PATH
 export PATH=$HOME/dotfiles/bin:$PATH
+export PATH=$PATH:$HOME/.emacs.d/bin
 
 
-# dba scipts
+# dba benchmark db
 if [ -r ~/databases/benchmark/activate ]; then
     . ~/databases/benchmark/activate
 fi
