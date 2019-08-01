@@ -9,3 +9,10 @@
 (doom-themes-org-config)
 (doom-themes-neotree-config)
 ;;(doom-themes-treemacs-config)
+
+(setq display-line-numbers-type nil)
+
+;; keybinds
+(map! :leader
+      (:prefix-map ("t" . "toggle")
+       :desc "Writeroom mode"   "w"  #'writeroom-mode))

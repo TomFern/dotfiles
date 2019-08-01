@@ -8,3 +8,6 @@
 
 ;(package! minimal-theme)
 (package! doom-themes)
+(package! typo)
+(package! ox-hugo)
+(package! writeroom-mode)
