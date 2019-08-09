@@ -11,3 +11,4 @@
 (package! typo)
 (package! ox-hugo)
 (package! writeroom-mode)
+;(package! org-preview-html-mode)

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: PICTURE CAPTION
+# key: CAPTION
+# condition: t
+# binding: C-c C-c p
+# --
+#+CAPTION: $1
+[[./public/$2]]

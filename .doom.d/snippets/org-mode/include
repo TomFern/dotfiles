@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: #+INCLUDE
+# key: inc
+# condition: t
+# binding: C-c C-c i
+# --
+#+INCLUDE: "./$1" src $2

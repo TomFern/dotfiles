@@ -8,8 +8,16 @@
 (doom-themes-visual-bell-config)
 (doom-themes-org-config)
 (doom-themes-neotree-config)
-;;(doom-themes-treemacs-config)
 
+;; modes
+(add-to-list 'auto-mode-alist '("\\.org\\'" . typo-mode))
+(add-to-list 'auto-mode-alist '("\\.org\\'" . visual-line-mode))
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . typo-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . visual-line-mode))
+(add-to-list 'auto-mode-alist '("\\.gitignore$" . sh-mode))
+
+;; customize
 (setq display-line-numbers-type nil)
 
 ;; keybinds
