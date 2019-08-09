@@ -10,12 +10,12 @@
 (doom-themes-neotree-config)
 
 ;; modes
-(add-to-list 'auto-mode-alist '("\\.org\\'" . typo-mode))
-(add-to-list 'auto-mode-alist '("\\.org\\'" . visual-line-mode))
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . typo-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . visual-line-mode))
-(add-to-list 'auto-mode-alist '("\\.gitignore$" . sh-mode))
+;; (add-to-list 'auto-mode-alist '("\\.org\\'" . typo-mode))
+;; (add-to-list 'auto-mode-alist '("\\.org\\'" . visual-line-mode))
+;; (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+;; (add-to-list 'auto-mode-alist '("\\.md\\'" . typo-mode))
+;; (add-to-list 'auto-mode-alist '("\\.md\\'" . visual-line-mode))
+;; (add-to-list 'auto-mode-alist '("\\.gitignore$" . sh-mode))
 
 ;; customize
 (setq display-line-numbers-type nil)
