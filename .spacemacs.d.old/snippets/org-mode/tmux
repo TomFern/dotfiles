@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: tmux
-# key: tmux
-# --
-
-#+BEGIN_SRC tmux :session default:0.0
-$0
-#+END_SRC
