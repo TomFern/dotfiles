@@ -16,7 +16,16 @@
 ;; (add-to-list 'auto-mode-alist '("\\.md\\'" . typo-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.md\\'" . visual-line-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.gitignore$" . sh-mode))
-
+;;
+;; minor modes
+(add-hook 'find-file-hook
+          (lambda ()
+            (when (string= (file-name-extension buffer-file-name) "org")
+              (typo-mode +1)
+              (visual-line-mode +1))
+            (when (string= (file-name-extension buffer-file-name) "md")
+              (typo-mode +1)
+              (visual-line-mode +1))))
 ;; customize
 (setq display-line-numbers-type nil)
 
