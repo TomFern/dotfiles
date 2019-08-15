@@ -27,6 +27,22 @@
 (setq display-line-numbers-type nil)
 (setq avy-all-windows t)
 
+(org-add-link-type "lid" 'endless/open-id-link 'endless/export-id-link)
+
+(defun endless/open-id-link (path)
+  "Follow an ID link to PATH."
+  (browse-url (endless/find-id-link path)))
+
+(defun endless/export-id-link (path desc format)
+  "Create the export version of an ID link specified by PATH and DESC.
+FORMATs understood are 'latex and 'html."
+  (setq path (endless/find-id-link path))
+  (cond
+   ((eq format 'html) (format "<a href=\"%s\">%s</a>" path desc))
+   ((eq format 'latex) (format "\\href{%s}{%s}" path desc))
+   (t desc)))
+
+
 ;; keybinds
 (map! :leader
       (:prefix-map ("t" . "toggle")
