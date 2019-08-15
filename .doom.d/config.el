@@ -1,23 +1,19 @@
 ;;; ~/.doom.d/config.el -*- lexical-binding: t; -*-
 
-;; theme
+;; theme setup
 (require 'doom-themes)
 (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
       doom-themes-enable-italic t) ; if nil, italics is universally disabled
-(load-theme 'adwaita t)
 (doom-themes-visual-bell-config)
 (doom-themes-org-config)
 (doom-themes-neotree-config)
 
-;; modes
-;; (add-to-list 'auto-mode-alist '("\\.org\\'" . typo-mode))
-;; (add-to-list 'auto-mode-alist '("\\.org\\'" . visual-line-mode))
-;; (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-;; (add-to-list 'auto-mode-alist '("\\.md\\'" . typo-mode))
-;; (add-to-list 'auto-mode-alist '("\\.md\\'" . visual-line-mode))
-;; (add-to-list 'auto-mode-alist '("\\.gitignore$" . sh-mode))
-;;
-;; minor modes
+;; hooks
+(add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
+(add-hook 'org-mode-hook #'typo-mode)
+(remove-hook 'org-mode-hook #'auto-fill-mode)
+(add-hook 'markdown-mode-hook #'typo-mode)
+(remove-hook 'markdown-mode-hook #'auto-fill-mode)
 (add-hook 'find-file-hook
           (lambda ()
             (when (string= (file-name-extension buffer-file-name) "org")
@@ -26,10 +22,14 @@
             (when (string= (file-name-extension buffer-file-name) "md")
               (typo-mode +1)
               (visual-line-mode +1))))
-;; customize
+
+;; customizations
 (setq display-line-numbers-type nil)
+(setq avy-all-windows t)
 
 ;; keybinds
 (map! :leader
       (:prefix-map ("t" . "toggle")
-       :desc "Writeroom mode"   "w"  #'writeroom-mode))
+       :desc "Writeroom mode"   "w"  #'writeroom-mode
+       :desc "Dark theme"       "o" (λ! (load-theme 'doom-one t))
+       :desc "Light theme"      "c" (λ! (load-theme 'doom-one-light t))))

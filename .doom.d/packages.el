@@ -6,9 +6,7 @@
 ;; (package! another-package :recipe (:fetcher github :repo "username/repo"))
 ;; (package! builtin-package :disable t)
 
-;(package! minimal-theme)
 (package! doom-themes)
 (package! typo)
 (package! ox-hugo)
 (package! writeroom-mode)
-;(package! org-preview-html-mode)
