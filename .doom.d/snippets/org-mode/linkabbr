@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: linkabbr
+# key: linkabbr
+# condition: t
+# binding: C-c C-c l
+# --
+#+LINK: $1 $2

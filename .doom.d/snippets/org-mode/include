@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: #+INCLUDE
-# key: inc
+# key: include
 # condition: t
 # binding: C-c C-c i
 # --

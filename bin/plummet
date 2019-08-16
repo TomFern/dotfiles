@@ -8,26 +8,25 @@ function usage () {
         - python-grip
         - entr
         - pandoc
-        - xdg-open
 
-    Options:
-        -f FMT        Input format (default=org)
-        -h|help       Display this message
+    # Options:
+    #     -f FMT        Input format (default=org)
+    #     -h|help       Display this message
     "
 }
 
-SW_f=org
-while getopts ":f:h" opt
-do
-  case $opt in
-      f) SW_f=$OPTARG;;
-      h|help     )  usage; exit 0   ;;
-      * )  echo -e "\n  Option does not exist : $opt\n"
-          usage; exit 1   ;;
-  esac
-done
-shift $(($OPTIND-1))
-OTHERARGS=$@
+# SW_f=org
+# while getopts ":f:h" opt
+# do
+#   case $opt in
+#       f) SW_f=$OPTARG;;
+#       h|help     )  usage; exit 0   ;;
+#       * )  echo -e "\n  Option does not exist : $opt\n"
+#           usage; exit 1   ;;
+#   esac
+# done
+# shift $(($OPTIND-1))
+# OTHERARGS=$@
 
 INPUT_FN=$1
 if [ -z "$INPUT_FN" ]; then
@@ -42,8 +41,7 @@ fi
 
 killall grip 2>/dev/null
 sleep 1
-touch review.md
+touch review.md links.md _review.md
 grip review.md &
-# xdg-open http://localhost:6419 &
 
 echo "$INPUT_FN" | entr pandoc -f $SW_f -t gfm "$INPUT_FN" -o review.md 
