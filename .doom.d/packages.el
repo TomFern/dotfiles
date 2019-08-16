@@ -10,3 +10,4 @@
 (package! typo)
 (package! ox-hugo)
 (package! writeroom-mode)
+(package! unfill)

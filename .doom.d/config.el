@@ -27,6 +27,7 @@
 (setq display-line-numbers-type nil)
 (setq avy-all-windows t)
 
+;; i'm drive testing these
 (add-hook 'org-mode-hook
           (lambda ()
             (progn
@@ -58,6 +59,7 @@
 
 
 ;; keybinds
+(map! (:g "M-q" #'unfill-paragraph))
 (map! :leader
       (:prefix-map ("t" . "toggle")
        :desc "Writeroom mode"   "w"  #'writeroom-mode
