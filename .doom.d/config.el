@@ -7,6 +7,7 @@
 (doom-themes-visual-bell-config)
 (doom-themes-org-config)
 (doom-themes-neotree-config)
+(load-theme 'doom-one-light t)
 
 ;; hooks
 (add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
@@ -31,6 +32,6 @@
 (map! (:g "M-q" #'unfill-paragraph))
 (map! :leader
       (:prefix-map ("t" . "toggle")
-       :desc "Writeroom mode"   "w"  #'writeroom-mode
+       :desc "Writeroom mode"   "w"  #'writeroom-mode)
        :desc "Dark theme"       "o" (λ! (load-theme 'doom-one t))
-       :desc "Light theme"      "c" (λ! (load-theme 'doom-one-light t))))
+       :desc "Light theme"      "c" (λ! (load-theme 'doom-one-light t)))
