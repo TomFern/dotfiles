@@ -34,9 +34,11 @@
 
 ;; custom modules
 (load-file (expand-file-name ".doom.d/custom/write-or-die.el"))
+(load-file (expand-file-name ".doom.d/custom/title-capitalization.el"))
 
 ;; keybinds
 (map! (:g "M-q" #'unfill-paragraph))
+(map! (:g "M-c" #'title-capitalization))
 (map! :leader
       (:prefix-map ("t" . "toggle")
        :desc "Write or die"    "k" (λ! (if (= 0 write-or-die-state)

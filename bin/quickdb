@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+function usage () {
+    echo "Usage :  $0 -e PRODUCT -d DB -u USER -p PASSWORD
+    Start a temporary db to test
+
+    Options:
+        -e            Type of db (mysql)
+        -d            DB name (demodb)
+        -u            Username to create (demouser)
+        -p            Password for the user (demouser)
+        -h|help       Display this message
+    "
+}
+
+SW_d=demodb
+SW_u=demouser
+SW_p=demouser
+SW_e=mysql
+while getopts ":e:u:d:p:h" opt
+do
+  case $opt in
+      e) SW_e=$OPTARG;;
+      u) SW_u=$OPTARG;;
+      d) SW_d=$OPTARG;;
+      p) SW_p=$OPTARG;;
+      h|help     )  usage; exit 0   ;;
+      * )  echo -e "\n  Option does not exist : $opt\n"
+          usage; exit 1   ;;
+  esac
+done
+shift $(($OPTIND-1))
+OTHERARGS=$@
+
+case "$SW_e" in
+    mysql)
+        echo ":: Starting local mysql..."
+        s=$(docker inspect -f '{{.State.Running}}' quickdb-mysql)
+        if [[ "$s" != "true" ]]; then
+            docker run -it -d -n quickdb-mysql --net=host -e MYSQL_ALLOW_EMPTY_PASSWORD=yes mysql --default_authentication_plugin=mysql_native_password
+            sleep 10
+        fi
+        mysql --protocol=TCP -h 127.0.0.1 -u root -ANe"CREATE USER '$SW_u'@'%' IDENTIFIED BY '$SW_p';"
+        mysql --protocol=TCP -h 127.0.0.1 -u root -ANe"CREATE SCHEMA $SW_d;"
+        mysql --protocol=TCP -h 127.0.0.1 -u root -ANe"GRANT ALL PRIVILEGES ON *.* TO '$SW_u'@'%';"
+        ;;
+    *)
+        echo "Type $SW_e not supported, sorry"
+        exit 1
+        ;;
+esac
