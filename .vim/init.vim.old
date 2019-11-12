@@ -79,10 +79,13 @@ Plug 'elzr/vim-json'
 " this needs patched nerd fonts
 Plug 'ryanoasis/vim-devicons'
 
+" can it run org? is this safe?
+Plug 'jceb/vim-orgmode'
+
 " nyaovim plugins (please edit nyaovimrc.html)
-Plug 'rhysd/nyaovim-popup-tooltip'
-Plug 'rhysd/nyaovim-running-gopher'
-Plug 'rhysd/nyaovim-markdown-preview'
+" Plug 'rhysd/nyaovim-popup-tooltip'
+" Plug 'rhysd/nyaovim-running-gopher'
+" Plug 'rhysd/nyaovim-markdown-preview'
 
 call plug#end()
 

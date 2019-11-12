@@ -5,8 +5,6 @@
 " what's new?
 "
 " vim-plug | :PlugStatus :PlugInstall :PlugUpdate :PlugClean
-" nyaovim-popup-tooltip show image under cursor | gi
-" nyaovim-running-gopher show running gopher | :RunGopher
 " edit vimrc, reload vimrc | gev | gsv
 " show all keybinds | :call ShowKeybind()
 " NERDTree | <C-e>
@@ -14,17 +12,6 @@
 " remove highlight | space space space
 " vim-workspave | :ToggleWorkspace :ToggleAutosave
 " ALE | :ALEFix
-" unite | <C-p> Find files <Space-/> Grep with AG
-"
-"
-" install requires:
-"
-" the_silver_searcher
-" desired syntax linters
-" YCM code completion: python3 build-essentials
-"   python: rope
-"   javacscript: nodejs-tern
-"       in root dir: echo '{ "plugins": { "node": {} } }' > .tern-project
 "
 " }}}
 " vim-plug {{{
@@ -34,55 +21,62 @@
 
 call plug#begin('~/.vim-plug/plugged')
 
-Plug 'Shougo/unite.vim'
+" the basics, this needs reconsideration
 Plug 'SirVer/ultisnips'
-Plug 'bling/vim-airline'
-Plug 'bradurani/vim-powerclose'
-Plug 'flazz/vim-colorschemes'
-Plug 'haya14busa/incsearch.vim'
 Plug 'honza/vim-snippets'
+Plug 'bradurani/vim-powerclose'
+Plug 'haya14busa/incsearch.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'justinmk/vim-sneak'
-Plug 'kabbamine/zeavim.vim'
-Plug 'majutsushi/tagbar'
-Plug 'python-mode/python-mode'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
+" Plug 'vim-scripts/restore_view.vim'
+Plug 'yggdroot/indentline'
+Plug 'thaerkh/vim-workspace'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+" Plug 'Shougo/unite.vim'
+" Plug 'kabbamine/zeavim.vim'
+" Plug 'majutsushi/tagbar'
+" Plug 'vim-scripts/dbext.vim'
+" Plug 'valloric/youcompleteme', { 'do': './install.py' }
+
+" beauty in the eye of the beholder
+Plug 'flazz/vim-colorschemes'
+Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/carrot.vim'
 Plug 'vim-scripts/rainbow_parentheses.vim'
-Plug 'vim-scripts/restore_view.vim'
-Plug 'vim-scripts/dbext.vim'
-Plug 'yggdroot/indentline'
-Plug 'valloric/youcompleteme', { 'do': './install.py' }
-Plug 'thaerkh/vim-workspace'
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
-" syntax support
+" syntax support, I guess
+Plug 'python-mode/python-mode'
 Plug 'PProvost/vim-ps1'
 Plug 'isruslan/vim-es6'
-Plug 'marijnh/tern_for_vim', {'do': 'npm install'}
 Plug 'mattn/emmet-vim'
-Plug 'vim-scripts/SQLUtilities'
 Plug 'vim-scripts/Align'
-Plug 'vim-scripts/gnuplot.vim'
-
-" Plug 'scrooloose/syntastic'
 Plug 'w0rp/ale'
 Plug 'sheerun/vim-polyglot'
 Plug 'pangloss/vim-javascript'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'elzr/vim-json'
+" Plug 'marijnh/tern_for_vim', {'do': 'npm install'}
+" Plug 'vim-scripts/SQLUtilities'
+" Plug 'vim-scripts/gnuplot.vim'
 
 " this needs patched nerd fonts
 Plug 'ryanoasis/vim-devicons'
 
+" produce and be bountiful
+Plug 'wakatime/vim-wakatime'
+
+" are you crazy? you're goint to kill us all
+Plug 'jceb/vim-orgmode'
+
 " nyaovim plugins (please edit nyaovimrc.html)
-Plug 'rhysd/nyaovim-popup-tooltip'
-Plug 'rhysd/nyaovim-running-gopher'
-Plug 'rhysd/nyaovim-markdown-preview'
+" Plug 'rhysd/nyaovim-popup-tooltip'
+" Plug 'rhysd/nyaovim-running-gopher'
+" Plug 'rhysd/nyaovim-markdown-preview'
 
 call plug#end()
 
@@ -197,8 +191,10 @@ cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 "set clipboard=unnamedplus
 
 " wrapping
-" set nowrap
-" set textwidth=120
+set nowrap
+set linebreak
+set textwidth=80
+set wrapmargin=80
 "set formatoptions=qrn1
 "set colorcolumn=80
 
@@ -506,7 +502,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " youcompleteme {{{
 
-let g:ycm_python_binary_path = 'python'
+" let g:ycm_python_binary_path = 'python'
 " make YCM compatible with UltiSnips (using supertab)
 " let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 " let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
@@ -540,15 +536,15 @@ map <C-e> :NERDTreeToggle<CR>
 " }}}
 " unite.vim {{{
 
-let g:unite_source_grep_command = 'ag'
-let g:unite_source_grep_default_opts = '--no-color -g ""'
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-call unite#custom#source('file_rec', 'ignore_pattern', 'venv\|VENV/\|VENV2/\|VENV3/\|node_modules')
+" let g:unite_source_grep_command = 'ag'
+" let g:unite_source_grep_default_opts = '--no-color -g ""'
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" call unite#filters#sorter_default#use(['sorter_rank'])
+" call unite#custom#source('file_rec', 'ignore_pattern', 'venv\|VENV/\|VENV2/\|VENV3/\|node_modules')
 
-" "nnoremap <C-p> :Unite -start-insert file_rec/async<cr>
-nnoremap <C-p> :Unite -start-insert file_rec/async<cr>
-nnoremap <space>/ :Unite grep:.<cr>
+" " "nnoremap <C-p> :Unite -start-insert file_rec/async<cr>
+" nnoremap <C-p> :Unite -start-insert file_rec/async<cr>
+" nnoremap <space>/ :Unite grep:.<cr>
 " " let g:unite_source_history_yank_enable = 1
 " " nnoremap <space>y :Unite history/yank<cr>
 " nnoremap <space>s :Unite -quick-match buffer<cr>
@@ -609,8 +605,8 @@ au Syntax * RainbowParenthesesLoadBraces
 " }}}
 " restore_view.vim {{{
 
-set viewoptions=cursor,folds,slash,unix
-let g:skipview_files = ['*\.vim']
+" set viewoptions=cursor,folds,slash,unix
+" let g:skipview_files = ['*\.vim']
 
 " }}}
 " ALE {{{
