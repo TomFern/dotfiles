@@ -72,6 +72,7 @@ Plug 'wakatime/vim-wakatime'
 
 " are you crazy? you're goint to kill us all
 Plug 'jceb/vim-orgmode'
+Plug 'reedes/vim-textobj-quote'
 
 " nyaovim plugins (please edit nyaovimrc.html)
 " Plug 'rhysd/nyaovim-popup-tooltip'
@@ -459,7 +460,7 @@ function! ShowKeybind()
 endfunction
 
 " }}}
-" autocmds {{{
+" autocmds & filetypes {{{
 
 augroup myvimrc
     au!
@@ -485,6 +486,17 @@ autocmd FileType make setlocal noexpandtab
 autocmd FileType neosnippet setlocal noexpandtab
 
 autocmd FileType sql setlocal makeprg=nimitta.sh\ -i\ %
+
+set nocompatible
+filetype plugin on       " may already be in your .vimrc
+" textobj-quote
+augroup textobj_quote
+  autocmd!
+  autocmd FileType org call textobj#quote#init()
+  autocmd FileType markdown call textobj#quote#init()
+  autocmd FileType text call textobj#quote#init()
+  " autocmd FileType text call textobj#quote#init({'educate': 0})
+augroup END
 
 
 " NERDTree
