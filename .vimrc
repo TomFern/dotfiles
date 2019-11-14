@@ -192,10 +192,10 @@ cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 "set clipboard=unnamedplus
 
 " wrapping
-set nowrap
+set wrap
 set linebreak
-set textwidth=80
-set wrapmargin=80
+set textwidth=0
+set wrapmargin=0
 "set formatoptions=qrn1
 "set colorcolumn=80
 
