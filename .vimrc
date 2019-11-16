@@ -24,19 +24,19 @@ call plug#begin('~/.vim-plug/plugged')
 " the basics, this needs reconsideration
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'bradurani/vim-powerclose'
 Plug 'haya14busa/incsearch.vim'
-Plug 'junegunn/vim-easy-align'
 Plug 'justinmk/vim-sneak'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-speeddating'
-" Plug 'vim-scripts/restore_view.vim'
 Plug 'yggdroot/indentline'
-Plug 'thaerkh/vim-workspace'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+" Plug 'thaerkh/vim-workspace'
+" Plug 'bradurani/vim-powerclose'
+" Plug 'junegunn/vim-easy-align'
+" Plug 'vim-scripts/restore_view.vim'
 " Plug 'Shougo/unite.vim'
 " Plug 'kabbamine/zeavim.vim'
 " Plug 'majutsushi/tagbar'
@@ -493,9 +493,10 @@ filetype plugin on       " may already be in your .vimrc
 " textobj-quote
 augroup textobj_quote
   autocmd!
-  autocmd FileType org call textobj#quote#init()
-  autocmd FileType markdown call textobj#quote#init()
-  autocmd FileType text call textobj#quote#init()
+  " autocmd FileType org call textobj#quote#init()
+  autocmd FileType org set tw=0
+  " autocmd FileType markdown call textobj#quote#init()
+  " autocmd FileType text call textobj#quote#init()
   " autocmd FileType text call textobj#quote#init({'educate': 0})
 augroup END
 
@@ -625,16 +626,17 @@ au Syntax * RainbowParenthesesLoadBraces
 " ALE {{{
 
 " Enable completion where available.
-let g:ale_completion_enabled = 1
+" let g:ale_completion_enabled = 1
 " Put this in vimrc or a plugin file of your own.
-" After this is configured, :ALEFix will try and fix your JS code with ESLint.
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
+\   'org': ['proselint'],
+\   'markdown': ['proselint']
 \}
 
 " Set this setting in vimrc if you want to fix files automatically on save.
 " This is off by default.
-let g:ale_fix_on_save = 1
+" let g:ale_fix_on_save = 1
 
 " }}}
 " syntastic {{{1
