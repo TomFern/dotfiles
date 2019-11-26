@@ -23,7 +23,7 @@ call plug#begin('~/.vim-plug/plugged')
 
 " the basics, this needs reconsideration
 Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+" Plug 'honza/vim-snippets'
 Plug 'haya14busa/incsearch.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'scrooloose/nerdtree'
@@ -493,11 +493,11 @@ filetype plugin on       " may already be in your .vimrc
 " textobj-quote
 augroup textobj_quote
   autocmd!
-  " autocmd FileType org call textobj#quote#init()
   autocmd FileType org set tw=0
-  " autocmd FileType markdown call textobj#quote#init()
-  " autocmd FileType text call textobj#quote#init()
-  " autocmd FileType text call textobj#quote#init({'educate': 0})
+  autocmd FileType org call textobj#quote#init()
+  autocmd FileType markdown call textobj#quote#init()
+  autocmd FileType text call textobj#quote#init()
+  autocmd FileType text call textobj#quote#init({'educate': 0})
 augroup END
 
 
