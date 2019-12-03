@@ -5,13 +5,13 @@
 " what's new?
 "
 " vim-plug | :PlugStatus :PlugInstall :PlugUpdate :PlugClean
-" edit vimrc, reload vimrc | gev | gsv
 " show all keybinds | :call ShowKeybind()
 " NERDTree | <C-e>
 " UltiSnip | <C-j> Expand
 " remove highlight | space space space
 " vim-workspave | :ToggleWorkspace :ToggleAutosave
-" ALE | :ALEFix
+" ALE | :ALEFix | Proselint for org
+" vim-orgmode
 "
 " }}}
 " vim-plug {{{
@@ -21,18 +21,20 @@
 
 call plug#begin('~/.vim-plug/plugged')
 
-" the basics, this needs reconsideration
-Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
-Plug 'haya14busa/incsearch.vim'
-Plug 'justinmk/vim-sneak'
-Plug 'scrooloose/nerdtree'
+" Tim Pope deserves its own section
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-speeddating'
 Plug 'yggdroot/indentline'
+
+" productivity
+Plug 'SirVer/ultisnips'
+Plug 'haya14busa/incsearch.vim'
+Plug 'justinmk/vim-sneak'
+Plug 'scrooloose/nerdtree'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+" Plug 'honza/vim-snippets'
 " Plug 'thaerkh/vim-workspace'
 " Plug 'bradurani/vim-powerclose'
 " Plug 'junegunn/vim-easy-align'
@@ -51,16 +53,16 @@ Plug 'vim-scripts/carrot.vim'
 Plug 'vim-scripts/rainbow_parentheses.vim'
 
 " syntax support, I guess
-Plug 'python-mode/python-mode'
-Plug 'PProvost/vim-ps1'
-Plug 'isruslan/vim-es6'
-Plug 'mattn/emmet-vim'
-Plug 'vim-scripts/Align'
 Plug 'w0rp/ale'
 Plug 'sheerun/vim-polyglot'
 Plug 'pangloss/vim-javascript'
-Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'elzr/vim-json'
+Plug 'python-mode/python-mode'
+" Plug 'isruslan/vim-es6'
+" Plug 'PProvost/vim-ps1'
+" Plug 'mattn/emmet-vim'
+" Plug 'vim-scripts/Align'
+" Plug 'othree/javascript-libraries-syntax.vim'
 " Plug 'marijnh/tern_for_vim', {'do': 'npm install'}
 " Plug 'vim-scripts/SQLUtilities'
 " Plug 'vim-scripts/gnuplot.vim'
@@ -73,12 +75,10 @@ Plug 'wakatime/vim-wakatime'
 
 " are you crazy? you're goint to kill us all
 Plug 'jceb/vim-orgmode'
-Plug 'reedes/vim-textobj-quote'
 
-" nyaovim plugins (please edit nyaovimrc.html)
-" Plug 'rhysd/nyaovim-popup-tooltip'
-" Plug 'rhysd/nyaovim-running-gopher'
-" Plug 'rhysd/nyaovim-markdown-preview'
+" curl my quotations
+Plug 'kana/vim-textobj-user'
+Plug 'reedes/vim-textobj-quote'
 
 call plug#end()
 
@@ -511,18 +511,8 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " }}}
 
-
 " plugin options
 
-" youcompleteme {{{
-
-" let g:ycm_python_binary_path = 'python'
-" make YCM compatible with UltiSnips (using supertab)
-" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-" let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-" let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" }}}
 " ultisnips {{{
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 
@@ -548,23 +538,6 @@ let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 map <C-e> :NERDTreeToggle<CR>
 
 " }}}
-" unite.vim {{{
-
-" let g:unite_source_grep_command = 'ag'
-" let g:unite_source_grep_default_opts = '--no-color -g ""'
-" call unite#filters#matcher_default#use(['matcher_fuzzy'])
-" call unite#filters#sorter_default#use(['sorter_rank'])
-" call unite#custom#source('file_rec', 'ignore_pattern', 'venv\|VENV/\|VENV2/\|VENV3/\|node_modules')
-
-" " "nnoremap <C-p> :Unite -start-insert file_rec/async<cr>
-" nnoremap <C-p> :Unite -start-insert file_rec/async<cr>
-" nnoremap <space>/ :Unite grep:.<cr>
-" " let g:unite_source_history_yank_enable = 1
-" " nnoremap <space>y :Unite history/yank<cr>
-" nnoremap <space>s :Unite -quick-match buffer<cr>
-
-
-" }}}
 " vim-airline {{{
 
 " show buffer line on top
@@ -585,12 +558,6 @@ let g:airline#extensions#tagbar#enabled = 1
 " integration with ctrlp
 " let g:airline#extensions#ctrlp#show_adjacent_modes = 1
 let g:airline_theme='molokai'
-
-" }}}
-" vim-dispatch {{{
-
-nnoremap <leader>t :w<CR>:Start -wait=always make test<CR>
-nnoremap <F9> :w<CR>Dispatch<CR>
 
 " }}}
 " indentLine {{{
@@ -617,22 +584,13 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 " }}}
-" restore_view.vim {{{
-
-" set viewoptions=cursor,folds,slash,unix
-" let g:skipview_files = ['*\.vim']
-
-" }}}
 " ALE {{{
 
 " Enable completion where available.
 " let g:ale_completion_enabled = 1
-" Put this in vimrc or a plugin file of your own.
-let g:ale_fixers = {
-\   'javascript': ['eslint'],
-\   'org': ['proselint'],
-\   'markdown': ['proselint']
-\}
+
+" org-mode files should be trated as text
+let g:ale_linter_aliases = {'org': 'text'}
 
 " Set this setting in vimrc if you want to fix files automatically on save.
 " This is off by default.
@@ -774,6 +732,47 @@ let g:pymode_lint_cwindow = 0
 " }}}
 " }}}
 " vim-json {{{
+" }}}
+
+" plugins no longer in use go here to die
+
+" youcompleteme {{{
+
+" let g:ycm_python_binary_path = 'python'
+" make YCM compatible with UltiSnips (using supertab)
+" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+" let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+" let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" }}}
+" unite.vim {{{
+
+" let g:unite_source_grep_command = 'ag'
+" let g:unite_source_grep_default_opts = '--no-color -g ""'
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" call unite#filters#sorter_default#use(['sorter_rank'])
+" call unite#custom#source('file_rec', 'ignore_pattern', 'venv\|VENV/\|VENV2/\|VENV3/\|node_modules')
+
+" " "nnoremap <C-p> :Unite -start-insert file_rec/async<cr>
+" nnoremap <C-p> :Unite -start-insert file_rec/async<cr>
+" nnoremap <space>/ :Unite grep:.<cr>
+" " let g:unite_source_history_yank_enable = 1
+" " nnoremap <space>y :Unite history/yank<cr>
+" nnoremap <space>s :Unite -quick-match buffer<cr>
+
+
+" }}}
+" vim-dispatch {{{
+
+nnoremap <leader>t :w<CR>:Start -wait=always make test<CR>
+nnoremap <F9> :w<CR>Dispatch<CR>
+
+" }}}
+" restore_view.vim {{{
+
+" set viewoptions=cursor,folds,slash,unix
+" let g:skipview_files = ['*\.vim']
+
 " }}}
 
 
