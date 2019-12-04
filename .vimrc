@@ -4,6 +4,8 @@
 "
 " what's new?
 "
+" lexical: set spell, ]s jump to spelling error, <leader>s spelling suggestions, <leader>t thesaurus
+" gt operator for Title Case
 " vim-plug | :PlugStatus :PlugInstall :PlugUpdate :PlugClean
 " show all keybinds | :call ShowKeybind()
 " NERDTree | <C-e>
@@ -75,6 +77,12 @@ Plug 'wakatime/vim-wakatime'
 
 " are you crazy? you're goint to kill us all
 Plug 'jceb/vim-orgmode'
+
+" beautify the titles
+Plug 'christoomey/vim-titlecase'
+
+" spelling and thesaurus
+Plug 'reedes/vim-lexical'
 
 " curl my quotations
 Plug 'kana/vim-textobj-user'
@@ -463,6 +471,7 @@ endfunction
 " }}}
 " autocmds & filetypes {{{
 
+" autoreload vim config
 augroup myvimrc
     au!
     au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,init.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
@@ -477,19 +486,16 @@ fun! <SID>StripTrailingWhitespaces()
     %s/\s\+$//e
     call cursor(l, c)
 endfun
-autocmd FileType c,cpp,java,php,ruby,python,perl,vim,ps1
+autocmd FileType c,cpp,java,php,ruby,python,perl,vim,ps1,markdown,org
             \ autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
-
-autocmd BufRead,BufNewFile *.t2t setlocal ft=txt2tags commentstring=%\ %s
 
 " use tabs on certain files (makefile,etc)
 autocmd FileType make setlocal noexpandtab
 autocmd FileType neosnippet setlocal noexpandtab
 
-autocmd FileType sql setlocal makeprg=nimitta.sh\ -i\ %
-
 set nocompatible
 filetype plugin on       " may already be in your .vimrc
+
 " textobj-quote
 augroup textobj_quote
   autocmd!
@@ -498,6 +504,16 @@ augroup textobj_quote
   autocmd FileType markdown call textobj#quote#init()
   autocmd FileType text call textobj#quote#init()
   autocmd FileType text call textobj#quote#init({'educate': 0})
+augroup END
+
+" vim-lexical
+augroup lexical
+  autocmd!
+  autocmd FileType markdown,mkd call lexical#init()
+  autocmd FileType textile call lexical#init()
+  autocmd FileType org call lexical#init({ 'spell': 0 })
+  autocmd FileType text call lexical#init({ 'spell': 0 })
+  " autocmd FileType text call lexical#init({ 'spell': 0 })
 augroup END
 
 
@@ -513,6 +529,14 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " plugin options
 
+" vim-lexical {{{
+
+let g:lexical#thesaurus = ['~/.vim/thesaurus/mthesaur.txt',]
+let g:lexical#thesaurus_key = '<leader>t'
+let g:lexical#spell_key = '<leader>s'
+" let g:lexical#dictionary_key = '<leader>k'
+
+" }}}
 " ultisnips {{{
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 
