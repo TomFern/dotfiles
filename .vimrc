@@ -3,7 +3,7 @@
 " about {{{
 "
 " what's new?
-"
+" titlecase.pl (tc) | <leader>c
 " lexical: set spell, ]s jump to spelling error, <leader>s spelling suggestions, <leader>t thesaurus
 " gt operator for Title Case
 " vim-plug | :PlugStatus :PlugInstall :PlugUpdate :PlugClean
@@ -79,7 +79,7 @@ Plug 'wakatime/vim-wakatime'
 Plug 'jceb/vim-orgmode'
 
 " beautify the titles
-Plug 'christoomey/vim-titlecase'
+" Plug 'christoomey/vim-titlecase'
 
 " spelling and thesaurus
 Plug 'reedes/vim-lexical'
@@ -273,6 +273,8 @@ nmap <leader>f yyP<leader>ccj
 
 nmap <leader>e :Explore<CR>
 
+xnoremap <leader>c :!tc<CR>
+
 " common actions
 noremap <leader>w :w<CR>
 
@@ -460,6 +462,8 @@ command Dtw %s/\s\+$//
 command Scss :g/{/ .+1/}/-1 sort
 " convert csv bank statements
 command Hbi :%!sed "s:^\([0-9]\+\)/\([0-9]\+\)/\([0-9]\+\),:20\3-\1-\2,:" | tac
+" command Tc :s/\<\(a\|an\|the\)\@!\&\w\+\>/\=toupper(submatch(0)[0]).submatch(0)[1:]/g
+
 
 function! ShowKeybind()
     redir! > /tmp/vim_keymaps
