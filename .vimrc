@@ -4,6 +4,7 @@
 "
 " what's new?
 " titlecase.pl (tc) | <leader>c
+" :Goyo writeroom
 " lexical: set spell, ]s jump to spelling error, <leader>s spelling suggestions, <leader>t thesaurus
 " gt operator for Title Case
 " vim-plug | :PlugStatus :PlugInstall :PlugUpdate :PlugClean
@@ -78,12 +79,13 @@ Plug 'wakatime/vim-wakatime'
 " are you crazy? you're goint to kill us all
 Plug 'jceb/vim-orgmode'
 
-" beautify the titles
-" Plug 'christoomey/vim-titlecase'
-
-" spelling and thesaurus
+" writing
+Plug 'reedes/vim-colors-pencil'
+Plug 'junegunn/goyo.vim'
+Plug 'dbmrq/vim-ditto'
+Plug 'reedes/vim-pencil'
 Plug 'reedes/vim-lexical'
-
+Plug 'reedes/vim-litecorrect'
 " curl my quotations
 Plug 'kana/vim-textobj-user'
 Plug 'reedes/vim-textobj-quote'
@@ -158,7 +160,7 @@ set wildmenu                       " complete commands with TAB
 set wildmode=list:longest
 set visualbell
 set noerrorbells                   " don't make noise
-set cursorline                     " highlight cursor line
+" set cursorline                     " highlight cursor line
 " set cursorcolumn                   " higtlight cursor column
 " set colorcolumn=79
 set formatoptions=j
@@ -201,10 +203,11 @@ cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 "set clipboard=unnamedplus
 
 " wrapping
-set wrap
-set linebreak
-set textwidth=0
-set wrapmargin=0
+" set wrap
+" set linebreak
+" set textwidth=0
+" set wrapmargin=0
+
 "set formatoptions=qrn1
 "set colorcolumn=80
 
@@ -380,27 +383,12 @@ cab Q q
 " }}}
 " colorscheme {{{
 
-" " colors for a dark room - use low contrast
-" function! DarkRoom()
-"     set background=dark
-"     color molokai
-" endfunction
+" color peachpuff
 
-"  colors for a light room - use high contrast
-" function! LightRoom()
-"     set background=light
-"     color peachpuff
-" endfunction
-
-" " if file ~/.darkness exists, we want to use a dark theme
-" if filereadable(expand("~/.darkness"))
-"     call DarkRoom()
-" else
-"     call LightRoom()
-" endif
-
-" colorschemes
-color peachpuff
+" set background=light
+set background=dark
+colorscheme pencil
+let g:pencil_terminal_italics = 1
 
 " }}}
 " gui only options{{{
@@ -500,24 +488,13 @@ autocmd FileType neosnippet setlocal noexpandtab
 set nocompatible
 filetype plugin on       " may already be in your .vimrc
 
-" textobj-quote
-augroup textobj_quote
+augroup pencil
   autocmd!
-  autocmd FileType org set tw=0
-  autocmd FileType org call textobj#quote#init()
-  autocmd FileType markdown call textobj#quote#init()
-  autocmd FileType text call textobj#quote#init()
-  autocmd FileType text call textobj#quote#init({'educate': 0})
-augroup END
-
-" vim-lexical
-augroup lexical
-  autocmd!
-  autocmd FileType markdown,mkd call lexical#init()
-  autocmd FileType textile call lexical#init()
-  autocmd FileType org call lexical#init({ 'spell': 0 })
-  autocmd FileType text call lexical#init({ 'spell': 0 })
-  " autocmd FileType text call lexical#init({ 'spell': 0 })
+  autocmd FileType markdown,mkd,org,text,textile call pencil#init()
+                            \ | call lexical#init({ 'spell': 0 })
+                            \ | call ditto#dittoOn()
+                            \ | call litecorrect#init()
+                            \ | call textobj#quote#init()
 augroup END
 
 
@@ -585,7 +562,8 @@ let g:airline#extensions#tagbar#enabled = 1
 
 " integration with ctrlp
 " let g:airline#extensions#ctrlp#show_adjacent_modes = 1
-let g:airline_theme='molokai'
+" let g:airline_theme='molokai'
+let g:airline_theme='pencil'
 
 " }}}
 " indentLine {{{
