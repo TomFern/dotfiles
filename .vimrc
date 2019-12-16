@@ -49,6 +49,7 @@ Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 " Plug 'valloric/youcompleteme', { 'do': './install.py' }
 
 " beauty in the eye of the beholder
+Plug 'reedes/vim-colors-pencil'
 Plug 'flazz/vim-colorschemes'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -79,15 +80,14 @@ Plug 'wakatime/vim-wakatime'
 " are you crazy? you're goint to kill us all
 Plug 'jceb/vim-orgmode'
 
-" writing
-Plug 'reedes/vim-colors-pencil'
+" the pen is mightier than the sword
+Plug 'kana/vim-textobj-user'
 Plug 'junegunn/goyo.vim'
 Plug 'dbmrq/vim-ditto'
+Plug 'reedes/vim-textobj-sentence'
 Plug 'reedes/vim-pencil'
 Plug 'reedes/vim-lexical'
 Plug 'reedes/vim-litecorrect'
-" curl my quotations
-Plug 'kana/vim-textobj-user'
 Plug 'reedes/vim-textobj-quote'
 
 call plug#end()
@@ -488,6 +488,7 @@ autocmd FileType neosnippet setlocal noexpandtab
 set nocompatible
 filetype plugin on       " may already be in your .vimrc
 
+" text formats
 augroup pencil
   autocmd!
   autocmd FileType markdown,mkd,org,text,textile call pencil#init()
