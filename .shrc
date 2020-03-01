@@ -3,78 +3,35 @@
 # common bash-like rc
 
 # environment {{{
+
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 export LC_TIME=en_US.UTF-8
 export LC_COLLATE=en_US.UTF-8
 
-# export BROWSER=firefox
-export BROWSER=xbrowser
+export BROWSER=firefox
 export EDITOR=vim
 # export VISUAL="/usr/bin/gvim --nofork"
-export PATH=$HOME/src/ibm/docker-apps:$PATH
+export PAGER=less
 export PATH=$HOME/dotfiles/bin:$PATH
-export PATH=$PATH:$HOME/.emacs.d/bin
+export S_COLORS=auto
 
 
-# dba benchmark db
-if [ -r ~/databases/benchmark/activate ]; then
-    . ~/databases/benchmark/activate
-fi
-if [ -f  ~/src/projects/mysql-dba/scripts-dba/cnf.sh ]; then
-    export PATH=$PATH:$HOME/src/projects/mysql-dba/scripts-dba
-    export CNFDIR=$HOME/src/projects/mysql-dba/scripts-dba/cnf
-    . ~/src/projects/mysql-dba/scripts-dba/cnf.sh import
-fi
+# if [ -r ~/databases/benchmark/activate ]; then
+#     . ~/databases/benchmark/activate
+# fi
 
-# codenames 
-if [ -r ~/databases/codenames/activate ]; then
-    . ~/databases/codenames/activate
-fi
+# if [ -r ~/databases/codenames/activate ]; then
+#     . ~/databases/codenames/activate
+# fi
 
-# perlbrew
-if [ -f ~/perl5/perlbrew/etc/bashrc ]; then
-    . ~/perl5/perlbrew/etc/bashrc
-    eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
-fi
-
-
-#export BDB=$HOME/databases/benchmark/benchmark.db
-
+# if [ -f ~/perl5/perlbrew/etc/bashrc ]; then
+#     . ~/perl5/perlbrew/etc/bashrc
+#     eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
+# fi
 
 # Timezone
 export TZ='America/Argentina/Buenos_Aires'
-# export LATITUDE=-34
-# export LONGITUDE=-58
-
-export PATH=$HOME/bin:$PATH
-export DVTM_TERM=rxvt dvtm
-
-# systat
-export S_COLORS=auto
-#export CACHEDIR=$HOME/.cache
-#export MANPATH=$HOME/local/share/man:$MANPATH
-#export TMPDIR=/tmp
-#export LOGDIR=/tmp
-
-# Preferred applications
-#export PAGER=less
-#export VTERM=xterminal
-#export TERMINAL=xterminal
-
-# as per XDG specification
-#export XDG_CONFIG_HOME="$HOME/.config"
-#export XDG_DATA_HOME="$HOME/.local/share"
-#export XDG_CACHE_HOME=$CACHEDIR
-#export XDG_DOWNLOAD_DIR="$HOME/dl"
-
-# other directories
-#export WALLPAPERDIR=$HOME/pictures/wallpapers
-export QUICKNOTESDIR=$HOME/src/doc/dp
-export QUICKDOCDIR=$HOME/docs/quick
-
-# pass
-export PASSWORD_STORE_DIR=$HOME/.password-store
 
 # gnu GPG agent
 export GPG_AGENT_INFO_FILE=$HOME/.gnupg/gpg-agent-info
@@ -89,22 +46,23 @@ fi
 # java
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=gasp'
 
-if [ `uname -o` = "Cygwin" ]; then
-    # this seems to fix Import errors for Cygwin's python 2.7
-    export PYTHONHOME=/usr
-    export PYTHONPATH=/usr/lib/python2.7
-fi
 # }}}
 # aliases {{{
 alias vi=vim
+alias v=vim
+alias l='ls -ltra'
 alias S="sudo systemctl"
 alias gp='ps aux | grep -v grep | grep -i'
 alias lo='libreoffice'
 alias turn-off='xset -display :0.0 dpms force off'
-alias en='su'
-alias D='docker'
-alias V='vagrant'
+alias en=su
+alias g=git
 
+alias dk=docker
+alias dk-rm='docker ps --filter status=dead --filter status=exited --filter status=created -aq | xargs docker rm -v'
+alias dk-volume-clean="docker volume ls -qf dangling=true | xargs -r docker volume rm -v"
+alias dk-image-clean="docker images --no-trunc | grep '<none>' | awk '{ print $3 }' | xargs -r docker rmi"
+alias dk-umount="umount -l $(grep 'aufs' /proc/mounts | awk '{print$2}' | sort -r)"
 
 # nocache
 if which nocache >/dev/null 2>&1; then
@@ -113,16 +71,6 @@ if which nocache >/dev/null 2>&1; then
     alias rm='nocache rm -i'
 fi
 
-# cli enhancements
-if which bat >/dev/null 2>&1; then
-    alias cat=bat
-fi
-if which prettyping >/dev/null 2>&1; then
-    alias ping=prettyping
-fi
-#if which tldr >/dev/null 2>&1; then
-#    alias help=tldr
-#fi
 
 # systemctl user mode
 alias Start='systemctl --user start'
@@ -134,77 +82,38 @@ alias Disable='systemctl --user disable'
 
 # arch linux
 alias P=yay
-alias pacman-autoremove='sudo pacman -Qdtq | sudo pacman -Rs -'
+# alias pacman-autoremove='pacman -Qdtq | pacman -Rs -'
 alias pacman-clean='sudo pacman -Scc'
-alias paci="pacaur -S"
-alias pacu="pacaur -Syu"
-alias pacU="pacaur -Syu"
-# alias pacman-autoremove='pacman --query --unrequired --deps'
-alias max-perf="sudo systemctl stop crashplan; sudo systemctl stop duplicati; sudo systemctl stop squid; Stop bt; sudo cpupower frequency-set -g performance"
+alias pacman-autoremove='pacman --query --unrequired --deps'
 
-# docker
-alias drm='docker ps --filter status=dead --filter status=exited --filter status=created -aq | xargs docker rm -v'
-alias dpurge='docker system purge'
-alias d-volume-clean="docker volume ls -qf dangling=true | xargs -r docker volume rm -v"
-alias d-image-clean="docker images --no-trunc | grep '<none>' | awk '{ print $3 }' | xargs -r docker rmi"
-alias d-umount="umount -l $(grep 'aufs' /proc/mounts | awk '{print$2}' | sort -r)"
-alias bb='dmenu_cli_bookmarks'
 
 alias steam='LIBGL_DEBUG=verbose LD_PRELOAD="/usr/\$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1 /usr/$LIB/libxcb.so.1" steam'
 
-alias trc='transmission-remote-cli'
 alias whatisall='whatis $(compgen -c) | sort'
-# alias clima='metar -d SABE'
-# alias clima-colonia='metar -d SUCA'
-alias rdesktop='rdesktop $RDESKTOP_OPTIONS '
-#alias backup='nocache rsync -aP --exclude-from=$HOME/.rsync-homedir-excludes $HOME /mnt/backup/ix/home'
 
 alias dice='echo $((0x$(head -c5 /dev/random|xxd -ps)%6+1))'
 alias zip-parts='echo "Repairing zip volume into archive_repaired.zip" && zip --output archive_repaired.zip -F'
 alias jsonvalid='python -mjson.tool'
-alias privon='ecryptfs-mount-private && cd ~/Private && . ~/Private/.shrc'
-alias privoff='if [ `pwd | grep ~/Private` ]; then cd ~ ; . ~/Private/.bash_aliases ; . ~/Private/.bash_history_on ; fi && sleep 1 && ecryptfs-umount-private'
-# Keyring container (TrueCrypt tcplay)
-alias kron='touch $HOME/.strongbox.vc && veracrypt -t -k ""  --protect-hidden=no $HOME/.strongbox.vc /mnt/strongbox ; cd /mnt/strongbox'
-alias kroff='cd $HOME; veracrypt -t -d $HOME/.strongbox.vc'
-alias clean-history="sed -i '/avi|jpg|mpg|mkv|wmv/d' .histfile"
 
-# codenames
 alias codename='code=$(curl -G http://codenames.herokuapp.com/api/codenames -d lists=adjectives,cities  -d filters=alliterative,random 2>/dev/null); echo $code; echo $code | xclip -i'
 
 # }}}
-# aliases special {{{
+# enhancements {{{
 
-function My2 {
-    mysqlsh --sql $(MyURI $1)
-}
+# use \ to invoke the original command, eg \cat
 
-function My {
-    mysql $(MyArgs $1 --user=¬user¬ --host=¬host¬ --port=¬port¬ --password=¬password¬)
-}
+if which bat >/dev/null 2>&1; then
+    alias cat=bat
+fi
 
-function MyEndpoint {
-    MyArgs $1 --user=¬user¬ --host=¬host¬ --port=¬port¬ --password=¬password¬
-}
+if which prettyping >/dev/null 2>&1; then
+    alias ping=prettyping
+fi
 
-#alias zeppelin='docker run --rm -p 8080:8080 -v /home/pablo/Documents/Training-Slides/data:/data dylanmei/zeppelin'
-# alias g0='mysqlsh $(MyURI g0) --sql'
-# alias g1='mysqlsh $(MyURI g1) --sql'
-# alias sr='mysqlsh $(MyURI sr) --sql'
-# alias ssaims1='mysqlsh $(MyURI ssaims1) --sql'
-# alias ssaims50='mysqlsh $(MyURI ssaims50) --sql'
-# alias mylocal='mysqlsh $(MyURI local) --sql'
-# alias docker-mysql='mysqlsh $(MyURI docker-mysql) --sql'
-# alias docker-mysql-57='mysqlsh $(MyURI docker-mysql-57) --sql'
-# alias docker-mysql-56='mysqlsh $(MyURI docker-mysql-56) --sql'
-# alias docker-mysql-80='mysqlsh $(MyURI docker-mysql-80) --sql'
-# alias pproxy='mysql $(MyURI proxy-admin)'
-# alias proxy-sr='mysql $(MyURI proxy-sr)'
+if which htop >/dev/null 2>&1; then
+    alias top=htop
+fi
 
-# vnc
-alias vnc-beta='vncviewer beta:5904 -passwd ~/.vnc/passwd-beta'
-alias vnc-g0='vncviewer g0:5904' # -passwd ~/.vnc/passwd-g0'
-alias vnc-sr='vncviewer sr:5903' # -passwd ~/.vnc/passwd-g0'
 # }}}
 
 

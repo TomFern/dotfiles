@@ -491,7 +491,7 @@ filetype plugin on       " may already be in your .vimrc
 " text formats
 augroup pencil
   autocmd!
-  autocmd FileType markdown,mkd,org,text,textile call pencil#init()
+  autocmd FileType markdown,mkd,org,text,textile call pencil#init({'wrap': 'soft', 'autoformat': 0})
                             \ | call lexical#init({ 'spell': 0 })
                             \ | call ditto#dittoOn()
                             \ | call litecorrect#init()
