@@ -98,6 +98,7 @@ call plug#end()
 filetype plugin indent on
 syntax enable
 set conceallevel=0
+set clipboard=unnamedplus
 
 " encoding
 set shortmess=at

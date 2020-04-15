@@ -82,9 +82,9 @@ alias Disable='systemctl --user disable'
 
 # arch linux
 alias P=yay
-# alias pacman-autoremove='pacman -Qdtq | pacman -Rs -'
+#alias pacman-autoremove='pacman --query --unrequired --deps'
+alias pacman-autoremove='sudo pacman -Rcns $(pacman -Qdtq)'
 alias pacman-clean='sudo pacman -Scc'
-alias pacman-autoremove='pacman --query --unrequired --deps'
 
 
 alias steam='LIBGL_DEBUG=verbose LD_PRELOAD="/usr/\$LIB/libstdc++.so.6 /usr/$LIB/libgcc_s.so.1 /usr/$LIB/libxcb.so.1" steam'
