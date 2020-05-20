@@ -16,6 +16,11 @@
 " ALE | :ALEFix | Proselint for org
 " vim-orgmode
 "
+" wishlist
+" real time org/md preview
+" smart paste line
+"
+"
 " }}}
 " vim-plug {{{
 " https://github.com/junegunn/vim-plug
