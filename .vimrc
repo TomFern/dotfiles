@@ -36,6 +36,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'vim-scripts/BufOnly.vim'
 Plug 'yggdroot/indentline'
+Plug 'AlphaMycelium/pathfinder.vim'
 " Plug 'honza/vim-snippets'
 " Plug 'bradurani/vim-powerclose'
 " Plug 'junegunn/vim-easy-align'
