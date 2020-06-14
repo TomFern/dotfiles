@@ -63,6 +63,7 @@ alias dk-rm='docker ps --filter status=dead --filter status=exited --filter stat
 alias dk-volume-clean="docker volume ls -qf dangling=true | xargs -r docker volume rm -v"
 alias dk-image-clean="docker images --no-trunc | grep '<none>' | awk '{ print $3 }' | xargs -r docker rmi"
 alias dk-umount="umount -l $(grep 'aufs' /proc/mounts | awk '{print$2}' | sort -r)"
+alias k=kubectl
 
 # nocache
 if which nocache >/dev/null 2>&1; then
