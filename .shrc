@@ -58,6 +58,7 @@ alias turn-off='xset -display :0.0 dpms force off'
 alias en=su
 alias g=git
 
+alias curl='curl -w "\n"'
 alias dk=docker
 alias dk-rm='docker ps --filter status=dead --filter status=exited --filter status=created -aq | xargs docker rm -v'
 alias dk-volume-clean="docker volume ls -qf dangling=true | xargs -r docker volume rm -v"
