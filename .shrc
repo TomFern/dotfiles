@@ -58,13 +58,14 @@ alias turn-off='xset -display :0.0 dpms force off'
 alias en=su
 alias g=git
 
-alias curl='curl -w "\n"'
+alias cu='curl -w "\n"'
 alias dk=docker
 alias dk-rm='docker ps --filter status=dead --filter status=exited --filter status=created -aq | xargs docker rm -v'
 alias dk-volume-clean="docker volume ls -qf dangling=true | xargs -r docker volume rm -v"
 alias dk-image-clean="docker images --no-trunc | grep '<none>' | awk '{ print $3 }' | xargs -r docker rmi"
 alias dk-umount="umount -l $(grep 'aufs' /proc/mounts | awk '{print$2}' | sort -r)"
 alias k=kubectl
+alias ka="kubectl apply -f -"
 alias dk-delete-all-images="docker system prune && docker rmi -f $(docker images -a -q)"
 
 # nocache
