@@ -86,6 +86,7 @@ alias Disable='systemctl --user disable'
 
 # arch linux
 alias P=yay
+alias Pu="yay -Syyu"
 #alias pacman-autoremove='pacman --query --unrequired --deps'
 alias pacman-autoremove='sudo pacman -Rcns $(pacman -Qdtq)'
 alias pacman-clean='sudo pacman -Scc'
