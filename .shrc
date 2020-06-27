@@ -59,6 +59,7 @@ alias en=su
 alias g=git
 
 alias cu='curl -w "\n"'
+alias portainer="docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer; echo Go to localhost:9000"
 alias dk=docker
 alias dk-rm='docker ps --filter status=dead --filter status=exited --filter status=created -aq | xargs docker rm -v'
 alias dk-volume-clean="docker volume ls -qf dangling=true | xargs -r docker volume rm -v"
