@@ -87,6 +87,7 @@ Plug 'reedes/vim-pencil'
 Plug 'reedes/vim-lexical'
 Plug 'reedes/vim-litecorrect'
 Plug 'reedes/vim-textobj-quote'
+Plug 'junegunn/goyo.vim'
 
 call plug#end()
 
