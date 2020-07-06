@@ -384,8 +384,8 @@ cab Q q
 
 " color peachpuff
 
-" set background=light
-set background=dark
+set background=light
+" set background=dark
 colorscheme pencil
 let g:pencil_terminal_italics = 1
 
