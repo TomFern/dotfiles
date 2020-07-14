@@ -498,7 +498,7 @@ augroup pencil
 augroup END
 
 augroup orgmode
-    autocmd FileType org let b:dispatch = "pandoc -f org -t gfm -o /tmp/out.md %"
+    autocmd FileType org let b:dispatch = "cp -r img /tmp; pandoc -f org -t gfm -o /tmp/out.md %"
 augroup END
 
 " NERDTree
