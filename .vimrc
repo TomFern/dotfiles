@@ -129,7 +129,7 @@ set t_Co=256
 let g:netrw_liststyle=1
 
 " paragraph formatting
-set formatprg=par\ -w80
+" set formatprg=par\ -w80
 
 " directory for swp files
 if has("win32")
@@ -498,7 +498,7 @@ augroup pencil
 augroup END
 
 augroup orgmode
-    autocmd FileType org let b:dispatch = "cp -r img /tmp; pandoc -f org -t gfm -o /tmp/out.md %"
+    autocmd FileType org let b:dispatch = "cp -r img /tmp; pandoc -f org -t gfm --wrap=none -o /tmp/out.md %"
 augroup END
 
 " NERDTree
