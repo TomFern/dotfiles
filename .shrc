@@ -68,6 +68,7 @@ alias dk-umount="umount -l $(grep 'aufs' /proc/mounts | awk '{print$2}' | sort -
 alias k=kubectl
 alias ka="kubectl apply -f -"
 alias dk-delete-all-images="docker system prune && docker rmi -f $(docker images -a -q)"
+alias npm=pnpm
 
 # nocache
 if which nocache >/dev/null 2>&1; then
