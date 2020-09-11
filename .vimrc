@@ -441,17 +441,14 @@ endif
 " }}}
 " functions & commands {{{
 
-" Find Less than 10 (1digit)
-command Ltt /\s[0-9]\s
-command Bbb '<,'>v/^|[^|]\+\%27v|/ s/\(^|[^|]\+\)|/\1 |/
-" Delete trailing whitespaces
-command Dtw %s/\s\+$//
 " Sort CSS elements
 command Scss :g/{/ .+1/}/-1 sort
 " convert csv bank statements
 command Hbi :%!sed "s:^\([0-9]\+\)/\([0-9]\+\)/\([0-9]\+\),:20\3-\1-\2,:" | tac
-" command Tc :s/\<\(a\|an\|the\)\@!\&\w\+\>/\=toupper(submatch(0)[0]).submatch(0)[1:]/g
+" command fix curly quotes
+command Cq :g/#+INCLUDE:/s/“\|”/"/
 
+" show key maps
 function! ShowKeybind()
     redir! > /tmp/vim_keymaps
     silent verbose map
@@ -467,8 +464,9 @@ augroup myvimrc
     au!
     au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc,init.vim so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 augroup END
+
 " format options, disable autocomment and autowrapping for all files
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o list listchars=tab:▸\ ,eol:¬
+" autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o list listchars=tab:▸\ ,eol:¬
 
 " remove trailing whitespaces automatically for some types
 fun! <SID>StripTrailingWhitespaces()
@@ -484,8 +482,8 @@ autocmd FileType c,cpp,java,php,ruby,python,perl,vim,ps1,markdown,org
 autocmd FileType make setlocal noexpandtab
 autocmd FileType neosnippet setlocal noexpandtab
 
-set nocompatible
-filetype plugin on       " may already be in your .vimrc
+" set nocompatible
+" filetype plugin on       " may already be in your .vimrc
 
 " text formats
 augroup pencil
@@ -497,17 +495,13 @@ augroup pencil
                             \ | call textobj#quote#init()
 augroup END
 
+" org-mode
 augroup orgmode
-    autocmd FileType org let b:dispatch = "cp -r img /tmp; pandoc -f org -t gfm --wrap=none -o /tmp/out.md %"
+    autocmd BufWritePre *.org :Cq
 augroup END
 
 " NERDTree
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-"map M :w<CR>:make<CR>
-"set makeprg       - change what :make does
 
 " }}}
 

@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+function usage () {
+    echo "Usage :  $0 SERVICE [-d DB] [-u USER] [-p PASSWORD]
+    Start a temporary test db
+
+    Services:
+        mysql
+        postgres
+        redis
+
+    Options:
+        -d            DB name (optional)
+        -u            Username to create (optional)
+        -p            Password for the user (optional)
+        -h|help       Display this message
+    "
+}
+
+SERVICE=$1
+shift
+SW_d=
+SW_u=
+SW_p=
+while getopts ":e:u:d:p:h" opt
+do
+  case $opt in
+      u) SW_u=$OPTARG;;
+      d) SW_d=$OPTARG;;
+      p) SW_p=$OPTARG;;
+      h)  usage; exit 0   ;;
+      * )  echo -e "\n  Option does not exist : $opt\n"
+          usage; exit 1   ;;
+  esac
+done
+shift $(($OPTIND-1))
+OTHERARGS=$@
+
+case "$SERVICE" in
+    mysql)
+        echo "=> Starting MySql..."
+        s=$(docker inspect -f '{{.State.Running}}' quick---mysql)
+        if [[ "$s" != "true" ]]; then
+            echo -n "     name: quick---mysql"
+            echo -n "     container:"
+            docker run -it -d --rm --name quick---mysql -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=yes mysql --default_authentication_plugin=mysql_native_password mysql
+            sleep 10
+        fi
+
+
+        echo "     Host: localhost"
+        echo "     Port: 3306"
+        if [ "x$SW_u" != "x" ] && [ "x$SW_p" != "x" ]; then
+            docker exec -it quick---mysql -- mysql -u root -ANe"CREATE USER '$SW_u'@'%' IDENTIFIED BY '$SW_p';"
+            docker exec -it quick---mysql -- mysql -u root -ANe"GRANT ALL PRIVILEGES ON *.* TO '$SW_u'@'%';"
+            echo "     User: $SW_u"
+            echo "     Password: $SW_p"
+        else
+            echo "     User: root"
+            echo "     Password: (blank)"
+        fi
+
+        if [ "x$SW_d" != "x" ]; then
+            echo "     Database: $SW_d"
+            docker exec -it quick---mysql -- mysql -u root -ANe"CREATE SCHEMA $SW_d;"
+        fi
+        ;;
+    postgres|psql)
+        echo ":: Starting PostgreSQL..."
+        s=$(docker inspect -f '{{.State.Running}}' quick---postgres 2>/dev/null)
+        if [[ "$s" != "true" ]]; then
+            echo -n "     name: quick---postgres"
+            echo -n "     container:"
+            docker run -it -d --rm --name quick---postgres -p 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust postgres
+            sleep 10
+        fi
+        echo "     Host: localhost"
+        echo "     Port: 5432"
+        echo "     User: postgres"
+        echo "     Password: (blank)"
+        echo "     Database: postgres"
+        ;;
+    redis)
+        echo ":: Starting Redis..."
+        s=$(docker inspect -f '{{.State.Running}}' quick---redis 2>/dev/null)
+        if [[ "$s" != "true" ]]; then
+            echo -n "     name: quick---redis"
+            echo -n "     container:"
+            docker run -it -d --rm --name quick---redis -p 6379:6379 redis
+            sleep 10
+        fi
+        echo "     Host: localhost"
+        echo "     Port: 6379"
+        ;;
+    *)
+        echo "Service $SERVICE not supported, sorry :( "
+        exit 1
+        ;;
+esac
