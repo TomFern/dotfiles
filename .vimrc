@@ -446,7 +446,7 @@ command Scss :g/{/ .+1/}/-1 sort
 " convert csv bank statements
 command Hbi :%!sed "s:^\([0-9]\+\)/\([0-9]\+\)/\([0-9]\+\),:20\3-\1-\2,:" | tac
 " command fix curly quotes
-command Cq :g/#+INCLUDE:/s/“\|”/"/
+command Cq :g/#+INCLUDE:/s/“\|”/"/|norm!``
 
 " show key maps
 function! ShowKeybind()
