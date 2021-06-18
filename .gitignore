@@ -1,4 +1,1 @@
-.emacs.d/cache
-.backblaze
-.vim/.netrwhist
-**/node_modules/
+.DS_Store/
