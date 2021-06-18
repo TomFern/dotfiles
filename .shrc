@@ -16,6 +16,10 @@ export PAGER=less
 export PATH=$HOME/dotfiles/bin:/usr/local/bin:$PATH
 export S_COLORS=auto
 
+# homebrew
+if [ -r /opt/homebrew/bin/brew ]; then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
 # if [ -r ~/databases/benchmark/activate ]; then
 #     . ~/databases/benchmark/activate
@@ -65,7 +69,7 @@ alias dk=docker
 alias dk-rm='docker ps --filter status=dead --filter status=exited --filter status=created -aq | xargs docker rm -v'
 alias dk-volume-clean="docker volume ls -qf dangling=true | xargs -r docker volume rm -v"
 alias dk-image-clean="docker images --no-trunc | grep '<none>' | awk '{ print $3 }' | xargs -r docker rmi"
-alias dk-umount="umount -l $(grep 'aufs' /proc/mounts | awk '{print$2}' | sort -r)"
+# alias dk-umount="umount -l $(grep 'aufs' /proc/mounts | awk '{print$2}' | sort -r)"
 alias k=kubectl
 alias ka="kubectl apply -f -"
 alias dk-delete-all-images="docker system prune && docker rmi -f $(docker images -a -q)"

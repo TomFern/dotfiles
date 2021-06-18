@@ -11,6 +11,10 @@ if [ -f ~/.zshrc ]; then
     . ~/.zshrc
 fi
 
+if [ -f ~/.shrc ]; then
+    . ~/.shrc
+fi
+
 # create LOGDIR if needed
 #if [ ! -d "$LOGDIR" ]; then
     #mkdir -p "$LOGDIR"
