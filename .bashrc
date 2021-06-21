@@ -93,3 +93,4 @@ shopt -s nocaseglob                 # pathname expansion will be treated as case
 if [ -f ~/.shrc ]; then
     . ~/.shrc
 fi
+
