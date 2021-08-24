@@ -329,6 +329,10 @@ if ! has('nvim')
     " tabs
     map , :bp<CR>
     map . :bn<CR>
+    map <leader>. :bn<CR>
+    map <leader>, :bp<CR>
+    imap <leader>. :bn<CR>
+    imap <leader>, :bp<CR>
 
     " windows
     map h :wincmd h<CR>
