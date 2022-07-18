@@ -29,6 +29,21 @@ if [ -r /opt/homebrew/bin/brew ]; then
       eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# php
+export PATH="/opt/homebrew/opt/php@7.4/sbin:$PATH"
+export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
+
+# bun completions
+[ -s "/Users/tom/.bun/_bun" ] && source "/Users/tom/.bun/_bun"
+
+# Bun
+export BUN_INSTALL="/Users/tom/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# deno
+export DENO_INSTALL="/Users/tom/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
 # kiex manages elixir version (install https://github.com/taylor/kiex) 
 if [ -s "$HOME/.kiex/scripts/kiex" ]; then
     source "$HOME/.kiex/scripts/kiex"

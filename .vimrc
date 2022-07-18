@@ -77,7 +77,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'wakatime/vim-wakatime'
 
 " are you crazy? you're goint to kill us all
-Plug 'jceb/vim-orgmode'
+" Plug 'jceb/vim-orgmode'
 
 " the pen is mightier than the sword
 Plug 'kana/vim-textobj-user'
@@ -88,6 +88,8 @@ Plug 'reedes/vim-lexical'
 Plug 'reedes/vim-litecorrect'
 Plug 'reedes/vim-textobj-quote'
 Plug 'junegunn/goyo.vim'
+Plug 'godlygeek/tabular'
+Plug 'preservim/vim-markdown'
 
 call plug#end()
 
@@ -230,6 +232,7 @@ nnoremap <leader><space> :noh<cr>
 "nnoremap <tab> %
 "vnoremap <tab> %
 
+
 " jump to end of pasted text
 vnoremap <silent> y y`]
 vnoremap <silent> p p`]
@@ -242,6 +245,9 @@ inoremap jj <ESC>
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
+
+" easy commit & push
+:nnoremap <leader>P :!git add . && git commit -m u && git push<CR>
 
 " CTRL+direction to move across windows
 "map <c-j> <c-w>j
