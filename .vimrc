@@ -31,11 +31,11 @@ Plug 'tpope/vim-dispatch'
 " productivity
 Plug 'SirVer/ultisnips'
 Plug 'haya14busa/incsearch.vim'
-Plug 'justinmk/vim-sneak'
-Plug 'scrooloose/nerdtree'
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'vim-scripts/BufOnly.vim'
-Plug 'yggdroot/indentline'
+" Plug 'justinmk/vim-sneak'
+" Plug 'scrooloose/nerdtree'
+" Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+" Plug 'vim-scripts/BufOnly.vim'
+" Plug 'yggdroot/indentline'
 " Plug 'AlphaMycelium/pathfinder.vim'
 " Plug 'honza/vim-snippets'
 " Plug 'bradurani/vim-powerclose'
@@ -90,6 +90,8 @@ Plug 'reedes/vim-textobj-quote'
 Plug 'junegunn/goyo.vim'
 Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
+Plug 'dpelle/vim-languagetool'
+Plug 'ron89/thesaurus_query.vim'
 
 call plug#end()
 
@@ -328,17 +330,19 @@ if ! has('nvim')
     map - :split<CR>
     map \| :vsplit<CR>
 
-    " buffers
+    " tabs
     map { :tabnext<CR>
     map } :tabprevious<CR>
 
-    " tabs
-    map , :bp<CR>
-    map . :bn<CR>
-    map <leader>. :bn<CR>
-    map <leader>, :bp<CR>
-    imap <leader>. :bn<CR>
-    imap <leader>, :bp<CR>
+    " buffers
+    " map , :bp<CR>
+    " map . :bn<CR>
+    noremap <C-J> :bnext<CR>
+    noremap <C-K> :bprev<CR>
+    " map <leader>. :bn<CR>
+    " map <leader>, :bp<CR>
+    " imap <leader>. :bn<CR>
+    " imap <leader>, :bp<CR>
 
     " windows
     map h :wincmd h<CR>
@@ -758,7 +762,11 @@ nnoremap <leader>m :w<CR>:Dispatch!<CR>
 nnoremap <leader>C :BufOnly<CR>
 
 " }}}
+" vim-markdown {{{
 
+let g:vim_markdown_folding_disabled = 1
+
+" }}}
 
 " plugins no longer in use go here to die
 

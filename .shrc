@@ -11,7 +11,6 @@ export LC_COLLATE=en_US.UTF-8
 
 export BROWSER=firefox
 export EDITOR=vim
-# export VISUAL="/usr/bin/gvim --nofork"
 export PAGER=less
 export PATH=$HOME/dotfiles/bin:/usr/local/bin:$PATH
 export S_COLORS=auto
@@ -24,6 +23,9 @@ if [ -d "$HOME/.rvm" ]; then
     fi
 fi
 
+# bun completions
+[ -s "/Users/tom/.bun/_bun" ] && source "/Users/tom/.bun/_bun"
+
 # homebrew
 if [ -r /opt/homebrew/bin/brew ]; then
       eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -34,11 +36,11 @@ export PATH="/opt/homebrew/opt/php@7.4/sbin:$PATH"
 export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
 
 # bun completions
-[ -s "/Users/tom/.bun/_bun" ] && source "/Users/tom/.bun/_bun"
 
 # Bun
 export BUN_INSTALL="/Users/tom/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "/Users/tom/.bun/_bun" ] && source "/Users/tom/.bun/_bun"
 
 # deno
 export DENO_INSTALL="/Users/tom/.deno"
@@ -73,13 +75,14 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-[ -f /opt/homebrew/opt/asdf/libexec/asdf.sh ] && . /opt/homebrew/opt/asdf/libexec/asdf.sh
+# [ -f /opt/homebrew/opt/asdf/libexec/asdf.sh ] && . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 # }}}
 
 # aliases {{{
-alias vi=vim
-alias v=vim
+alias vim=nvim
+alias vi=nvim
+alias v=nvim
 alias l='ls -ltra'
 # alias S="sudo systemctl"
 # alias gp='ps aux | grep -v grep | grep -i'
@@ -98,7 +101,7 @@ alias dk-image-clean="docker images --no-trunc | grep '<none>' | awk '{ print $3
 # alias dk-umount="umount -l $(grep 'aufs' /proc/mounts | awk '{print$2}' | sort -r)"
 alias k=kubectl
 # alias ka="kubectl apply -f -"
-alias dk-delete-all-images="docker system prune && docker rmi -f $(docker images -a -q)"
+# alias dk-delete-all-images="docker system prune && docker rmi -f $(docker images -a -q)"
 
 # nocache
 # if which nocache >/dev/null 2>&1; then
@@ -137,6 +140,15 @@ alias jsonvalid='python -mjson.tool'
 
 function gp {
     ps -ef "$1" | grep -v grep
+}
+
+function md2doc {
+    in="$1"
+    out="${in}.docx"
+    html=$(mktemp)
+    pandoc -f gfm -t html -o "$html" --wrap=none "$in"
+    pandoc -f html -t docx -o "$out" --wrap=none "$html"
+    rm -f "$html"
 }
 
 # }}}
