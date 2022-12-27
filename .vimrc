@@ -400,7 +400,7 @@ cab Q q
 
 " color peachpuff
 
-set background=light
+set background=dark
 " set background=dark
 colorscheme pencil
 let g:pencil_terminal_italics = 1
@@ -517,6 +517,39 @@ augroup END
 
 " NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" }}}
+" WSL options {{{
+
+function! IsWSL()
+    let uname = substitute(system('uname'),'\n','','')
+    if uname == 'Linux'
+        let lines = readfile("/proc/version")
+        if lines[0] =~ "Microsoft"
+            return 1
+        endif
+    endif
+  return 0
+endfunction
+
+" requires vim-gtk (+clipboard support)
+" requires https://github.com/equalsraf/win32yank/releases in path: C:\Users\USERNAME\AppData\Local\Microsoft\WindowsApps
+
+if IsWSL()
+    set clipboard+=unnamedplus
+    let g:clipboard = {
+            \   'name': 'win32yank-wsl',
+            \   'copy': {
+            \      '+': 'win32yank.exe -i --crlf',
+            \      '*': 'win32yank.exe -i --crlf',
+            \    },
+            \   'paste': {
+            \      '+': 'win32yank.exe -o --lf',
+            \      '*': 'win32yank.exe -o --lf',
+            \   },
+            \   'cache_enabled': 0,
+            \ }
+endif
 
 " }}}
 
