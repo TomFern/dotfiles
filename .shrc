@@ -15,12 +15,26 @@ export PAGER=less
 export PATH=$HOME/dotfiles/bin:/usr/local/bin:$PATH
 export S_COLORS=auto
 
+# MullVPN
+alias chrome-vpn="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome  --proxy-server=socks5://10.64.0.1"
+
+# ruby brew
+if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
+  export PATH=/opt/homebrew/opt/ruby/bin:$PATH
+  export PATH=`gem environment gemdir`/bin:$PATH
+fi
+
 # rvm
-if [ -d "$HOME/.rvm" ]; then
-    export PATH="$PATH:$HOME/.rvm/bin"
-    if [ -s "$HOME/.rvm/scripts/rvm" ]; then
-        source "$HOME/.rvm/scripts/rvm" 
-    fi
+# if [ -d "$HOME/.rvm" ]; then
+#     export PATH="$PATH:$HOME/.rvm/bin"
+#     if [ -s "$HOME/.rvm/scripts/rvm" ]; then
+#         source "$HOME/.rvm/scripts/rvm" 
+#     fi
+# fi
+
+# rust
+if [ -d "$HOME/.cargo/bin" ]; then
+    export PATH="$PATH:$HOME/.cargo/bin"
 fi
 
 # bun completions
@@ -63,6 +77,9 @@ if [ -f "$GPG_AGENT_INFO_FILE" ]; then
     export SSH_AUTH_SOCK
     export SSH_AGENT_PID
 fi
+
+# docker use linux platform by default
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
 
 # java
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=gasp'
@@ -142,13 +159,31 @@ function gp {
     ps -ef "$1" | grep -v grep
 }
 
+function mp3tomid {
+    for f in "$@"; do
+        mp3="$f"
+        wav="${f%.mp3}.wav"
+        midi="${f%.mp3}.mid"
+        echo "===> Converting $mp3 to $midi"
+        ffmpeg -i "$mp3" "$wav"
+        waon -i "$wav" -o "$midi"
+        rm "$wav"
+    done
+}
+
 function md2doc {
     in="$1"
-    out="${in}.docx"
+    out="${in}.docx" 
     html=$(mktemp)
     pandoc -f gfm -t html -o "$html" --wrap=none "$in"
     pandoc -f html -t docx -o "$out" --wrap=none "$html"
     rm -f "$html"
+}
+
+function md2wp {
+    in="$1"
+    out="${in}.wp"
+    pandoc -f gfm -t markdown_phpextra+hard_line_breaks-citations-markdown_in_html_blocks --embed-resources --wrap=none -o "$out" "$in"
 }
 
 # }}}
