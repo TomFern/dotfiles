@@ -9,61 +9,12 @@ export LC_CTYPE=en_US.UTF-8
 export LC_TIME=en_US.UTF-8
 export LC_COLLATE=en_US.UTF-8
 
-export BROWSER=firefox
+# export BROWSER=firefox
 export EDITOR=vim
 export PAGER=less
 export PATH=$HOME/dotfiles/bin:/usr/local/bin:$PATH
 export S_COLORS=auto
 
-# MullVPN
-alias chrome-vpn="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome  --proxy-server=socks5://10.64.0.1"
-
-# ruby brew
-if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
-  export PATH=/opt/homebrew/opt/ruby/bin:$PATH
-  export PATH=`gem environment gemdir`/bin:$PATH
-fi
-
-# rvm
-# if [ -d "$HOME/.rvm" ]; then
-#     export PATH="$PATH:$HOME/.rvm/bin"
-#     if [ -s "$HOME/.rvm/scripts/rvm" ]; then
-#         source "$HOME/.rvm/scripts/rvm" 
-#     fi
-# fi
-
-# rust
-if [ -d "$HOME/.cargo/bin" ]; then
-    export PATH="$PATH:$HOME/.cargo/bin"
-fi
-
-# bun completions
-[ -s "/Users/tom/.bun/_bun" ] && source "/Users/tom/.bun/_bun"
-
-# homebrew
-if [ -r /opt/homebrew/bin/brew ]; then
-      eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
-# php
-export PATH="/opt/homebrew/opt/php@7.4/sbin:$PATH"
-export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
-
-# bun completions
-
-# Bun
-export BUN_INSTALL="/Users/tom/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-[ -s "/Users/tom/.bun/_bun" ] && source "/Users/tom/.bun/_bun"
-
-# deno
-export DENO_INSTALL="/Users/tom/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-
-# kiex manages elixir version (install https://github.com/taylor/kiex) 
-if [ -s "$HOME/.kiex/scripts/kiex" ]; then
-    source "$HOME/.kiex/scripts/kiex"
-fi
 
 # Timezone
 # export TZ='America/Argentina/Buenos_Aires'
@@ -78,15 +29,69 @@ if [ -f "$GPG_AGENT_INFO_FILE" ]; then
     export SSH_AGENT_PID
 fi
 
-# docker use linux platform by default
-export DOCKER_DEFAULT_PLATFORM=linux/amd64
-
 # java
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=gasp'
 
 # }}}
+# langs {{{
+
+
+
+# rvm
+# if [ -d "$HOME/.rvm" ]; then
+#     export PATH="$PATH:$HOME/.rvm/bin"
+#     if [ -s "$HOME/.rvm/scripts/rvm" ]; then
+#         source "$HOME/.rvm/scripts/rvm" 
+#     fi
+# fi
+
+# rust
+# if [ -d "$HOME/.cargo/bin" ]; then
+#     export PATH="$PATH:$HOME/.cargo/bin"
+# fi
+
+
+# php
+export PATH="/opt/homebrew/opt/php@7.4/sbin:$PATH"
+export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
+
+# bun completions
+
+# # Bun
+# export BUN_INSTALL="/Users/tom/.bun"
+# export PATH="$BUN_INSTALL/bin:$PATH"
+# [ -s "/Users/tom/.bun/_bun" ] && source "/Users/tom/.bun/_bun"
+
+# deno
+# export DENO_INSTALL="/Users/tom/.deno"
+# export PATH="$DENO_INSTALL/bin:$PATH"
+
+# kiex manages elixir version (install https://github.com/taylor/kiex) 
+# if [ -s "$HOME/.kiex/scripts/kiex" ]; then
+#     source "$HOME/.kiex/scripts/kiex"
+# fi
+
+# }}}
 # macos {{{
 
+# homebrew
+if [ -r /opt/homebrew/bin/brew ]; then
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# ruby brew
+if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
+  export PATH=/opt/homebrew/opt/ruby/bin:$PATH
+  export PATH=`gem environment gemdir`/bin:$PATH
+fi
+
+# docker use linux platform by default
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
+
+# bun completions
+# [ -s "/Users/tom/.bun/_bun" ] && source "/Users/tom/.bun/_bun"
+
+# nvm
 export NVM_DIR="$HOME/.nvm"
 [  -d "$NVM_DIR" ] || mkdir -p "$NVM_DIR"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
@@ -94,9 +99,13 @@ export NVM_DIR="$HOME/.nvm"
 
 # [ -f /opt/homebrew/opt/asdf/libexec/asdf.sh ] && . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
+# present slides in chromeless browser
+alias present='open -n -a "Google Chrome" --args "--app=file:///Users/tom/r/slides/export/Slides/index.html"'
+
 # }}}
 
 # aliases {{{
+
 alias vim=nvim
 alias vi=nvim
 alias v=nvim
@@ -119,6 +128,7 @@ alias dk-image-clean="docker images --no-trunc | grep '<none>' | awk '{ print $3
 alias k=kubectl
 # alias ka="kubectl apply -f -"
 # alias dk-delete-all-images="docker system prune && docker rmi -f $(docker images -a -q)"
+
 
 # nocache
 # if which nocache >/dev/null 2>&1; then
@@ -155,9 +165,28 @@ alias jsonvalid='python -mjson.tool'
 # }}}
 # functions {{{
 
+# convert pdf page into high-res image
+function pdfpage {
+    pdf="$1"
+    page="$2"
+    output="page_${page}.png"
+    convert -density 300 "${pdf}[${page}]" -background white -flatten "$output"
+    open "$output"
+}
+
 function gp {
     ps -ef "$1" | grep -v grep
 }
+
+function dropshadow {
+    for f in "$@"; do
+       source="$f"
+       output="${f}.shadow"
+       convert "$f" \( +clone -background black -shadow 80x3+3+3 \) +swap -background transparent -layers merge +repage "$output"
+       mv "$output" "$source"
+    done
+}
+    
 
 function mp3tomid {
     for f in "$@"; do
@@ -168,6 +197,16 @@ function mp3tomid {
         ffmpeg -i "$mp3" "$wav"
         waon -i "$wav" -o "$midi"
         rm "$wav"
+    done
+}
+
+function mp4tostereo {
+    for f in "$@"; do
+        mp4="$f"
+        stereo="${f%.mp4}_stereo.mp4"
+        echo "===> Converting $mp4 to stereo"
+	ffmpeg -i "$mp4" -map 0:v -map 0:a -c:v h264 -c:a aac -f mp4 "$stereo"
+	mv "$stereo" "$mp4"
     done
 }
 
@@ -191,13 +230,13 @@ function md2wp {
 
 # use \ to invoke the original command, eg \cat
 
-if which bat >/dev/null 2>&1; then
-    alias cat=bat
-fi
+# if which bat >/dev/null 2>&1; then
+#     alias cat=bat
+# fi
 
-if which prettyping >/dev/null 2>&1; then
-    alias ping=prettyping
-fi
+# if which prettyping >/dev/null 2>&1; then
+#     alias ping=prettyping
+# fi
 
 if which htop >/dev/null 2>&1; then
     alias top=htop
