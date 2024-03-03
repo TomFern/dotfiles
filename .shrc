@@ -106,6 +106,7 @@ alias present='open -n -a "Google Chrome" --args "--app=file:///Users/tom/r/slid
 
 # aliases {{{
 
+alias service-mysql="docker run --name mysql-container -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -p 3306:3306 -d mysql; sleep 10; docker exec -it mysql-container mysql"
 alias vim=nvim
 alias vi=nvim
 alias v=nvim
@@ -160,6 +161,8 @@ alias dice='echo $((0x$(head -c5 /dev/random|xxd -ps)%6+1))'
 alias zip-parts='echo "Repairing zip volume into archive_repaired.zip" && zip --output archive_repaired.zip -F'
 alias jsonvalid='python -mjson.tool'
 
+
+
 # alias codename='code=$(curl -G http://codenames.herokuapp.com/api/codenames -d lists=adjectives,cities  -d filters=alliterative,random 2>/dev/null); echo $code; echo $code | xclip -i'
 
 # }}}
@@ -196,7 +199,16 @@ function mp3tomid {
         echo "===> Converting $mp3 to $midi"
         ffmpeg -i "$mp3" "$wav"
         waon -i "$wav" -o "$midi"
-        rm "$wav"
+    done
+}
+
+
+function mp3towav {
+    for f in "$@"; do
+        mp3="$f"
+        wav="${f%.mp3}.wav"
+        echo "===> Converting $mp3 to $wav"
+        ffmpeg -i "$mp3" "$wav"
     done
 }
 

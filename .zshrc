@@ -110,42 +110,8 @@ source "$HOME/.shrc"
 export PATH="$PATH:$HOME/.rvm/bin"
 
 
-# JINA_CLI_BEGIN
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/private/tmp/google-cloud-sdk/path.zsh.inc' ]; then . '/private/tmp/google-cloud-sdk/path.zsh.inc'; fi
 
-## autocomplete
-if [[ ! -o interactive ]]; then
-    return
-fi
-
-compctl -K _jina jina
-
-_jina() {
-  local words completions
-  read -cA words
-
-  if [ "${#words}" -eq 2 ]; then
-    completions="$(jina commands)"
-  else
-    completions="$(jina completions ${words[2,-2]})"
-  fi
-
-  reply=(${(ps:
-:)completions})
-}
-
-# session-wise fix
-ulimit -n 4096
-export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
-
-# JINA_CLI_END
-
-
-
-
-# pnpm
-export PNPM_HOME="/Users/tom/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
+# The next line enables shell command completion for gcloud.
+if [ -f '/private/tmp/google-cloud-sdk/completion.zsh.inc' ]; then . '/private/tmp/google-cloud-sdk/completion.zsh.inc'; fi
