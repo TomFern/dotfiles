@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+# prerequisites: git, gh, zsh, stow, homebrew
+
+brew install nvim python3 iterm2 node nvm krita libreoffice discord openai-whisper ffmpeg imagemagick spotify obs wget whisper ffmpeg

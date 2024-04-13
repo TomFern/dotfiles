@@ -10,7 +10,7 @@ export LC_TIME=en_US.UTF-8
 export LC_COLLATE=en_US.UTF-8
 
 # export BROWSER=firefox
-export EDITOR=vim
+export EDITOR=nvim
 export PAGER=less
 export PATH=$HOME/dotfiles/bin:/usr/local/bin:$PATH
 export S_COLORS=auto
@@ -219,6 +219,25 @@ function mp4tostereo {
         echo "===> Converting $mp4 to stereo"
 	ffmpeg -i "$mp4" -map 0:v -map 0:a -c:v h264 -c:a aac -f mp4 "$stereo"
 	mv "$stereo" "$mp4"
+    done
+}
+
+function mp4towaveform {
+    for f in "$@"; do
+       mp4="$f"
+       waveform="${f%.mp4}_waveform.mp4"
+       echo "===> Creating waveform for $mp4"
+       ffmpeg -i "$mp4" -filter_complex "[0:a]showwaves=mode=cline:s=hd720:colors=white[v]" -map "[v]" -map 0:a -pix_fmt yuv420p -an "$waveform"
+    done
+}
+
+function mp4tosrt {
+    for f in "$@"; do
+       mp4="$f"
+       wav="${f%.mp4}.wav"
+       ffmpeg -i "$mp4" "$wav"
+       echo "===> Transcribing $mp4"
+       whisper --language en --output_format srt "$wav"
     done
 }
 
