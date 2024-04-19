@@ -231,6 +231,18 @@ function mp4towaveform {
     done
 }
 
+function mp3towaveform {
+    for f in "$@"; do
+       mp3="$f"
+       wav="${f%.mp3}.wav"
+       waveform="${f%.mp3}_waveform.mp4"
+       ffmpeg -i "$mp3" "$wav"
+       echo "===> Creating waveform for $mp3"
+       ffmpeg -i "$mp3" -filter_complex "[0:a]showwaves=mode=cline:s=hd720:colors=white[v]" -map "[v]" -pix_fmt yuv420p "$waveform"
+       # ffmpeg -i "$m34" -filter_complex "[0:a]showwaves=mode=cline:s=hd720:colors=white[v]" -map "[v]" -map 0:a -pix_fmt yuv420p -an "$waveform"
+    done
+}
+
 function mp4tosrt {
     for f in "$@"; do
        mp4="$f"
