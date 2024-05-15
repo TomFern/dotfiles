@@ -1,0 +1,56 @@
+#!/bin/bash
+# prereqs: fswatch jpegoptim imagemagick
+#
+# Monitor a folder for image files. Convert to jpeg, optimize and copy to destination
+#
+
+usage() {
+  echo "Usage: $0 SOURCE_DIR DEST_DIR"
+  exit 1
+}
+
+if [ "$#" -ne 2 ]; then
+  usage
+fi
+
+SOURCE_DIR="$1"
+shift
+DEST_DIR="$1"
+
+if [ ! -d "$SOURCE_DIR" ]; then
+  echo "Error: Source folder '$SOURCE_DIR' does not exist."
+  exit 1
+fi
+
+if [ ! -d "$DEST_DIR" ]; then
+  echo "Error: Destination folder '$DEST_DIR' does not exist."
+  exit 1
+fi
+
+process_image() {
+  local file="$1"
+  local base_name=$(basename "$file")
+  local dest_file="$DEST_DIR/${base_name%.*}.jpg"
+
+  # Convert to jpg
+  convert "$file" "$dest_file"
+
+  # Optimize the jpg file
+  jpegoptim --max=80 "$dest_file"
+
+}
+
+export -f process_image
+
+echo "==> Monitoring images in $SOURCE_DIR"
+
+fswatch -0 "$SOURCE_DIR" | while read -d "" event
+do
+    # Check if the file is an image by extension
+    if [[ "$event" =~ \.(jpg|jpeg|png|gif|bmp|tiff)$ ]]; then
+      process_image "$event"
+    else
+      echo "Ignoring $event"
+    fi
+done
+

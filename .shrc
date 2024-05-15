@@ -36,6 +36,8 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=gasp'
 # langs {{{
 
 
+# ollama
+export GIN_MODE=release
 
 # rvm
 # if [ -d "$HOME/.rvm" ]; then
@@ -129,7 +131,7 @@ alias dk-image-clean="docker images --no-trunc | grep '<none>' | awk '{ print $3
 alias k=kubectl
 # alias ka="kubectl apply -f -"
 # alias dk-delete-all-images="docker system prune && docker rmi -f $(docker images -a -q)"
-
+alias png2jpg="mkdir -p jpgs; sips -s format jpeg *.png --out \"./jpgs/\""
 
 # nocache
 # if which nocache >/dev/null 2>&1; then
