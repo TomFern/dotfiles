@@ -175,7 +175,7 @@ function pdfpage {
     pdf="$1"
     page="$2"
     output="page_${page}.png"
-    convert -density 300 "${pdf}[${page}]" -background white -flatten "$output"
+    magick -density 300 "${pdf}[${page}]" -background white -flatten "$output"
     open "$output"
 }
 
@@ -183,11 +183,12 @@ function gp {
     ps -ef "$1" | grep -v grep
 }
 
+# add a drop shadow to an image
 function dropshadow {
     for f in "$@"; do
        source="$f"
        output="${f}.shadow"
-       convert "$f" \( +clone -background black -shadow 80x3+3+3 \) +swap -background transparent -layers merge +repage "$output"
+       magick "$f" \( +clone -background black -shadow 20x5+5+5 \) +swap -background white -layers merge +repage "$output"
        mv "$output" "$source"
     done
 }
