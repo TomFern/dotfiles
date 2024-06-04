@@ -33,10 +33,10 @@ process_image() {
   local dest_file="$DEST_DIR/${base_name%.*}.jpg"
 
   # Convert to jpg without changes
-  # magick "$file" "$dest_file"
+  magick "$file" "$dest_file"
 
   # Convert to jpg and add drop-shadow
-  magick "$file" \( +clone -background black -shadow 20x5+5+5 \) +swap -background white -layers merge +repage "$dest_file"
+  # magick "$file" \( +clone -background black -shadow 20x5+5+5 \) +swap -background white -layers merge +repage "$dest_file"
 
   # Optimize the jpg file
   jpegoptim --max=80 "$dest_file"

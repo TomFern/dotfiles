@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Function to get the dimensions of the image
+get_image_dimensions() {
+  local image="$1"
+  identify -format "%w %h" "$image"
+}
+
+# Function to crop the image to remove the shadow
+crop_image() {
+  local input_image="$1"
+  local output_image="$2"
+  local offset_x=8
+  local offset_y=8
+  
+  # Get the dimensions of the image
+  dimensions=$(get_image_dimensions "$input_image")
+  read -r width height <<< "$dimensions"
+  
+  # Calculate the original dimensions (without shadow)
+  original_width=$((width - offset_x))
+  original_height=$((height - offset_y))
+  
+  # Crop the image to remove the shadow
+  echo magick "$input_image" -crop "${original_width}x${original_height}-${offset_x}-${offset_y}" +repage "$output_image"
+  magick "$input_image" -crop "${original_width}x${original_height}-${offset_x}-${offset_y}" +repage "$output_image"
+}
+
+# Check if correct number of arguments is provided
+if [ "$#" -ne 2 ]; then
+  echo "Usage: $0 <input_image_with_shadow> <output_image_without_shadow>"
+  exit 1
+fi
+
+# Input and output image paths
+input_image="$1"
+output_image="$2"
+
+# Crop the image to remove the shadow
+crop_image "$input_image" "$output_image"
+
+echo "The image has been cropped to remove the shadow. Output saved to: $output_image"
+

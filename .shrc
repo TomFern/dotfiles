@@ -131,7 +131,7 @@ alias dk-image-clean="docker images --no-trunc | grep '<none>' | awk '{ print $3
 alias k=kubectl
 # alias ka="kubectl apply -f -"
 # alias dk-delete-all-images="docker system prune && docker rmi -f $(docker images -a -q)"
-alias png2jpg="mkdir -p jpgs; sips -s format jpeg *.png --out \"./jpgs/\""
+# alias png2jpg="mkdir -p jpgs; sips -s format jpeg *.png --out \"./jpgs/\""
 
 # nocache
 # if which nocache >/dev/null 2>&1; then
@@ -178,6 +178,15 @@ function pdfpage {
     magick -density 300 "${pdf}[${page}]" -background white -flatten "$output"
     open "$output"
 }
+
+function png2jpg {
+    for f in "$@"; do
+        dest="${f%.png}.jpg"
+	magick "$f" "$dest"
+  	jpegoptim --max=80 "$dest"
+    done
+}
+
 
 function gp {
     ps -ef "$1" | grep -v grep
