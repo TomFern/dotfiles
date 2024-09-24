@@ -82,10 +82,14 @@ if [ -r /opt/homebrew/bin/brew ]; then
 fi
 
 # ruby brew
-if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
-  export PATH=/opt/homebrew/opt/ruby/bin:$PATH
-  export PATH=`gem environment gemdir`/bin:$PATH
-fi
+# if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
+#   export PATH=/opt/homebrew/opt/ruby/bin:$PATH
+#   export PATH=`gem environment gemdir`/bin:$PATH
+# fi
+
+# rbenv
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
 
 # docker use linux platform by default
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
@@ -102,7 +106,7 @@ export NVM_DIR="$HOME/.nvm"
 # [ -f /opt/homebrew/opt/asdf/libexec/asdf.sh ] && . /opt/homebrew/opt/asdf/libexec/asdf.sh
 
 # present slides in chromeless browser
-alias present='open -n -a "Google Chrome" --args "--app=file:///Users/tom/r/slides/export/Slides/index.html"'
+alias present='open -n -a "Google Chrome" --args "--app=file:///Users/tom/r/vault/export/Slides/index.html"'
 
 # }}}
 

@@ -29,3 +29,6 @@ fi
 # fi
 
 export PATH="/Users/tom/.local/share/solana/install/active_release/bin:$PATH"
+
+# Added by `rbenv init` on Wed Aug 28 09:44:18 -03 2024
+eval "$(rbenv init - --no-rehash zsh)"

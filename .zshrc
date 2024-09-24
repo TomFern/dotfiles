@@ -74,6 +74,7 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 source $HOME/.shrc
+eval $(thefuck --alias)
 
 # User configuration
 

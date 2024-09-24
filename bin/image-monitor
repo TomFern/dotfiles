@@ -27,6 +27,11 @@ if [ ! -d "$DEST_DIR" ]; then
   exit 1
 fi
 
+if [ "$SOURCE_DIR" = "$DEST_DIR" ]; then
+  echo "Source and destination directories cannot be the same"
+  exit 1
+fi
+
 process_image() {
   local file="$1"
   local base_name=$(basename "$file")
