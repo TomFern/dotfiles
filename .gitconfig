@@ -1,6 +1,7 @@
 [user]
 	name = tomas f
 	email = 46322567+TomFern@users.noreply.github.com
+	signingkey = 658891F4A45B1ECEC003426720DBF7EE92E722A8
 [pull]
 	rebase = false
 [init]
@@ -12,3 +13,7 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true
