@@ -107,3 +107,4 @@ export PATH="$PATH:/Users/tom/.cache/lm-studio/bin"
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+eval "$(ruby ~/.local/try.rb init ~/src/tries)"
