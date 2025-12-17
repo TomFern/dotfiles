@@ -112,6 +112,9 @@ alias present='open -n -a "Google Chrome" --args "--app=file:///Users/tom/r/vaul
 
 # aliases {{{
 
+alias arrakis="ssh tom@arrakis"
+alias Shared1="sudo mkdir -p /Volumes/shared1; sudo mount -t nfs -o vers=3 192.168.1.100:/srv/shared1 /Volumes/shared1"
+alias Unshared1="sudo umount /Volumes/shared1"
 alias service-mysql="docker run --name mysql-container -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -p 3306:3306 -d mysql; sleep 10; docker exec -it mysql-container mysql"
 alias vim=nvim
 alias vi=nvim

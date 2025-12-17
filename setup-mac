@@ -4,3 +4,76 @@
 brew install nvim python3 iterm2 node nvm krita libreoffice discord openai-whisper ffmpeg imagemagick spotify obs wget whisper ffmpeg ncdu pandoc ranger basictex
 
 brew install --cask browsers-software/tap/browsers
+
+# awscli: Official Amazon AWS command-line interface
+# btop: Resource monitor. C++ version and continuation of bashtop and bpytop
+# certbot: Tool to obtain certs from Let's Encrypt and autoenable HTTPS
+# cloudflared: Cloudflare Tunnel client (formerly Argo Tunnel)
+# dvc: Git for data science projects
+# elixir: Functional metaprogramming aware language built on Erlang VM
+# fish: User-friendly command-line shell for UNIX-like operating systems
+# fswatch: Monitor a directory for changes and run a shell command
+# fzf: Command-line fuzzy finder written in Go
+# gh: GitHub command-line tool
+# git-filter-repo: Quickly rewrite git repository history
+# gitleaks: Audit git repos for secrets
+# go: Open source programming language to build simple/reliable/efficient software
+# graphviz: Graph visualization software from AT&T and Bell Labs
+# helm: Kubernetes package manager
+# infracost: Cost estimates for Terraform
+# jpegoptim: Utility to optimize JPEG files
+# jq: Lightweight and flexible command-line JSON processor
+# k9s: Kubernetes CLI To Manage Your Clusters In Style!
+# kubernetes-cli: Kubernetes command-line interface
+# lazygit: Simple terminal UI for git commands
+# libpq: Postgres C API library
+# llama.cpp: LLM inference in C/C++
+# lychee: Fast, async, resource-friendly link checker
+# mbedtls: Cryptographic & SSL/TLS library
+# ncdu: NCurses Disk Usage
+# neovim: Ambitious Vim-fork focused on extensibility and agility
+# netlify-cli: Netlify command-line tool
+# nmap: Port scanning utility for large networks
+# nvm: Manage multiple Node.js versions
+# openai-whisper: General-purpose speech recognition model
+# pandoc: Swiss-army knife of markup format conversion
+# pwgen: Password generator
+# pyenv: Python version management
+# ranger: File browser
+# rbenv: Ruby version manager
+# render: Command-line interface for Render
+# ripgrep: Search tool like grep and The Silver Searcher
+# semgrep: Easily detect and prevent bugs and anti-patterns in your codebase
+# stow: Organize software neatly under a single directory tree (e.g. /usr/local)
+# syncthing: Open source continuous file synchronization application
+# telnet: User interface to the TELNET protocol
+# terraform: Tool to build, change, and version infrastructure
+# thefuck: Programmatically correct mistyped console commands
+# transmission-cli: Lightweight BitTorrent client
+# uv: Extremely fast Python package installer and resolver, written in Rust
+# wget: Internet file retriever
+# yarn: JavaScript package manager
+# yt-dlp: Feature-rich command-line audio/video downloader
+# zellij: Pluggable terminal workspace, with terminal multiplexer as the base feature
+
+# audacity: (Audacity) Multi-track audio editor and recorder
+# basictex: (BasicTeX) Compact TeX distribution as alternative to the full TeX Live / MacTeX
+# browsers: (Browsers) Open the right browser at the right time
+# calibre: (calibre) E-books management software
+# colorpicker-propicker: (Pro Picker) Colour picker
+# discord: (Discord) Voice and text chat software
+# gcloud-cli: (Google Cloud CLI) Set of tools to manage resources and applications hosted on Google Cloud
+# ghostty: (Ghostty) Terminal emulator that uses platform-native UI and GPU acceleration
+# iterm2: (iTerm2) Terminal emulator as alternative to Apple's Terminal app
+# keycastr: (KeyCastr) Open-source keystroke visualiser
+# krita: (Krita) Free and open-source painting and sketching program
+# libreoffice: (LibreOffice) Free cross-platform office suite, fresh version
+# mullvad-vpn: (Mullvad VPN) VPN client
+# obs: (OBS) Open-source software for live streaming and screen recording
+# obsidian: (Obsidian) Knowledge base that works on top of a local folder of plain text Markdown files
+# spotify: (Spotify) Music streaming service
+# surge: (Surge) Network toolbox
+# visual-studio-code: (Microsoft Visual Studio Code, VS Code) Open-source code editor
+# vlc: (VLC media player) Multimedia player
+# zap: (Zed Attack Proxy, ZAP) Free and open source web app scanner
+# zoom: (Zoom) Video communication and virtual meeting platform
