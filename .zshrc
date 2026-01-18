@@ -103,8 +103,10 @@ eval $(thefuck --alias)
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/tom/.cache/lm-studio/bin"
+#export PATH="$PATH:/Users/tom/.cache/lm-studio/bin"
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
-eval "$(ruby ~/.local/try.rb init ~/src/tries)"
+#eval "$(ruby ~/.local/try.rb init ~/src/tries)"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"

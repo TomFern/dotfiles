@@ -107,6 +107,8 @@ export NVM_DIR="$HOME/.nvm"
 
 # present slides in chromeless browser
 alias present='open -n -a "Google Chrome" --args "--app=file:///Users/tom/r/vault/export/Slides/index.html"'
+alias wen="whisper --language en"
+alias wes="whisper --language es"
 
 # }}}
 
