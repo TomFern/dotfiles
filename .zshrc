@@ -110,3 +110,8 @@ eval $(thefuck --alias)
 #eval "$(ruby ~/.local/try.rb init ~/src/tries)"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/pab/.lmstudio/bin"
+# End of LM Studio CLI section
+
